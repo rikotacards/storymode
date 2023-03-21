@@ -34,7 +34,7 @@
 }
 ```
 # Image storage path design
-`/[env]/[username]/[postId]/[fileName]`
+`/[env]/[username]/[postId]/[fileName-orderNo]`
 
 # Post db path
 
@@ -54,4 +54,3 @@
 ``/content/[userid]/posts/[postId]/`
 - Shorter, and we nest all information into postId. The post document would include the list of images / text
 - Reactions would be a key, mapped to a map `reactions: {happy: 0, sad: 1}`
-
