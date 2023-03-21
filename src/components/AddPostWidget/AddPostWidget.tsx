@@ -31,7 +31,7 @@ export const AddPostWidget: React.FC = () => {
           )}
           <div>
             <Button style={{marginTop: '8px'}} variant="outlined" fullWidth>
-              Cancel
+              Remove
             </Button>
           </div>
         </div>
@@ -45,7 +45,7 @@ export const AddPostWidget: React.FC = () => {
         </Button>
       </div>
       <div>
-        <Button variant="outlined" fullWidth>
+        <Button style={{marginTop: '8px'}} variant="outlined" fullWidth>
           Post
         </Button>
       </div>
