@@ -35,3 +35,6 @@
 ```
 # Image storage path design
 `/[env]/[username]/[postId]/[fileName]`
+
+# Post db path
+`/`
