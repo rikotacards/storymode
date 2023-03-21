@@ -1,0 +1,33 @@
+.addPostContainer {
+  display: flex;
+  flex-direction: column;
+  width: 469px;
+}
+.layout {
+  display: flex;
+  flex-direction: row;
+}
+.postDetails {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.imageAndCaption {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+}
+.addDetailInput {
+  display: flex;
+  width: 100%
+}
+.reorderContainer {
+  display: flex;
+  align-items: center;
+}
+.textInputContainer {
+  display: flex;
+  flex-shrink: 1;
+  width: 100%;
+  align-items: start;
+}

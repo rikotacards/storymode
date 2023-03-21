@@ -4,7 +4,7 @@ import styles from './SideMenu.module.css'
 const menuItems = [
   { name: "Add Post", path: "/add-post" },
   { name: "Drafts", path: "/drafts" },
-  { name: "Home", path: "/home" },
+  { name: "Home", path: "/" },
   { name: "Profile", path: "/profile" },
   { name: "Explore", path: "/explore" },
 ];
