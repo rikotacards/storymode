@@ -1,7 +1,7 @@
 .addPostContainer {
   display: flex;
   flex-direction: column;
-  width: 469px;
+  max-width: 469px;
 }
 .layout {
   display: flex;
@@ -15,7 +15,7 @@
 .imageAndCaption {
   display: flex;
   width: 100%;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .addDetailInput {
   display: flex;
@@ -29,5 +29,5 @@
   display: flex;
   flex-shrink: 1;
   width: 100%;
-  align-items: start;
+  align-items: flex-start;
 }
