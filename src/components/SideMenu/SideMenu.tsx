@@ -13,7 +13,7 @@ export const SideMenu: React.FC = () => {
   return (
     <div className={styles.sidemenu}>
       {menuItems.map((item) => (
-        <MenuItem name={item.name} path={item.path} />
+        <MenuItem key={item.name} name={item.name} path={item.path} />
       ))}
     </div>
   );
