@@ -68,7 +68,6 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
     addImage,
     removePost
   }
-  console.log('CONTEXT RERENDERED',posts)
 
   return (
     <AddPostContext.Provider value={addPostFunctions} >
