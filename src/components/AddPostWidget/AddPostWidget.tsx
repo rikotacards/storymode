@@ -3,52 +3,44 @@ import React from "react";
 import styles from "./AddPostWidget.module.css";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { UploadImageThumbnail } from "../UploadImageThumbnail/UploadImageThumbnail";
+import { AddPostContext } from "@/context/AddPostContext";
 
-const disableExtraFeatures = true;
+interface AddPostWidgetProps {
+  docRefId: string;
+  index: number
+}
 
-export const AddPostWidget: React.FC = () => {
+export const AddPostWidget: React.FC<AddPostWidgetProps> = ({docRefId, index}) => {
+  const addPostContext = React.useContext(AddPostContext);
+
   return (
-    <div className={styles.addPostContainer}>
       <div className={styles.layout}>
         <div className={styles.postDetails}>
           <div className={styles.imageAndCaption}>
-            <UploadImageThumbnail />
+            <UploadImageThumbnail index={index} />
             <div className={styles.textInputContainer}>
               <Input
                 placeholder={"Write your caption..."}
                 fullWidth
                 multiline
+                id='caption'
                 type="text"
                 disableUnderline
+                value={addPostContext.posts[index].caption}
+                onChange={(e) => {addPostContext.onTextChange(e,index)}}
               />
             </div>
           </div>
-          {!disableExtraFeatures && (
-            <>
-              <div className={styles.addDetailInput}>tag</div>
-              <div className={styles.addDetailInput}>add</div>
-            </>
-          )}
           <div>
-            <Button style={{marginTop: '8px'}} variant="outlined" fullWidth>
+            <Button onClick={() => addPostContext.removePost(index)} style={{ marginTop: "8px" }} variant="outlined" fullWidth>
               Remove
             </Button>
           </div>
         </div>
         <div className={styles.reorderContainer}>
-          <DragHandleIcon color='action' />
+          <DragHandleIcon color="action" />
         </div>
       </div>
-      <div style={{marginTop: '8px'}}>
-        <Button variant="outlined" fullWidth>
-          Add part 2
-        </Button>
-      </div>
-      <div>
-        <Button style={{marginTop: '8px'}} variant="outlined" fullWidth>
-          Post
-        </Button>
-      </div>
-    </div>
+     
   );
 };

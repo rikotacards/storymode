@@ -1,15 +1,46 @@
-import { Card, CardActionArea, CardContent } from "@mui/material";
+import { Card, CardActionArea } from "@mui/material";
 import React from "react";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import styles from "./UploadImageThumbnail.module.css";
-import testImage from "../../../public/test.jpg";
-import Image from 'next/image'
+import Image from "next/image";
+import { AddPostContext } from "@/context/AddPostContext";
+interface UploadImageThumbnailProps {
+  index: number;
+}
 
-const ImageThumbnail: React.FC = () => {
+export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
+  index
+}) => {
+  const [images, setImages] = React.useState([] as any);
+
+  const [imageURLS, setImageURLs] = React.useState([]);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const addPostContext = React.useContext(AddPostContext);
+  React.useEffect(() => {
+    if (images.length < 1) return;
+    const newImageUrls: any = [];
+    images.forEach((image: any) =>
+      newImageUrls.push(URL.createObjectURL(image))
+    );
+    addPostContext.addImage(newImageUrls[0], index)
+    setImageURLs(newImageUrls);
+
+  }, [images, addPostContext, index]);
+
+  const onImageChange = (e: any) => {
+    addPostContext
+    setImages([...e.target.files]);
+  };
+  const handleClick = () => {
+    if(inputRef.current!==null){
+      inputRef.current.click();
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <Card className={styles.imageCard}>
-        <CardActionArea sx={{ display: "flex", height: "100%" }}>
+      <Card variant="outlined" className={styles.imageCard}>
+        <CardActionArea sx={{ display: "flex", height: "100%" }} onClick={handleClick}>
           <div
             style={{
               display: "flex",
@@ -19,37 +50,25 @@ const ImageThumbnail: React.FC = () => {
               width: "100%",
             }}
           >
-            <Image height={100} alt='uploaded' src={testImage} />
-          </div>
-        </CardActionArea>
-      </Card>
-    </div>
-  );
-};
+            {(!!addPostContext.posts[index].imageUrl.length || !!imageURLS.length) && <Image  fill alt={''} src={addPostContext.posts[index].imageUrl || imageURLS[0]} />}
 
-const hasImage = false;
+            <input
+              type="file"
+              style={{ display: "none" }}
+              ref={inputRef}
+              accept="image/*"
+              onChange={onImageChange}
+            />
 
-export const UploadImageThumbnail: React.FC = () => {
-  
-  return (
-    <div className={styles.container}>
-      { !hasImage ? (<Card  variant='outlined' className={styles.imageCard}>
-        <CardActionArea sx={{ display: "flex", height: "100%" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-              width: "100%",
-            }}
-          >
             <AddPhotoAlternateIcon color="action" />
           </div>
         </CardActionArea>
-      </Card>) : (
-        <ImageThumbnail/>
-      )}
+      </Card>
+      <>
+        {/* {imageURLS.map((imageSrc) => (
+          <ImageThumbnail key={imageSrc} src={imageSrc} alt="not fount"/>
+        ))} */}
+      </>
     </div>
   );
 };

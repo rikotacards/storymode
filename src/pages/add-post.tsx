@@ -1,8 +1,8 @@
-import { AddPostWidget } from "@/components/AddPostWidget/AddPostWidget";
-import { Button, Input } from "@mui/material";
 import React from "react";
-import Head from 'next/head'
-import styles from '../styles/AddPost.module.css'
+import Head from "next/head";
+import styles from "../styles/AddPost.module.css";
+import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer";
+import { AddPostContextWrapper } from "@/context/AddPostContext";
 const AddPost = () => {
   return (
     <>
@@ -13,8 +13,9 @@ const AddPost = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-     
-      <AddPostWidget/>
+        <AddPostContextWrapper>
+          <AddPostContainer />
+        </AddPostContextWrapper>
       </main>
     </>
   );
