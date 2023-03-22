@@ -45,3 +45,77 @@ https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/
 
 ## Different envs for firebase
 https://stackoverflow.com/questions/37450439/separate-dev-and-prod-firebase-environment
+
+
+# Post
+* A post can either have image(s) or no image(s). 
+* A post can either have text
+* A post cannot have no image and no text, obviously. 
+
+```ts
+// Post schema
+{
+  postId: '19950224';
+  username: 'michaelhsu05';
+  timestamp: 'dec 16 1992';
+  location: 'San Diego';
+  content: ['mediaType01', 'mediaType02']
+  reactions: 'reactionStype'
+}
+```
+# content 
+```js
+// mediaType
+{
+  parent: '19950224'
+  contentId: '01230',
+  imageUrl: '',
+  caption: 'test'
+}
+```
+
+# Reactions
+```js
+{
+  contentId: 'mediaId'
+  heart: 10,
+  sad: 0
+}
+```
+# Image storage path design
+`/[env]/[username]/[postId]/[fileName-orderNo]`
+
+# Post db path
+
+## Option 1
+
+`/content/[userid]/posts/[postId]/content`
+- This path gets us all images / text content for a specific post
+- We would use this path to render a post
+
+* `/content` lowest level
+* `/content/[userId]` so we can get all posts from that user, or get all posts from followers
+* `/content/[userId]/posts` to get all posts for that userId
+* `/content/[userId]/posts/[postId]`, access specific post
+* `/content/[userid]/posts/[postId]/content` access list of images or text post
+
+## Option 2
+``/content/[userid]/posts/[postId]/`
+- Shorter, and we nest all information into postId. The post document would include the list of images / text
+- Reactions would be a key, mapped to a map `reactions: {happy: 0, sad: 1}`
+
+
+# Add post functionality
+1. Upload image, be able to select multiple
+2. Add caption
+
+## Flow
+1. generate a postID already if possible
+2. If image uploaded, first is the order. 
+
+# Resources
+* Different envs for firestore https://medium.com/@alifyandra/how-i-separate-development-environments-on-firestore-cf512a6afb7b
+* Upload images via react and web api
+https://stackoverflow.com/questions/43692479/how-to-upload-an-image-in-react-js
+* Create Draggable elements 
+https://rootstack.com/en/blog/how-do-i-use-drag-and-drop-react
