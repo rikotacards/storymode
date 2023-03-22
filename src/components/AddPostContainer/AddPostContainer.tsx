@@ -22,7 +22,7 @@ export const AddPostContainer: React.FC = () => {
         </Button>
       </div>}
       <div>
-        <Button style={{ marginTop: "8px" }} variant="outlined" fullWidth>
+        <Button onClick={addPostContext.onPostClick} style={{ marginTop: "8px" }} variant="outlined" fullWidth>
           Post
         </Button>
       </div>

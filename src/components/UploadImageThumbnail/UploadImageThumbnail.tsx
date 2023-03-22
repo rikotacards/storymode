@@ -19,10 +19,15 @@ export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
   React.useEffect(() => {
     if (images.length < 1) return;
     const newImageUrls: any = [];
-    images.forEach((image: any) =>
+    const blobs: string[] = [];
+    images.forEach(async(image: any) =>{
+
       newImageUrls.push(URL.createObjectURL(image))
-    );
-    addPostContext.addImage(newImageUrls[0], index)
+      let dataUrl = await new Promise(r => {let a=new FileReader(); a.onload=r; a.readAsDataURL(image)}).then(e => e.target.result);
+      blobs.push(dataUrl)
+      addPostContext.addImage(newImageUrls[0], index, blobs[0])
+    }
+    )
     setImageURLs(newImageUrls);
 
   }, [images, addPostContext, index]);

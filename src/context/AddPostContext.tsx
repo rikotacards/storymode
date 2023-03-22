@@ -1,25 +1,61 @@
 import React from 'react';
+import {  collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { firestore } from "@/firebase/clientApp";
+import { getStorage, ref, uploadString } from "firebase/storage";
+
+const storage = getStorage();
 
 interface AddPostContextProps {
-  posts: {imageUrl: string, caption: string}[];
+  posts: {imageUrl: string, caption: string, blobData: string}[];
   addPost: () => void;
   onTextChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
-  addImage: (imageUrl: string, index: number) => void;
+  addImage: (imageUrl: string, index: number, blobData:string) => void;
   removePost: (index:number) => void;
+  onPostClick: () => void;
 }
 
 export const AddPostContext = React.createContext({} as AddPostContextProps)
 
+
 interface PostContextProps {
   children: React.ReactNode;
 }
-
+const username = 'max'
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
-  const [posts, setPosts] = React.useState([{imageUrl:'', caption:''}])
- 
+  const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: ''}])
+  const collectionRef = collection(firestore,'content', username, 'posts')
+  const docRef = doc(collectionRef)  
+
+  
+  const onPostClick = async() => {
+    try{
+
+      await setDoc(doc(firestore, "content", username, "posts", docRef.id), {
+        postTime: Timestamp.fromDate(new Date()),
+        author: username,
+        content: posts
+      });
+
+      posts.forEach(async(post,i) => {
+        // we save images into a directory that references the post
+        const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`,);
+        if(!post.blobData){
+          return 
+        }
+        await uploadString(storageRef, post.blobData, 'data_url').then((snapshot) => {
+          console.log('Uploaded a blob or file!');
+        });
+      })
+      
+    }catch (e){
+      console.log("ER", e)
+    }
+  
+  }
+  
 
   const addPost = () => {
-    setPosts((prev) => [...prev, {imageUrl:'', caption: ''}])
+    setPosts((prev) => [...prev, {imageUrl:'', caption: '', blobData: ''}])
   }
   
 
@@ -34,9 +70,9 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
     setPosts(newState)
   }
 
-  const addImage = (imageUrl: string, i: number) => {
+  const addImage = (imageUrl: string, i: number, blobData: string) => {
     const postToUpdate = posts[i]
-    const newPost = {...postToUpdate, imageUrl}
+    const newPost = {...postToUpdate, imageUrl, blobData}
     posts[i] = newPost
     const newState = [...posts]
     setPosts(newState)
@@ -66,7 +102,8 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
     addPost,
     onTextChange,
     addImage,
-    removePost
+    removePost,
+    onPostClick
   }
 
   return (

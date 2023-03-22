@@ -4,10 +4,7 @@ import styles from '@/styles/Home.module.css'
 import { PostWithImage } from '@/components/PostWithImage/PostWithImage'
 import { TextOnlyPost } from '@/components/TextOnlyPost/TextOnlyPost'
 const inter = Inter({ subsets: ['latin'] })
-import { firestore } from '../firebase/clientApp';
-import {collection,QueryDocumentSnapshot,DocumentData,query,where,limit,getDocs} from "@firebase/firestore";
-const dev = collection(firestore,'dev');
-console.log(dev)
+
 
 export default function Home() {
   return (

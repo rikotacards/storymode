@@ -3,6 +3,26 @@ import Head from "next/head";
 import styles from "../styles/AddPost.module.css";
 import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer";
 import { AddPostContextWrapper } from "@/context/AddPostContext";
+import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import{firestore} from '../firebase/clientApp'
+export async function getServerSideProps(context) {
+  console.log('we run')
+  const docRef = doc(firestore, "cities", "SF");
+  const docSnap = await getDoc(docRef);
+  
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+  
+
+  return {
+    props: {}, // will be passed to the page component as props
+  }
+}
+
 const AddPost = () => {
   return (
     <>

@@ -119,3 +119,7 @@ https://stackoverflow.com/questions/37450439/separate-dev-and-prod-firebase-envi
 https://stackoverflow.com/questions/43692479/how-to-upload-an-image-in-react-js
 * Create Draggable elements 
 https://rootstack.com/en/blog/how-do-i-use-drag-and-drop-react
+* Implementing next and firebase
+https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/
+* INtro to NextJs / Typescript firebase database
+https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database/
