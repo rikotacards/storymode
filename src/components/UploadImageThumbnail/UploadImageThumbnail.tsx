@@ -25,7 +25,7 @@ export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
     addPostContext.addImage(newImageUrls[0], index)
     setImageURLs(newImageUrls);
 
-  }, [images]);
+  }, [images, addPostContext, index]);
 
   const onImageChange = (e: any) => {
     addPostContext
