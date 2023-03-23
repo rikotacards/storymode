@@ -1,4 +1,3 @@
-import { Post } from '@/context/AddPostContext';
 import { getPostByUsername } from '@/firebase/db';
 import Head from 'next/head';
 import React from 'react';
