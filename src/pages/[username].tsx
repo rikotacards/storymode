@@ -15,7 +15,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: {params: {username: string}}) {
   const posts = await getPostByUsername(params.username);
-  console.log(posts)
   return {
     props: {
       posts,
@@ -23,8 +22,7 @@ export async function getStaticProps({ params }: {params: {username: string}}) {
   };
 }
 
-export const Profile = ({posts}: {posts: Post[]}) => {
-  console.log('profle', posts)
+export const Profile = ({posts}: {posts: {postTime: number}[]}) => {
   const postc = posts.map((post, i) => <div key={post.postTime + i}>{post.postTime}</div>)
   return (
 <>
