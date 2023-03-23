@@ -30,6 +30,12 @@ interface PostContextProps {
 export const username = 'max'
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: ''}])
+  const [imageBlobs, setImageBlobs] = React.useState<string[]>([]);
+
+  const addImageBlob = (index: number, blob: string) => {
+    
+  }
+
   const collectionRef = collection(firestore,'content', username, 'posts')
   const docRef = doc(collectionRef)  
 
