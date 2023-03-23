@@ -6,16 +6,14 @@ import { uploadPost } from '@/firebase/db';
 
 const storage = getStorage();
 
-export interface Content {
+export interface Post {
   imageUrl: string; 
   caption: string;
   blobData: string;
 }
 
-
-
 interface AddPostContextProps {
-  posts: {author: string, content: Content[], postTime: Date};
+  posts: Post[];
   addPost: () => void;
   onTextChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
   addImage: (imageUrl: string, index: number, blobData:string) => void;
