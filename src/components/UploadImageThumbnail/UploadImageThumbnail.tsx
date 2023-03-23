@@ -23,7 +23,12 @@ export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
     images.forEach(async(image: any) =>{
 
       newImageUrls.push(URL.createObjectURL(image))
-      let dataUrl = await new Promise(r => {let a=new FileReader(); a.onload=r; a.readAsDataURL(image)}).then(e => e.target.result);
+      let dataUrl = await new Promise(r => {let a=new FileReader(); 
+        a.onload=r; 
+        a.readAsDataURL(image)}).then((e) => {
+          // todo
+          let b = e as any
+          return (b.target?.result)});
       blobs.push(dataUrl)
       addPostContext.addImage(newImageUrls[0], index, blobs[0])
     }

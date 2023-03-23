@@ -1,7 +1,11 @@
 # March 23 2023 (Thursday)
-- [ ] Create the get method for retrieving all posts belonging to me. 
-- [ ] Figure out how to relate reactions to the specific post. Likely we will have a `/content/reactions/post` collection, where each post will have a reaction that people can edit. 
+- [x] Create the get method for retrieving all posts belonging to me. 
+- [x] Figure out how to relate reactions to the specific post. Likely we will have a `/content/reactions/post` collection, where each post will have a reaction that people can edit.
+  - This is done via `/reactions/postid/`
+  when a post is upload, we create a document with the post Id, `{heart: 0}`
 - [ ] Create slider function for multiple images and text content.  
+- [ ] Make post component mobile friendly.
+- [ ] Find a way to remove the blob  data. 
 
 # March 22 2023
 - [x] Add upload feature. Added ability to upload post to firestore, as well as images to firebase storage. 

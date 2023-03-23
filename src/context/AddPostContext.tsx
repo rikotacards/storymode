@@ -2,11 +2,18 @@ import React from 'react';
 import {  collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
 import { getStorage, ref, uploadString } from "firebase/storage";
+import { uploadPost } from '@/firebase/db';
 
 const storage = getStorage();
 
+export interface Post {
+  imageUrl: string; 
+  caption: string;
+  blobData: string;
+}
+
 interface AddPostContextProps {
-  posts: {imageUrl: string, caption: string, blobData: string}[];
+  posts: Post[];
   addPost: () => void;
   onTextChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
   addImage: (imageUrl: string, index: number, blobData:string) => void;
@@ -20,37 +27,28 @@ export const AddPostContext = React.createContext({} as AddPostContextProps)
 interface PostContextProps {
   children: React.ReactNode;
 }
-const username = 'max'
+export const username = 'max'
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: ''}])
+  const [imageBlobs, setImageBlobs] = React.useState<string[]>([]);
+
+  const addImageBlob = (index: number, blob: string) => {
+    
+  }
+
   const collectionRef = collection(firestore,'content', username, 'posts')
   const docRef = doc(collectionRef)  
 
   
   const onPostClick = async() => {
-    try{
-
-      await setDoc(doc(firestore, "content", username, "posts", docRef.id), {
-        postTime: Timestamp.fromDate(new Date()),
-        author: username,
-        content: posts
-      });
-
-      posts.forEach(async(post,i) => {
-        // we save images into a directory that references the post
-        const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`,);
-        if(!post.blobData){
-          return 
-        }
-        await uploadString(storageRef, post.blobData, 'data_url').then((snapshot) => {
-          console.log('Uploaded a blob or file!');
-        });
-      })
-      
-    }catch (e){
-      console.log("ER", e)
-    }
-  
+   try {
+    const res = uploadPost({
+      username, 
+      posts
+    })
+   } catch (e) {
+    console.log(e)
+   }
   }
   
 
