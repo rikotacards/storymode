@@ -1,9 +1,11 @@
 .post {
-  max-width: 469px;
-  display: flex;
+  /* Keeps the slider from stretching horizontally*/
+  width: 469px;
+  /* position: relative; */
+  /* display flex commented about because it wouldnt work with the slider */
   flex-direction: column;
   /* border: 1px solid black; */
-  overflow: hidden;
+  /* overflow:auto; */
   margin-bottom: 8px;
   align-items: center;
   justify-content: center;

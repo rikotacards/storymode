@@ -9,7 +9,7 @@ export const PostActions: React.FC = () => {
     <div className={styles.postactions}>
       <Reactions/>
       <ShareButton/>
-      <PartCount/>
+      {/* <PartCount/> */}
       <div className={styles.bookmarkButton}>
 
       <BookmarkButton active={false}/>
