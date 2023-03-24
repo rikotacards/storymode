@@ -1,9 +1,11 @@
 # March 24 2023 Friday
 - [ ] Make post component mobile friendly.
+- [ ] Add reactions to db.
 - [x] Find a way to remove the blob  data. 
-- [ ] Add firestore image path to grab image.
+- [x] Add firestore image path to grab image.
 - [x] Bonus, added emoji selection
-- [ ] Consider moving the 'getImage' function inside the 'getposts'
+- [ ] Consider moving the 'getImage' 
+function inside the 'getposts'
 
 # March 23 2023 (Thursday)
 - [x] Create the get method for retrieving all posts belonging to me. 
