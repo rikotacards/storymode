@@ -7,9 +7,10 @@ import { uploadPost } from '@/firebase/db';
 const storage = getStorage();
 
 export interface Post {
-  imageUrl: string; 
+  imagePath: string;
+  imageUrl?: string; 
   caption: string;
-  blobData: string;
+  blobData?: string;
 }
 
 interface AddPostContextProps {
@@ -29,16 +30,7 @@ interface PostContextProps {
 }
 export const username = 'max'
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
-  const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: ''}])
-  const [imageBlobs, setImageBlobs] = React.useState<string[]>([]);
-
-  const addImageBlob = (index: number, blob: string) => {
-    
-  }
-
-  const collectionRef = collection(firestore,'content', username, 'posts')
-  const docRef = doc(collectionRef)  
-
+  const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: '', imagePath: ''}])
   
   const onPostClick = async() => {
    try {
@@ -53,7 +45,7 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
   
 
   const addPost = () => {
-    setPosts((prev) => [...prev, {imageUrl:'', caption: '', blobData: ''}])
+    setPosts((prev) => [...prev, {imageUrl:'', caption: '', blobData: '', imagePath: ''}])
   }
   
 

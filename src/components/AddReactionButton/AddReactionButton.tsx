@@ -1,14 +1,49 @@
-import { AddReaction } from '@mui/icons-material';
-import { Button, Chip, IconButton } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import React from 'react';
+import { AddReaction } from "@mui/icons-material";
+import { Button, Chip, Dialog, DialogTitle, Fade, IconButton, List, ListItem, Slide } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import React from "react";
 
-export const AddReactionButton: React.FC = () => {
-  return (
-    // <Button variant='outlined' sx={{borderRadius:25, maxWidth: 1, paddingLeft: 0, paddingRight: 0}}>
-    //   <AddReaction fontSize='small'/>
-    // </Button>
-      <Chip  variant='outlined' label={<div style={{display: 'flex'}}><AddReaction  fontSize='small' /></div>}clickable />
+import dynamic from 'next/dynamic';
+import { EmojiClickData } from "emoji-picker-react";
 
-  )
+const Picker = dynamic(
+  () => {
+    return import('emoji-picker-react');
+  },
+  { ssr: false }
+);
+interface AddReactionButtonProps {
+  onEmojiClick: (emoji: EmojiClickData['emoji']) => void;
 }
+
+export const AddReactionButton: React.FC<AddReactionButtonProps> = ({onEmojiClick}) => {
+  const [open, setOpen] = React.useState(false)
+    const onClick = () => {
+      setOpen(!open);
+    }
+    const handleClose = (value: string) => {
+      setOpen(false);
+    };
+  
+  return (
+    
+    <>
+
+    <Chip
+      variant="outlined"
+      onClick={onClick}
+      label={
+        <div style={{ display: "flex" }}>
+          <AddReaction color="action" fontSize="small" />
+        </div>
+      }
+      clickable
+    />
+    {<Dialog onClose={handleClose} open={open}  >
+      <div style={{display: 'flex'}}>
+      <Picker onEmojiClick={(d) => onEmojiClick(d.emoji)}/>
+      </div>
+    </Dialog>}
+    </>
+  );
+};

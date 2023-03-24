@@ -123,3 +123,9 @@ https://rootstack.com/en/blog/how-do-i-use-drag-and-drop-react
 https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/
 * INtro to NextJs / Typescript firebase database
 https://www.section.io/engineering-education/introduction-to-nextjs-with-typescript-and-firebase-database/
+* Cropping images
+https://www.npmjs.com/package/react-image-crop
+* SliderJs mobile device
+https://stackoverflow.com/questions/73767963/slider-skipped-in-the-mobile-device
+* SwiperJs demos
+https://swiperjs.com/demos#pagination
