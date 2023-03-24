@@ -5,7 +5,7 @@ import { PostWrapper } from '../PostWrapper/PostWrapper';
 import styles from './TextOnly.module.css';
 export const TextOnlyPost: React.FC = () => {
   return (
-    <PostWrapper>
+    <PostWrapper author='max'>
       <div className={styles.textContentWrapper}>
         <Typography>
           Can someone please tell me where the nearest toilet is? About to die here.
