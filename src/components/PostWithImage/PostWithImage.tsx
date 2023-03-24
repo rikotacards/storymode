@@ -16,18 +16,16 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime } = props;
   const images: string[] = [];
   const captions: string[] = [];
-  if(!content?.length){
-    return <>
-    </>
-  }
  
-  content.forEach((c) => {images.push(c.imagePath);captions.push(c.caption)})
+ 
+  content?.forEach((c) => {images.push(c.imagePath);captions.push(c.caption)})
   // todo: quick hack. we should just save it in order
   images.reverse();
   captions.reverse();
   const [myswiper, setswiper] = React.useState(
     {} as { slideNext: () => void; slidePrev: () => void }
   );
+  
   const  next = React.useCallback(() => myswiper.slideNext(),[myswiper])
   const  prev = React.useCallback(() => myswiper.slidePrev(),[myswiper])
 
