@@ -23,6 +23,7 @@ export interface PostFromDbProps {
   author: string;
   content: Post[];
   postTime: number;
+  postId: string;
 }
 
 export const uploadPost = async (args: uploadPostProps) => {
@@ -84,8 +85,12 @@ export const incrementReaction = async({docId, emoji}: IncrementReactionProps) =
 }
 
 export const getReactions = async(docId: string) => {
-  const querySnapshot = await getDoc(doc(firestore, 'reactions', docId));
-  const reactions = querySnapshot.data()
+  const queryDoc = await getDoc(doc(firestore, 'reactions', docId));
+  if(!queryDoc.exists()){
+    return {}
+  }
+  const reactions = queryDoc.data()
+  console.log(reactions)
 
   return reactions
 }
@@ -115,6 +120,7 @@ export const getPostByUsername = async (username: string) => {
     const data = {
       ...doc.data(),
       postTime: doc.data().postTime?.toDate().getTime(),
+      postId: doc.id
     };
     return data;
   });
