@@ -5,7 +5,6 @@ import React from "react";
 import styles from "../styles/AddPost.module.css";
 
 export async function getStaticPaths() {
-  console.log('hi')
   const paths = ["/max"];
   return {
     paths,
