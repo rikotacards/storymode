@@ -1,9 +1,13 @@
 import {
   collection,
   doc,
+  FieldValue,
+  getDoc,
   getDocs,
+  increment,
   setDoc,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
@@ -59,14 +63,39 @@ export const uploadPost = async (args: uploadPostProps) => {
         });
     });
 
-    // add reactions doc,
+    // init Reactions doc in firestore,
     await setDoc(doc(firestore, "reactions", docRef.id), {
-      heart: 0,
+      '❤️': 0,
+      // keep track of what the user has already liked.
+      ['❤️'+'liked']: false
     });
   } catch (e) {
     return e;
   }
 };
+interface IncrementReactionProps {
+  docId: string;
+  emoji: string;
+}
+export const incrementReaction = async({docId, emoji}: IncrementReactionProps) => {
+  const collectionRef = collection(firestore, "reactions")
+  const docRef = doc(collectionRef, docId)
+  await updateDoc(docRef, {[emoji]: increment(1), [emoji+'liked']: true})
+}
+
+export const getReactions = async(docId: string) => {
+  const querySnapshot = await getDoc(doc(firestore, 'reactions', docId));
+  const reactions = querySnapshot.data()
+
+  return reactions
+}
+
+
+export const decrementReaction = async({docId, emoji}: IncrementReactionProps) => {
+  const collectionRef = collection(firestore, "reactions")
+  const docRef = doc(collectionRef, docId)
+  await updateDoc(docRef, {[emoji]: increment(-1), [emoji+'liked']: false})
+}
 
 export const getImagePath = (imagePath: string) => {
   const pathReference = ref(storage, imagePath);
@@ -74,6 +103,8 @@ export const getImagePath = (imagePath: string) => {
     return e
   })
 }
+
+
 
 export const getPostByUsername = async (username: string) => {
   const querySnapshot = await getDocs(
