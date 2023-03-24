@@ -17,8 +17,7 @@ export default function Home() {
         
       </Head>
       <main className={styles.main}>
-        <TextOnlyPost/>
-        <PostWithImage/>
+      
       </main>
     </>
   )
