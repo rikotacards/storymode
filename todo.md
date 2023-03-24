@@ -6,6 +6,7 @@
 - [x] Bonus, added emoji selection
 - [ ] Consider moving the 'getImage' 
 function inside the 'getposts'
+- [ ] infinity render
 
 # March 23 2023 (Thursday)
 - [x] Create the get method for retrieving all posts belonging to me. 
