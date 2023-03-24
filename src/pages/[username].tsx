@@ -5,7 +5,6 @@ import React from "react";
 import styles from "../styles/AddPost.module.css";
 
 export async function getStaticPaths() {
-  console.log('hi')
   const paths = ["/max"];
   return {
     paths,
@@ -21,12 +20,16 @@ export async function getStaticProps({
   const posts = await getPostByUsername(params.username);
   return {
     props: {
-      posts,
+      posts
     },
   };
 }
 
-export const Profile = ({posts}) => {
+interface ProfileProps {
+  posts: PostFromDbProps[]
+}
+
+export const Profile: React.FC<ProfileProps> = ({posts}) => {
   const postWithImage = posts.map((postData, i) => <PostWithImage key={postData.postTime+i} author={postData.author} content={postData.content} postTime={postData.postTime} />);
   return (
     <>

@@ -60,7 +60,7 @@ export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
               width: "100%",
             }}
           >
-            {(!!addPostContext.posts[index].imageUrl.length || !!imageURLS.length) && <Image  fill alt={''} src={addPostContext.posts[index].imageUrl || imageURLS[0]} />}
+            {(!!addPostContext.posts[index]?.imageUrl?.length || !!imageURLS.length) && <Image  fill alt={''} src={addPostContext.posts[index].imageUrl || imageURLS[0]} />}
 
             <input
               type="file"
