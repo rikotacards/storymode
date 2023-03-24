@@ -9,7 +9,7 @@ export const AddPostContainer: React.FC = () => {
   const collectionRef = collection(firestore,'/content')
   const addPostContext = React.useContext(AddPostContext);
   const docRef = doc(collectionRef)  
-  const postComponents = addPostContext.posts.map((data, i) => <AddPostWidget key={i + data.imageUrl} index={i} docRefId={docRef.id}/>)
+  const postComponents = addPostContext.posts.map((data, i) => <AddPostWidget key={i + docRef.id} index={i} docRefId={docRef.id}/>)
 
   return (
     <div className={styles.addPostContainer}>
