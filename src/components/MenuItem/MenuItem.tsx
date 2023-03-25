@@ -16,7 +16,7 @@ export const MenuItem: React.FC<MenuItemProps> = (props) => {
         style={{
           display: "flex",
           alignItems: "center",
-          padding: "12px 24px 12px 24px",
+          padding: "12px 24px 12px 14px",
         }}
       >
         <div style={{ marginRight: "16px" }}>{icon}</div>
