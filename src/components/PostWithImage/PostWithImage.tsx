@@ -30,7 +30,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const  prev = React.useCallback(() => myswiper.slidePrev(),[myswiper])
 
   return (
-    <PostWrapper author={author}>
+    <PostWrapper author={author} postId={postId}>
       <Swiper
         navigation={true}
         modules={[Navigation]}
