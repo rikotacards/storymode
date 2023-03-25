@@ -1,4 +1,5 @@
 import { PostWithImage } from "@/components/PostWithImage/PostWithImage";
+import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
 import Head from "next/head";
 import React from "react";
@@ -40,6 +41,7 @@ export const Profile: React.FC<ProfileProps> = ({posts}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <ProfileHeader/>
         <div>{postWithImage}</div>
       </main>
     </>
