@@ -4,10 +4,15 @@ import { PartCount } from '../PartCount/PartCount';
 import { Reactions } from '../Reactions/Reactions';
 import { BookmarkButton } from '../BookmarkButton/BookmarkButton';
 import { ShareButton } from '../ShareButton/ShareButton';
-export const PostActions: React.FC = () => {
+
+interface PostActionsProps {
+  postId: string;
+}
+
+export const PostActions: React.FC<PostActionsProps> = ({postId}) => {
   return (
     <div className={styles.postactions}>
-      <Reactions/>
+      <Reactions postId={postId}/>
       <ShareButton/>
       {/* <PartCount/> */}
       <div className={styles.bookmarkButton}>

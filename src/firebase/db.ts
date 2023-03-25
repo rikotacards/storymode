@@ -1,9 +1,13 @@
 import {
   collection,
   doc,
+  FieldValue,
+  getDoc,
   getDocs,
+  increment,
   setDoc,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
@@ -19,6 +23,7 @@ export interface PostFromDbProps {
   author: string;
   content: Post[];
   postTime: number;
+  postId: string;
 }
 
 export const uploadPost = async (args: uploadPostProps) => {
@@ -28,10 +33,10 @@ export const uploadPost = async (args: uploadPostProps) => {
   const docRef = doc(collectionRef);
 
   const contentToUpload: Post[] = [];
-  // add posts
+  // add posts start
   try {
     posts.forEach(async (post, i) => {
-      // we save images into a directory that references the post
+      // 1) we save images into a directory that references the post
       const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`);
       if (!post.blobData) {
         return;
@@ -59,14 +64,41 @@ export const uploadPost = async (args: uploadPostProps) => {
         });
     });
 
-    // add reactions doc,
+    // Init Reactions doc in firestore,
     await setDoc(doc(firestore, "reactions", docRef.id), {
-      heart: 0,
+      "2764-fe0f": {count: 0, hasLiked: false, emoji:'❤️' }
     });
   } catch (e) {
     return e;
   }
 };
+interface IncrementReactionProps {
+  docId: string;
+  unified: string;
+  direction: 'increment' | 'decrement';
+}
+export const updateReaction = async({docId, unified, direction}: IncrementReactionProps) => {
+  const collectionRef = collection(firestore, "reactions")
+  const docRef = doc(collectionRef, docId)
+  await setDoc(docRef, {[unified]: {count: increment(direction == 'increment' ? 1 : -1), hasLiked: direction == 'increment'}}, {merge: true})
+}
+
+export const addNewReaction = async({docId, emoji, unified}: {docId:string, emoji: string, unified: string}) => {
+  const collectionRef = collection(firestore, "reactions")
+  const docRef = doc(collectionRef, docId)
+  await setDoc(docRef, {[unified]: {count: 1, hasLiked: true, emoji}}, {merge: true})
+}
+
+export const getReactions = async(docId: string) => {
+  const queryDoc = await getDoc(doc(firestore, 'reactions', docId));
+  if(!queryDoc.exists()){
+    return {}
+  }
+  const reactions = queryDoc.data()
+  return reactions
+}
+
+
 
 export const getImagePath = (imagePath: string) => {
   const pathReference = ref(storage, imagePath);
@@ -74,6 +106,8 @@ export const getImagePath = (imagePath: string) => {
     return e
   })
 }
+
+
 
 export const getPostByUsername = async (username: string) => {
   const querySnapshot = await getDocs(
@@ -84,6 +118,7 @@ export const getPostByUsername = async (username: string) => {
     const data = {
       ...doc.data(),
       postTime: doc.data().postTime?.toDate().getTime(),
+      postId: doc.id
     };
     return data;
   });
