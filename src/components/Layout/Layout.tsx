@@ -6,11 +6,15 @@ interface LayoutProps {
 }
 export const Layout: React.FC<LayoutProps> = ({children}) => {
   return (
-    <>
+    <div className={styles.main}>
+      <div className={styles.layoutMenuDesktop}>
+
     <SideMenu/>
-    <main>
+      </div>
+    <main className={styles.mainColumn}>
+      
       {children}
     </main>
-    </>
+    </div>
   )
 }

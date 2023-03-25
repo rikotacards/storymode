@@ -1,8 +1,17 @@
 .main {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  /* align-items: center; */
   min-height: 100vh;
+  position: relative;
+}
+.mainColumn {
+  flex-grow: 1;
+
+}
+.layoutMenuDesktop {
+  height: 100%;
+  display: flex;
+  position: 'sticky'
 }
