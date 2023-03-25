@@ -11,7 +11,7 @@ export const TextOnlyPost: React.FC = () => {
           Can someone please tell me where the nearest toilet is? About to die here.
         </Typography>
       </div>
-      <PostActions/>
+      <PostActions postId={''}/>
 
 
       </PostWrapper>
