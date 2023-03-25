@@ -13,7 +13,7 @@ import "swiper/css/navigation";
 
 
 export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
-  const { author, content, postTime } = props;
+  const { author, content, postTime, postId } = props;
   const images: string[] = [];
   const captions: string[] = [];
  

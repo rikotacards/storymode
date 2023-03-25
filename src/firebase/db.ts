@@ -1,12 +1,13 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   setDoc,
   Timestamp,
 } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
-import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, listAll, ref, uploadString } from "firebase/storage";
 import { Post } from "@/context/AddPostContext";
 const storage = getStorage();
 
@@ -19,6 +20,27 @@ export interface PostFromDbProps {
   author: string;
   content: Post[];
   postTime: number;
+  postId: string;
+}
+
+export const deletePost = async(username: string, postId: string) => {
+
+  await deleteDoc(doc(firestore, "content", username, "posts", postId ));
+  await deleteDoc(doc(firestore, "reactions", postId))
+   // Create a root reference
+   const listRef = ref(storage, `${username}/${postId}`);
+   // Create a reference 
+   listAll(listRef).then((res) => {
+    res.items.forEach((item) => {
+      const docRef = ref(storage, item.fullPath);
+      deleteObject(docRef).then(()=> {
+        console.log('deleted')
+      }).catch((e) => {console.log(e)})
+    })
+   })
+  
+  
+
 }
 
 export const uploadPost = async (args: uploadPostProps) => {
@@ -54,6 +76,7 @@ export const uploadPost = async (args: uploadPostProps) => {
               postTime: Timestamp.fromDate(new Date()),
               author: username,
               content: contentToUpload,
+              postId: docRef.id,
             }
           );
         });
