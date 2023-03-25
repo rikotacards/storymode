@@ -13,11 +13,11 @@ import "swiper/css/navigation";
 
 
 export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
-  const { author, content, postTime, postId } = props;
+  const { author, content, postTime, postId} = props;
   const images: string[] = [];
   const captions: string[] = [];
  
- 
+ console.log(postId, 'POSTID')
   content?.forEach((c) => {images.push(c.imagePath);captions.push(c.caption)})
   // todo: quick hack. we should just save it in order
   images.reverse();
@@ -30,7 +30,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const  prev = React.useCallback(() => myswiper.slidePrev(),[myswiper])
 
   return (
-    <PostWrapper author={author}>
+    <PostWrapper author={author} postId={postId}>
       <Swiper
         navigation={true}
         modules={[Navigation]}
@@ -47,7 +47,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
           );
         })}
       </Swiper>
-      <PostActions />
+      <PostActions postId={postId} />
       <Swiper onInit={(ev) => setswiper(ev)}>
         {captions.map((caption, i) => {
           return (

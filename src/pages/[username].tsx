@@ -30,7 +30,7 @@ interface ProfileProps {
 }
 
 export const Profile: React.FC<ProfileProps> = ({posts}) => {
-  const postWithImage = posts.map((postData, i) => <PostWithImage key={postData.postTime+i} author={postData.author} content={postData.content} postTime={postData.postTime} postId={postData.postId} />);
+  const postWithImage = posts.map((postData, i) => <PostWithImage postId={postData.postId} key={postData.postTime+i} author={postData.author} content={postData.content} postTime={postData.postTime} />);
   return (
     <>
       <Head>

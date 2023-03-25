@@ -12,7 +12,7 @@ export const TextOnlyPost: React.FC = () => {
           here.
         </Typography>
       </div>
-      <PostActions />
-    </PostWrapper>
-  );
-};
+      <PostActions postId={''}/>
+      </PostWrapper>
+  )
+}
