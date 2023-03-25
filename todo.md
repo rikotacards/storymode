@@ -1,12 +1,23 @@
+# March 25 2023 Saturday
+- [ ] Fix reactions bug of showing NaN
+
+
+
+## Main challenges / blockers for today
+* Trying to figure out the best way to display the reactions. 
+* Ensuring that once you react, you cannot react again, so needed to save the state. 
+* Also, splitting the database information from the UI. This saves one trip of a GET request. Because then once you update the state, you dont need to 'get' the state again to display the most up to date information. 
 # March 24 2023 Friday
 - [ ] Make post component mobile friendly.
-- [ ] Add reactions to db.
+- [x] Add reactions to db.
 - [x] Find a way to remove the blob  data. 
 - [x] Add firestore image path to grab image.
 - [x] Bonus, added emoji selection
 - [ ] Consider moving the 'getImage' 
 function inside the 'getposts'
-- [ ] infinity render
+- [x] infinity render
+## Main challenges / blockers for today
+* SUPER annoying bug, the thumbnail kept on re-rendering for the upload image. Eventually fixed it, but it took hours and hours. The issue was to do with the mapping keys Since the component is mapped out from an array. 
 
 # March 23 2023 (Thursday)
 - [x] Create the get method for retrieving all posts belonging to me. 

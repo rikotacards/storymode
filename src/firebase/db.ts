@@ -81,7 +81,12 @@ interface IncrementReactionProps {
 export const incrementReaction = async({docId, emoji}: IncrementReactionProps) => {
   const collectionRef = collection(firestore, "reactions")
   const docRef = doc(collectionRef, docId)
-  await updateDoc(docRef, {[emoji]: increment(1), [emoji+'liked']: true})
+  await setDoc(docRef, {[emoji]: increment(1), [emoji+'liked']: 0}, {merge: true})
+}
+export const decrementReaction = async({docId, emoji}: IncrementReactionProps) => {
+  const collectionRef = collection(firestore, "reactions")
+  const docRef = doc(collectionRef, docId)
+  await setDoc(docRef, {[emoji]: increment(-1), [emoji+'liked']: 1}, {merge: true})
 }
 
 export const getReactions = async(docId: string) => {
@@ -96,11 +101,6 @@ export const getReactions = async(docId: string) => {
 }
 
 
-export const decrementReaction = async({docId, emoji}: IncrementReactionProps) => {
-  const collectionRef = collection(firestore, "reactions")
-  const docRef = doc(collectionRef, docId)
-  await updateDoc(docRef, {[emoji]: increment(-1), [emoji+'liked']: false})
-}
 
 export const getImagePath = (imagePath: string) => {
   const pathReference = ref(storage, imagePath);
