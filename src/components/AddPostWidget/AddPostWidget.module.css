@@ -6,6 +6,7 @@
 .layout {
   display: flex;
   flex-direction: row;
+  margin-bottom: 8px;
 }
 .postDetails {
   display: flex;

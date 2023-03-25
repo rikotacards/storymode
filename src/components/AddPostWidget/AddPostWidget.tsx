@@ -7,40 +7,52 @@ import { AddPostContext } from "@/context/AddPostContext";
 
 interface AddPostWidgetProps {
   docRefId: string;
-  index: number
+  index: number;
 }
 
-export const AddPostWidget: React.FC<AddPostWidgetProps> = ({docRefId, index}) => {
+export const AddPostWidget: React.FC<AddPostWidgetProps> = ({
+  docRefId,
+  index,
+}) => {
   const addPostContext = React.useContext(AddPostContext);
+  const { posts } = addPostContext;
 
   return (
-      <div className={styles.layout}>
-        <div className={styles.postDetails}>
-          <div className={styles.imageAndCaption}>
-            <UploadImageThumbnail index={index} />
-            <div className={styles.textInputContainer}>
-              <Input
-                placeholder={"Write your caption..."}
-                fullWidth
-                multiline
-                id='caption'
-                type="text"
-                disableUnderline
-                value={addPostContext.posts[index].caption}
-                onChange={(e) => {addPostContext.onTextChange(e,index)}}
-              />
-            </div>
+    <div className={styles.layout}>
+      <div className={styles.postDetails}>
+        <div className={styles.imageAndCaption}>
+          <UploadImageThumbnail index={index} />
+          <div className={styles.textInputContainer}>
+            <Input
+              placeholder={"Write your caption..."}
+              fullWidth
+              multiline
+              id="caption"
+              type="text"
+              disableUnderline
+              value={addPostContext.posts[index].caption}
+              onChange={(e) => {
+                addPostContext.onTextChange(e, index);
+              }}
+            />
           </div>
+        </div>
+        {posts.length > 1 && (
           <div>
-            <Button onClick={() => addPostContext.removePost(index)} style={{ marginTop: "8px" }} variant="outlined" fullWidth>
+            <Button
+              onClick={() => addPostContext.removePost(index)}
+              style={{ marginTop: "8px" }}
+              variant="outlined"
+              fullWidth
+            >
               Remove
             </Button>
           </div>
-        </div>
-        <div className={styles.reorderContainer}>
-          <DragHandleIcon color="action" />
-        </div>
+        )}
       </div>
-     
+      <div className={styles.reorderContainer}>
+        <DragHandleIcon color="action" />
+      </div>
+    </div>
   );
 };
