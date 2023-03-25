@@ -55,9 +55,28 @@ export const uploadPost = async (args: uploadPostProps) => {
   // add posts start
   try {
     posts.forEach(async (post, i) => {
+      console.log(post)
       // 1) we save images into a directory that references the post
       const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`);
-      if (!post.blobData) {
+      if (!post?.blobData?.length) {
+        // NO PHOTOS
+        contentToUpload.push({
+          caption: post.caption,
+          imagePath: '',
+        });
+        
+          // These 'then' are linked up because we need the content to upload array
+          // if we didn't use the then, then the array would be empty.
+          await setDoc(
+            doc(firestore, "content", username, "posts", docRef.id),
+            {
+              postTime: Timestamp.fromDate(new Date()),
+              author: username,
+              content: contentToUpload,
+              postId: docRef.id,
+            }
+          );
+        
         return;
       }
       await uploadString(storageRef, post.blobData, "data_url")

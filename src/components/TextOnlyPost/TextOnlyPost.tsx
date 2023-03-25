@@ -3,16 +3,15 @@ import React from "react";
 import { PostActions } from "../PostActions/PostActions";
 import { PostWrapper } from "../PostWrapper/PostWrapper";
 import styles from "./TextOnly.module.css";
-export const TextOnlyPost: React.FC = () => {
+interface TextOnlyPostProps {
+  caption: string;
+}
+export const TextOnlyPost: React.FC<TextOnlyPostProps> = ({caption}) => {
   return (
-    <PostWrapper author="max" postId={''}>
       <div className={styles.textContentWrapper}>
-        <Typography>
-          Can someone please tell me where the nearest toilet is? About to die
-          here.
+        <Typography variant='h4'>
+          {caption}
         </Typography>
       </div>
-      <PostActions postId={''}/>
-      </PostWrapper>
   )
 }

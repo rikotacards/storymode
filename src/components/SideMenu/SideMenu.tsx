@@ -5,7 +5,7 @@ const menuItems = [
   { name: "Add Post", path: "/add-post" },
   { name: "Drafts", path: "/drafts" },
   { name: "Home", path: "/" },
-  { name: "Profile", path: "/profile" },
+  { name: "Profile", path: "/max" },
   { name: "Explore", path: "/explore" },
 ];
 
