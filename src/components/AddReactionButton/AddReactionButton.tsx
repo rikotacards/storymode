@@ -13,7 +13,7 @@ const Picker = dynamic(
   { ssr: false }
 );
 interface AddReactionButtonProps {
-  onEmojiClick: (emoji: EmojiClickData['emoji']) => void;
+  onEmojiClick: (unfied: EmojiClickData['unified'], emoji: string) => void;
 }
 
 export const AddReactionButton: React.FC<AddReactionButtonProps> = ({onEmojiClick}) => {
@@ -41,7 +41,7 @@ export const AddReactionButton: React.FC<AddReactionButtonProps> = ({onEmojiClic
     />
     {<Dialog onClose={handleClose} open={open}  >
       <div style={{display: 'flex'}}>
-      <Picker onEmojiClick={(d) => onEmojiClick(d.emoji)}/>
+      <Picker onEmojiClick={(d) => { console.log(d);onEmojiClick(d.unified, d.emoji)}}/>
       </div>
     </Dialog>}
     </>

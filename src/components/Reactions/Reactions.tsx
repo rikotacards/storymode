@@ -1,29 +1,23 @@
 import React from "react";
-import { Emoji } from "../Emoji/Emoji";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./Reactions.module.css";
-import AddReactionIcon from "@mui/icons-material/AddReaction";
 import { EmojiCount } from "../EmojiCount/EmojiCount";
 import { AddReactionButton } from "../AddReactionButton/AddReactionButton";
 import { EmojiClickData } from "emoji-picker-react";
-import {
-  decrementReaction,
-  getReactions,
-  incrementReaction,
-} from "@/firebase/db";
+import { addNewReaction, getReactions, updateReaction } from "@/firebase/db";
 
 interface ReactionsProps {
   postId: string;
 }
 
+interface ReactionsStateType {
+  [key: string]: { count: number; hasLiked: boolean; emoji: string };
+}
+
 export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
   const displayed = [];
-  const [postReactions, setReactions] = React.useState<{
-    [key: string]: number;
-  }>({});
-  const [displayedReactions, setDisplayedReactions] = React.useState<{
-    [key: string]: number;
-  }>({});
+  const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
+  const [displayedReactions, setDisplayedReactions] =
+    React.useState<ReactionsStateType>({});
 
   React.useEffect(() => {
     getReactions(postId)
@@ -35,51 +29,58 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
         // todo
         console.log(e);
       })
-      .then(() => {
-      });
-  }, []);
+      .then(() => {});
+  }, [postId]);
 
-  const updateDisplayedReactions = (
-    emoji: EmojiClickData["emoji"],
-    incrementValue: number
+  const updateDisplayedReactions = React.useCallback((
+    unified: EmojiClickData["unified"],
+    incrementValue: number,
+    emoji: string
   ) => {
-    setDisplayedReactions({
-      ...displayedReactions,
-      [emoji]: displayedReactions[emoji] + incrementValue, 
-      [emoji+'liked']: displayedReactions[emoji+'liked'] == 0 ? 1 : 0
-    });
-  };
+    const newState = {
+      ...displayedReactions[unified],
+      count: (displayedReactions[unified]?.count || 0) + incrementValue,
+      hasLiked: incrementValue == 1,
+      emoji,
+    };
+    setDisplayedReactions((prev) => ({ ...prev, [unified]: newState }));
+  },[displayedReactions])
 
-  const onEmojiClick = React.useCallback((emoji: EmojiClickData["emoji"]) => {
-    if (displayedReactions[emoji + "liked"] == 1) {
-      decrementReaction({ docId: postId, emoji });
-      updateDisplayedReactions(emoji, -1);
-    }
-    if (displayedReactions[emoji + "liked"] !== 1) {
-      incrementReaction({ docId: postId, emoji });
-      // we have this so we don't need to 'get' the data after increment.
-      updateDisplayedReactions(emoji, 1);
-    }
-  }, [postReactions, displayedReactions]);
+  const onAddEmojiClick = React.useCallback(
+    (unified: EmojiClickData["unified"], emoji: string) => {
+      if (displayedReactions[unified] == undefined) {
+        addNewReaction({ docId: postId, unified, emoji });
+        // we have this so we don't need to 'get' the data after increment.
+        updateDisplayedReactions(unified, 1, emoji);
+      }
+    
+    },
+    [ displayedReactions, postId, updateDisplayedReactions]
+  );
 
   for (let key in displayedReactions) {
-    if (key.indexOf('liked') > 1) {
+    if (
+      key !== "2764-fe0f" &&
+      (displayedReactions[key].count === 0 || !displayedReactions[key].emoji)
+    ) {
       continue;
     }
     displayed.push(
       <EmojiCount
         key={key}
-        onClick={onEmojiClick}
-        symbol={key}
+        postId={postId}
+        symbol={displayedReactions[key].emoji}
         label={key}
-        count={displayedReactions[key]}
+        unified={key}
+        count={displayedReactions[key].count}
+        hasLiked={displayedReactions[key].hasLiked}
       />
     );
   }
   return (
     <div className={styles.reactions}>
       <div className={styles.allEmojis}>{displayed}</div>
-      <AddReactionButton onEmojiClick={onEmojiClick} />
+      <AddReactionButton onEmojiClick={onAddEmojiClick} />
     </div>
   );
 };
