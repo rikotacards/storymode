@@ -1,10 +1,6 @@
 import { Gallery } from "@/components/Gallery/Gallery";
-import { PostImageContent } from "@/components/PostImageContent/PostImageContent";
-import { PostPreivew } from "@/components/PostPreview/PostPreview";
-import { PostWithImage } from "@/components/PostWithImage/PostWithImage";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
-import { Box, Grid } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/AddPost.module.css";
