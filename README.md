@@ -129,3 +129,7 @@ https://www.npmjs.com/package/react-image-crop
 https://stackoverflow.com/questions/73767963/slider-skipped-in-the-mobile-device
 * SwiperJs demos
 https://swiperjs.com/demos#pagination
+* instagram css grid
+https://codepen.io/MAB015/pen/pZjYbX
+* Css crop image to square, responsive
+https://stackoverflow.com/questions/15167545/how-to-crop-a-rectangular-image-into-a-square-with-css

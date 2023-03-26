@@ -1,6 +1,10 @@
+import { Gallery } from "@/components/Gallery/Gallery";
+import { PostImageContent } from "@/components/PostImageContent/PostImageContent";
+import { PostPreivew } from "@/components/PostPreview/PostPreview";
 import { PostWithImage } from "@/components/PostWithImage/PostWithImage";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
+import { Box, Grid } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/AddPost.module.css";
@@ -21,17 +25,17 @@ export async function getStaticProps({
   const posts = await getPostByUsername(params.username);
   return {
     props: {
-      posts
+      posts,
     },
   };
 }
 
 interface ProfileProps {
-  posts: PostFromDbProps[]
+  posts: PostFromDbProps[];
 }
 
-export const Profile: React.FC<ProfileProps> = ({posts}) => {
-  const postWithImage = posts.map((postData, i) => <PostWithImage postId={postData.postId} key={postData.postTime+i} author={postData.author} content={postData.content} postTime={postData.postTime} />);
+export const Profile: React.FC<ProfileProps> = ({ posts }) => {
+ 
   return (
     <>
       <Head>
@@ -41,8 +45,8 @@ export const Profile: React.FC<ProfileProps> = ({posts}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <ProfileHeader/>
-        <div>{postWithImage}</div>
+        <ProfileHeader />
+        <Gallery posts={posts}/>
       </main>
     </>
   );
