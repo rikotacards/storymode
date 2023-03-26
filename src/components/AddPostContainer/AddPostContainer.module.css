@@ -1,6 +1,11 @@
 .addPostContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   max-width: 469px;
+  width: 100%;
+}
+.addPostContainerSmall {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 }

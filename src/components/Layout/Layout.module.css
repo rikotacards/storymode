@@ -6,7 +6,10 @@
 }
 .mainColumn {
   flex-grow: 1;
-display: flex;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
 }
 .layoutMenuDesktop {
   height: 100%;

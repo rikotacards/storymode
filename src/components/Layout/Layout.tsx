@@ -7,14 +7,12 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const md = useGetBreakpoints('md')
+  const md = useGetBreakpoints("md");
   return (
     <div className={styles.main}>
-      <div className={styles.layoutMenuDesktop}>
-        {!md && <SideMenu />}
-      </div>
+      <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
       <main className={styles.mainColumn}>{children}</main>
-      {md && <BottomMenuBar/>}
+      {md && <BottomMenuBar />}
     </div>
   );
 };

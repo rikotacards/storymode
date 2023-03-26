@@ -1,9 +1,10 @@
 .container {
   display: flex;
   flex-direction: row;
-  min-width: 400px;
+  /* min-width: 400px; */
   flex-grow: 1;
   padding: 8px;
+  width: 100%;
   min-height: 250px;
   margin-bottom: 36px;
 }
@@ -11,4 +12,11 @@
   display: flex;
   align-items: center;
   margin-right: 40px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px){
+  .container {
+    flex-direction: column;
+  }
 }
