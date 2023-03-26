@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { PostWithImage } from '@/components/PostWithImage/PostWithImage'
-import { TextOnlyPost } from '@/components/TextOnlyPost/TextOnlyPost'
 const inter = Inter({ subsets: ['latin'] })
 
 
