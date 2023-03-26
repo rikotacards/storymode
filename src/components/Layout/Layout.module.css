@@ -1,17 +1,13 @@
 .main {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
-  /* align-items: center; */
   min-height: 100vh;
   position: relative;
 }
 .mainColumn {
   flex-grow: 1;
-
+display: flex;
 }
 .layoutMenuDesktop {
   height: 100%;
-  display: flex;
-  position: 'sticky'
 }
