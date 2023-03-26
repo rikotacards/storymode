@@ -2,6 +2,7 @@ import { Typography, MenuItem as M, ListItemText } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from 'next/navigation';
+import { useRouter } from "next/router";
 interface MenuItemProps {
   path: string;
   name: string;
@@ -9,6 +10,7 @@ interface MenuItemProps {
 }
 export const MenuItem: React.FC<MenuItemProps> = (props) => {
   const { path, name, icon } = props;
+  const router = useRouter();
   const p = usePathname();
   return (
     <M selected={p === path}>
@@ -17,16 +19,14 @@ export const MenuItem: React.FC<MenuItemProps> = (props) => {
           display: "flex",
           alignItems: "center",
           padding: "12px 24px 12px 14px",
+          width: '100%',
         }}
+        onClick={() => {router.push(path)}}
       >
         <div style={{ marginRight: "16px" }}>{icon}</div>
         <ListItemText>
-          <Link
-            href={path}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          
             <Typography>{name}</Typography>
-          </Link>
         </ListItemText>
       </div>
     </M>
