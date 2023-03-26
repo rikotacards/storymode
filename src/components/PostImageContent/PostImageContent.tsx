@@ -1,13 +1,11 @@
 import React from 'react';
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { getImagePath } from '@/firebase/db';
-import { Url } from 'next/dist/shared/lib/router/router';
 
 interface PostImageContentProps {
-  imageUrl: string | StaticImageData;
   imagePath: string;
 }
-export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath, imageUrl}) => {
+export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath}) => {
   const [path, setPath] = React.useState("");
   if(!imagePath){
     return <></>
@@ -27,7 +25,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath, im
       position: 'relative'}}>
       <Image 
       style={{objectFit: 'cover'}} 
-      alt={`${imageUrl}`}
+      alt={imagePath}
       src={path}
       width={468}
       //oriignally 540

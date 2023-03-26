@@ -1,6 +1,6 @@
 .post {
   /* Keeps the slider from stretching horizontally*/
-  width: 469px;
+  /* width: 469px; */
   /* position: relative; */
   /* display flex commented about because it wouldnt work with the slider */
   flex-direction: column;

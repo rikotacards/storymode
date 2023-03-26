@@ -10,7 +10,6 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { TextOnlyPost } from "../TextOnlyPost/TextOnlyPost";
 
 export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
@@ -43,7 +42,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
           {images?.map((image, i) => {
             return (
               <SwiperSlide key={image + i}>
-                <PostImageContent imagePath={image} imageUrl={image} />
+                <PostImageContent imagePath={image} />
               </SwiperSlide>
             );
           })}
@@ -54,7 +53,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
           {captions.map((caption, i) => (
             <SwiperSlide key={caption + i}>
               <div>
-                <TextOnlyPost key={caption + i} caption={caption} />
+                <PostTextContent key={caption + i} caption={caption} />
               </div>
             </SwiperSlide>
           ))}
