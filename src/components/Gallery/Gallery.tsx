@@ -9,7 +9,7 @@ export const Gallery: React.FC<GalleryProps> = ({posts}) => {
   const galleryItems = posts.map((post,i) => {
     console.log(post.content[0])
     return (
-      <PostPreview key={post.content[0].caption + i} post={post.content[0]}/>
+      <PostPreview postId={post.postId} key={post.content[0].caption + i} post={post.content[0]}/>
     )
     
   })

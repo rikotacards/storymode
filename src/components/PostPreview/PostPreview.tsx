@@ -2,14 +2,18 @@ import { Post } from "@/context/AddPostContext";
 import React from "react";
 import styles from "./PostPreview.module.css";
 import { getImagePath } from "@/firebase/db";
-import { Typography } from "@mui/material";
+import { Dialog, Typography } from "@mui/material";
+import { PostWithImage } from "../PostWithImage/PostWithImage";
 
 interface PostPreviewProps {
   post: Post;
+  postId: string;
 }
 export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
   const [path, setPath] = React.useState("");
-
+  const [open, setOpen] = React.useState(false);
+  const onClick = () => {setOpen(true)}
+  const onClose = () => {setOpen(false)}
   if (post.imagePath) {
     getImagePath(post.imagePath)
       .then((data) => {
@@ -25,11 +29,11 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
   if (post?.imagePath?.length > 0) {
     console.log("path", post.imagePath);
     return (
-      <a href="" className={styles.post}>
+      <div onClick={onClick} className={styles.post}>
         <figure className={styles.postImage}>
           <img alt="" src={path}  />
         </figure>
-      </a>
+      </div>
     );
   }
 
