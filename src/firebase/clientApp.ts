@@ -9,15 +9,15 @@ import firebase from "firebase/app"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCihlRapz-_cQunIxs8f8Rxs7fLj0wyjUA",
-//   authDomain: "storymode-app.firebaseapp.com",
-//   projectId: "storymode-app",
-//   storageBucket: "storymode-app.appspot.com",
-//   messagingSenderId: "546787786385",
-//   appId: "1:546787786385:web:4401705f292b9dd0ca4930",
-//   measurementId: "G-4Y0H8V2VZY"
-// };
+const firebaseConfigHardCoded = {
+  apiKey: "AIzaSyCihlRapz-_cQunIxs8f8Rxs7fLj0wyjUA",
+  authDomain: "storymode-app.firebaseapp.com",
+  projectId: "storymode-app",
+  storageBucket: "storymode-app.appspot.com",
+  messagingSenderId: "546787786385",
+  appId: "1:546787786385:web:4401705f292b9dd0ca4930",
+  measurementId: "G-4Y0H8V2VZY"
+};
 
 // Initialize Firebase
 
@@ -36,7 +36,7 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfigHardCoded);
 
 
 // Initialize Cloud Firestore and get a reference to the service
