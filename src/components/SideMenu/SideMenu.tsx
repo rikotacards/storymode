@@ -7,9 +7,15 @@ import styles from "./SideMenu.module.css";
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import AddIcon from '@mui/icons-material/Add';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import { auth } from "@/firebase/clientApp";
+import { useAuth } from "@/context/AuthContext";
 export const sideMenuWidth = 240;
+
+export  const menuItems = [
+  { name: "Home", path: "/", icon: <HomeIcon/> },
+  { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
+  { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
+
+];
 const openedMixin = (theme: Theme): CSSObject => ({
   width: sideMenuWidth,
   transition: theme.transitions.create('width', {
@@ -50,20 +56,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export const SideMenu: React.FC = () => {
   
-   const menuItems = [
-    { name: "Home", path: "/", icon: <HomeIcon/> },
-    { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
-    { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
-    { name: "Profile", path: "/"+ auth?.currentUser?.uid || '', icon: <Avatar sx={{height: 24, width: 24}}/> },
-    { name: "Signin", path: "/signin"|| '', icon: <Avatar sx={{height: 24, width: 24}}/> },
-
-  ];
+  const auth = useAuth()
+  const all = [...menuItems,   { name: "Profile", path: "/"+ (auth?.user?.uid || 'signin'), icon: <Avatar sx={{height: 24, width: 24}}/> },
+]
   
 
   return (
     <Paper>
       <Drawer anchor={"left"} open={true} variant="permanent">
-        {menuItems.map((item) => (
+        {all.map((item) => (
           <MenuItem icon={item.icon} key={item.name} name={item.name} path={item.path} />
         ))}
       </Drawer>
