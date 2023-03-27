@@ -8,15 +8,8 @@ import Head from "next/head";
 import React from "react";
 import styles from "../styles/AddPost.module.css";
 
-export async function getStaticPaths() {
-  const paths = ["/max"];
-  return {
-    paths,
-    fallback: false,
-  };
-}
 
-export async function getStaticProps({
+export async function getServerSideProps({
   params,
 }: {
   params: { username: string };
