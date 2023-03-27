@@ -55,6 +55,8 @@ export const SideMenu: React.FC = () => {
     { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
     { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
     { name: "Profile", path: "/"+ auth?.currentUser?.uid || '', icon: <Avatar sx={{height: 24, width: 24}}/> },
+    { name: "Signin", path: "/signin"|| '', icon: <Avatar sx={{height: 24, width: 24}}/> },
+
   ];
   
 

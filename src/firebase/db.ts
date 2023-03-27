@@ -205,27 +205,41 @@ export const getPostByUsername = async (username: string) => {
   return post;
 };
 
-export const addFollower = async (
+export const follow = async (
   userId: string,
   userBeingFollowed: string
 ) => {
-  const userProfileRef = doc(
+  // adding new user to my following list
+  const myProfileRef = doc(
     firestore,
     "userProfiles",
     userId,
-    "followers",
+    "follwing",
     userBeingFollowed
   );
   await setDoc(
-    userProfileRef,
+    myProfileRef,
     { followDate: Timestamp.fromDate(new Date()) },
     { merge: true }
   );
   await setDoc(
-    userProfileRef,
-    { followerCount: increment(1) },
+    myProfileRef,
+    { followingCount: increment(1) },
     { merge: true }
   );
+  // new user gains followers
+  const followedUserRef = doc(
+    firestore, 
+    "userProfiles", 
+    userBeingFollowed, 
+    "followers"
+  )
+  await setDoc(
+    followedUserRef,
+    { followersCount: increment(1) },
+    { merge: true }
+  );
+
 };
 
 export const removeFollower = async (
