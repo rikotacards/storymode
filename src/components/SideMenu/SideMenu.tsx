@@ -12,7 +12,7 @@ export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon/> },
   { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
   { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
-  { name: "Drafts", path: "/drafts", icon: <DriveFileRenameOutlineIcon/> },
+  // { name: "Drafts", path: "/drafts", icon: <DriveFileRenameOutlineIcon/> },
   { name: "Profile", path: "/max", icon: <Avatar sx={{height: 24, width: 24}}/> },
 ];
 

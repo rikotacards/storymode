@@ -1,3 +1,4 @@
+import { AuthContext, AuthContextWrapper } from "@/context/AuthContext";
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import React from "react";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
