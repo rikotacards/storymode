@@ -37,7 +37,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
       return;
     }
   }, [auth.currentUser?.uid]);
-
+  console.log(auth)
   const signInWithGooglePopUp = async () => {
     setPersistence(auth, browserLocalPersistence).then((d) => {
       signInWithPopup(auth, provider)

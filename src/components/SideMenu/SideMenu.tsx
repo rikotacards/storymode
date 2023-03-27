@@ -8,14 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import AddIcon from '@mui/icons-material/Add';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-export const menuItems = [
-  { name: "Home", path: "/", icon: <HomeIcon/> },
-  { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
-  { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
-  // { name: "Drafts", path: "/drafts", icon: <DriveFileRenameOutlineIcon/> },
-  { name: "Profile", path: "/max", icon: <Avatar sx={{height: 24, width: 24}}/> },
-];
-
+import { auth } from "@/firebase/clientApp";
 export const sideMenuWidth = 240;
 const openedMixin = (theme: Theme): CSSObject => ({
   width: sideMenuWidth,
@@ -56,6 +49,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export const SideMenu: React.FC = () => {
+  
+   const menuItems = [
+    { name: "Home", path: "/", icon: <HomeIcon/> },
+    { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
+    { name: "Add Post", path: "/add-post", icon: <AddIcon/> },
+    { name: "Profile", path: "/"+ auth?.currentUser?.uid || '', icon: <Avatar sx={{height: 24, width: 24}}/> },
+  ];
+  
+
   return (
     <Paper>
       <Drawer anchor={"left"} open={true} variant="permanent">

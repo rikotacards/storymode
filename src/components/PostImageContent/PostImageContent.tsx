@@ -14,7 +14,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath}) =
     setPath(data)
   }).catch((e) => {
     console.log(e)
-  }).then(((d) => {console.log(path)}))
+  })
 
   return (
     <div style={{
