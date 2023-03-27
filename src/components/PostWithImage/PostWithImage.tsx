@@ -52,7 +52,16 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
         <Swiper navigation={true} modules={[Navigation]}>
           {captions.map((caption, i) => (
             <SwiperSlide key={caption + i}>
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '300px', paddingLeft: '10%',paddingRight: '10%'}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  minHeight: "300px",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
                 <PostTextContent key={caption + i} caption={caption} />
               </div>
             </SwiperSlide>

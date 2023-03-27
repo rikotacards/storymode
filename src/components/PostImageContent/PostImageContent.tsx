@@ -27,6 +27,8 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath}) =
       style={{objectFit: 'cover'}} 
       alt={imagePath}
       src={path}
+      // fill={true}
+      // originally 468
       width={468}
       //oriignally 540
       height={484}
