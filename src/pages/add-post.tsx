@@ -2,18 +2,8 @@ import React from "react";
 import Head from "next/head";
 import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer";
 import { AddPostContextWrapper } from "@/context/AddPostContext";
-import { AuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/router";
 
 const AddPost = () => {
-  const {user} = React.useContext(AuthContext);
-  const router = useRouter();
-
-  React.useEffect(() => {
-    if(!user?.uid){
-      router.push('/signin')
-    } 
-  }, [])
   return (
     <>
       <Head>
