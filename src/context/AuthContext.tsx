@@ -5,7 +5,6 @@ import {
 } from "firebase/auth";
 import React from "react";
 import {
-  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   User,
@@ -21,23 +20,46 @@ interface AuthContextWrapperProps {
 interface AuthContextState {
   signInWithGooglePopUp: () => void;
   user: User | null | undefined;
+  uid: string |null | undefined;
 }
 
 export const AuthContext = React.createContext<AuthContextState>({} as AuthContextState);
+export const useAuth= ()=> {
+  return React.useContext(AuthContext)
+}
 export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   children,
 }) => {
   const provider = new GoogleAuthProvider();
   const [user, setUser] = React.useState<User | null>();
-  React.useEffect(() => {
-    if (auth.currentUser?.uid) {
-      setUser(auth.currentUser);
-      addUserToDb(auth.currentUser.uid)
-      console.log(auth.currentUser);
-      return;
-    }
-  }, [auth.currentUser?.uid]);
+  const [currentUser, setCurrentUser] = React.useState<User | null>()
+  const [loading, setLoading] = React.useState(true)
 
+  const [currUserId, setCurrUserId] = React.useState<string | undefined>(auth?.currentUser?.uid)
+  // React.useEffect(() => {
+  //   if (auth.currentUser !== null) {
+  //     console.log('we have auth', auth.currentUser.uid)
+  //     setUser(auth.currentUser);
+  //     setCurrUserId(auth.currentUser.uid)
+  //     addUserToDb(auth.currentUser.uid)
+  //     console.log(auth.currentUser);
+  //     return;
+  //   }
+  // }, [currUserId]);
+  console.log(auth, currUserId)
+  React.useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if(user){
+
+        setCurrentUser(user)
+        addUserToDb(user.uid)
+      }
+
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
   const signInWithGooglePopUp = async () => {
     setPersistence(auth, browserLocalPersistence).then((d) => {
       signInWithPopup(auth, provider)
@@ -65,10 +87,12 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
     });
   };
 
-  const context = {
+  const context: AuthContextState = {
     signInWithGooglePopUp,
-    user,
+    user: currentUser,
+    uid: currUserId
   };
+  console.log('context', context)
 
   return (
     <AuthContext.Provider value={context}>{children}</AuthContext.Provider>

@@ -8,10 +8,14 @@ import IconButton from "@mui/material/IconButton";
 
 import { menuItems } from "../SideMenu/SideMenu";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+import { Avatar } from "@mui/material";
 
 export const BottomMenuBar: React.FC = () => {
   const route = useRouter()
-  const items = menuItems.map((item) => <IconButton key={item.path} onClick={() => route.push(item.path)}>{item.icon}</IconButton>)
+  const auth = useAuth();
+  let items = menuItems.map((item) => <IconButton key={item.path} onClick={() => route.push(item.path)}>{item.icon}</IconButton>)
+  items = [...items,<IconButton key={auth?.user?.uid||'undefined'} onClick={() => route.push(`/${auth?.user?.uid || 'signin'}`)}>{<Avatar sx={{height: 24, width: 24}}/>}</IconButton> ]
   return (
 
   <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
