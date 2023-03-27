@@ -6,7 +6,6 @@ export const isFollowing = async(myUserId: string, otherUserId:string) => {
   const queryDoc = await getDoc(doc(firestore, "userProfiles", myUserId, 'following', otherUserId));
   console.log(queryDoc.exists())
   return !!queryDoc.exists()
-  
 }
 
 export const getFollowerInfo = async(userId: string) => {

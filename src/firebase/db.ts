@@ -153,6 +153,17 @@ export const updateReaction = async ({
   );
 };
 
+export const getUserInfo = async(userId: string) => {
+  try{
+    const docRef = await getDoc(doc(firestore, 'userProfiles', userId))
+    if(docRef.exists()){
+      return docRef.data()
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const addNewReaction = async ({
   docId,
   emoji,
