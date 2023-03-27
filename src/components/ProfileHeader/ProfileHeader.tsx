@@ -16,10 +16,10 @@ export const ProfileHeader: React.FC = () => {
         <Avatar sx={{ width: px, height: px }}>M</Avatar>
         {isLessThanMd && <ProfileActions/>}
       </div>
-      <div>
+      <div className={styles.actionsLinksContainer}>
         {!isLessThanMd && <ProfileActions />}
         <ProfileStats />
-        {/* <ProfilePersonalInfo /> */}
+        <ProfilePersonalInfo />
         <ProfileLinks />
       </div>
     </div>

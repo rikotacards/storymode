@@ -7,11 +7,17 @@
   width: 100%;
   min-height: 250px;
   margin-bottom: 36px;
+  justify-content: center;
 }
 .avatarContainer {
   display: flex;
   align-items: center;
-  margin-right: 40px;
+}
+
+.actionsLinksContainer{
+  display: flex;
+  flex-direction: column;
+  margin-left: 3%;
 }
 
 /* Extra small devices (phones, 600px and down) */
