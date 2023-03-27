@@ -2,6 +2,7 @@ import React from 'react'
 import {  createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { Button, Input } from '@mui/material';
 import { AuthContext } from '@/context/AuthContext';
+import { auth } from '@/firebase/clientApp';
 
 export const SignInNewUser: React.FC = () => {
   const {signInWithGooglePopUp} = React.useContext(AuthContext);
@@ -22,6 +23,7 @@ export const SignInNewUser: React.FC = () => {
         Sign In with Google
       </Button>
       </div>
+      <Button onClick={() => {auth.signOut()}}>Sign out</Button>
     </div>
   )
 }
