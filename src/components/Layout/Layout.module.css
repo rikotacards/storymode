@@ -10,6 +10,7 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
+  justify-content: flex-start;
 }
 .layoutMenuDesktop {
   height: 100%;
