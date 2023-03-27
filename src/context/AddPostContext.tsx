@@ -4,8 +4,6 @@ import { firestore } from "@/firebase/clientApp";
 import { getStorage, ref, uploadString } from "firebase/storage";
 import { uploadPost } from '@/firebase/db';
 
-const storage = getStorage();
-
 export interface Post {
   imagePath: string;
   imageUrl?: string; 

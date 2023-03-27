@@ -45,6 +45,11 @@ export const deletePost = async(username: string, postId: string) => {
 
 }
 
+export const addUserToDb = async(userId: string) => {
+  const userProfileRef = doc(firestore, 'userProfiles', userId);
+setDoc(userProfileRef, { userId: userId }, { merge: true });
+}
+
 export const uploadPost = async (args: uploadPostProps) => {
   const { username, posts } = args;
 

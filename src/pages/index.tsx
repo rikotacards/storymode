@@ -1,10 +1,14 @@
 import Head from 'next/head'
+import React from 'react';
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { AuthContext } from '@/context/AuthContext'
 const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {
+  const authContext = React.useContext(AuthContext)
+  console.log(authContext)
   return (
     <>
       <Head>
