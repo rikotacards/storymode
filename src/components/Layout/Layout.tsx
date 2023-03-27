@@ -10,12 +10,10 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   return (
-    <AuthContextWrapper >
     <div className={styles.main}>
       <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
       <main className={styles.mainColumn}>{children}</main>
       {md && <BottomMenuBar />}
     </div>
-    </AuthContextWrapper>
   );
 };
