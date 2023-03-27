@@ -21,7 +21,6 @@ export default function MyApp(props: MyAppProps) {
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps,
-    router,
   } = props;
 
   return (
