@@ -1,13 +1,19 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import styles from "./ProfilePersonalInfo.module.css";
-export const ProfilePersonalInfo: React.FC = () => {
+interface ProfilePersonalInfoProps {
+  displayedName: string;
+  bio: string;
+}
+export const ProfilePersonalInfo: React.FC<ProfilePersonalInfoProps> = (props) => {
+  const {displayedName, bio} = props;
+  
   return (
     <div className={styles.container}>
       <div className={styles.firstNameLastName}>
-        <Typography sx={{fontWeight: 'bold'}}>Max Hsu</Typography>
+        <Typography sx={{fontWeight: 'bold'}}>{displayedName}</Typography>
       </div>
-      <div>Hi my name is Max, and I liked to create video content as well as websites. </div>
+      <div>{bio}</div>
     </div>
   );
 };

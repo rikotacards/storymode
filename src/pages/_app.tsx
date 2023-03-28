@@ -9,7 +9,6 @@ import createEmotionCache from "../config/createEmotionCache";
 import { Layout } from "@/components/Layout/Layout";
 import { AuthContextWrapper } from "@/context/AuthContext";
 import { RouteGuard } from "@/components/RouteGuard/RouteGuard";
-import { useRouter } from "next/router";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

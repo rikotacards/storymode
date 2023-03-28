@@ -64,7 +64,6 @@ export const addUserToDb = async (userId: string) => {
 
 export const uploadPost = async (args: uploadPostProps) => {
   const { username, posts } = args;
-
   const collectionRef = collection(firestore, "content", username, "posts");
   const docRef = doc(collectionRef);
 
@@ -157,11 +156,44 @@ export const updateReaction = async ({
   );
 };
 
+export const getUsername = async (username: string) => {
+  try {
+    const docRef = await getDoc(doc(firestore, "usernames", username));
+    if (docRef.exists()) {
+      return docRef.data()
+    } else {
+      return undefined
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateUserProfileInfo = async(uid: string, update: {[key: string]: any}) => {
+  const collectionRef = collection(firestore, "userProfiles");
+  const docRef = doc(collectionRef, uid);
+  await setDoc(
+    docRef,
+    update,
+    { merge: true }
+  );
+}
+
+export const setUsername = async (username: string, uid: string) => {
+  const docRef = doc(firestore, 'usernames', username )
+  await setDoc(docRef, {uid: uid}, {merge: true}).then(() => {
+    return {status: 'done'}
+  })
+  await updateUserProfileInfo(uid, {username})
+}
+
 export const getUserInfo = async (userId: string) => {
   try {
     const docRef = await getDoc(doc(firestore, "userProfiles", userId));
     if (docRef.exists()) {
       return docRef.data();
+    } else {
+      return undefined
     }
   } catch (e) {
     console.log(e);

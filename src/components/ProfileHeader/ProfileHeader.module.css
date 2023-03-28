@@ -8,6 +8,7 @@
   min-height: 250px;
   margin-bottom: 36px;
   justify-content: center;
+  max-height: 200px;
 }
 .avatarContainer {
   display: flex;

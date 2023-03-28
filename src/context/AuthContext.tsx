@@ -24,6 +24,7 @@ interface AuthContextState {
   uid: string |null | undefined;
   isLoggedIn: boolean;
   signOut: () => void;
+  isLoading: boolean;
 }
 
 export const AuthContext = React.createContext<AuthContextState>({} as AuthContextState);
@@ -37,19 +38,10 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   const provider = new GoogleAuthProvider();
   const [user, setUser] = React.useState<User | null>();
   const [currentUser, setCurrentUser] = React.useState<User | null>()
-  const [loading, setLoading] = React.useState(true)
+  const [isLoading, setLoading] = React.useState(true)
   const [isLoggedIn, setLogIn] = React.useState(false);
   const [currUserId, setCurrUserId] = React.useState<string | undefined>(auth?.currentUser?.uid)
-  // React.useEffect(() => {
-  //   if (auth.currentUser !== null) {
-  //     console.log('we have auth', auth.currentUser.uid)
-  //     setUser(auth.currentUser);
-  //     setCurrUserId(auth.currentUser.uid)
-  //     addUserToDb(auth.currentUser.uid)
-  //     console.log(auth.currentUser);
-  //     return;
-  //   }
-  // }, [currUserId]);
+
   console.log(auth, currUserId)
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -57,6 +49,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
         console.log(user)
         setLogIn(!!user)
         setCurrentUser(user)
+        setCurrUserId(user.uid)
         addUserToDb(user.uid)
         console.log("REDIRECT")
       } else {
@@ -67,7 +60,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
     })
 
     return unsubscribe
-  }, [])
+  }, [user?.uid])
   const signOut = () => {
     router.push('/signin')
     auth.signOut()
@@ -104,7 +97,8 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
     user: currentUser,
     uid: currUserId, 
     isLoggedIn,
-    signOut
+    signOut,
+    isLoading
   };
 
   return (

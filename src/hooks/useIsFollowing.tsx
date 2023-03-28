@@ -9,7 +9,6 @@ export const useIsFollowing = (myUserId: string, otherUserId: string) => {
   React.useEffect(() => {
     user?.uid &&
     (isFollowing(user.uid, otherUserId).then((res) => {
-     console.log("RES', ", user.uid, otherUserId)
       setIsFollowingUser(res)
     }))
   }, [user, otherUserId])

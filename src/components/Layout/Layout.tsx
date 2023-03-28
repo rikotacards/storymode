@@ -1,10 +1,7 @@
-import { AuthContext, AuthContextWrapper, useAuth } from "@/context/AuthContext";
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
-import { useRouter } from "next/router";
 import React from "react";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 import { SideMenu } from "../SideMenu/SideMenu";
-import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
 import styles from "./Layout.module.css";
 interface LayoutProps {
   children: React.ReactNode;

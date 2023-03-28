@@ -7,21 +7,25 @@ interface RouteGuardProps {
   children: React.ReactNode;
 }
 export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
-  const { isLoggedIn } = useAuth();
-  console.log(isLoggedIn);
+  const { isLoggedIn, isLoading } = useAuth();
+  console.log('isLoggedIn', isLoggedIn);
   const router = useRouter();
   const { children } = props;
   const pathIsProtected = !!protectedRoutes[router.pathname];
   
   React.useEffect(() => {
+    if(!isLoading && isLoggedIn && pathIsProtected){
+      return
+    }
     if (!isLoggedIn && pathIsProtected){
       console.log('not logged in, path is protected')
       router.push(publicRoutes.signin);
     } 
    
-  }, [isLoggedIn, pathIsProtected, router]);
+  }, [isLoggedIn, pathIsProtected, router, isLoading]);
   
-  if(!isLoggedIn && pathIsProtected){
+
+  if((isLoading || !isLoggedIn) && pathIsProtected){
     return <LinearProgress/>
   }
 
