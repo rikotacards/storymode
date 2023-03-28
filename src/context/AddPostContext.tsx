@@ -3,6 +3,7 @@ import {  collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
 import { getStorage, ref, uploadString } from "firebase/storage";
 import { uploadPost } from '@/firebase/db';
+import { useAuth } from './AuthContext';
 
 export interface Post {
   imagePath: string;
@@ -26,16 +27,21 @@ export const AddPostContext = React.createContext({} as AddPostContextProps)
 interface PostContextProps {
   children: React.ReactNode;
 }
-export const username = 'max'
+
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: '', imagePath: ''}])
-  
+  const auth = useAuth();
   const onPostClick = async() => {
+    if(!auth?.user?.uid){
+      console.log('user needs to be logged in')
+      return;
+    }
    try {
     const res = uploadPost({
-      username, 
+      username:auth.user.uid, 
       posts
     })
+    console.log(auth.user.uid)
    } catch (e) {
     console.log(e)
    }

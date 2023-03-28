@@ -20,7 +20,7 @@ export const TabPanel: React.FC<TabPanelProps> =(props: TabPanelProps)=> {
 
   return (
     <div
-    style={{width: '100%'}}
+    style={{width: '100%', display: 'flex', justifyContent: 'center'}}
       role="tabpanel"
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}

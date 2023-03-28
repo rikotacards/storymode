@@ -34,9 +34,4 @@ export const ProfileButtons: React.FC<ProfileButtonsProps> = ({handleChange, val
     </div>
   )
 }
-      // <IconButton>
-      //   <AppsIcon/>
-      // </IconButton>
-      // <IconButton>
-      //   <TableRowsIcon/>
-      // </IconButton>
+  

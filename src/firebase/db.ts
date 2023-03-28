@@ -69,10 +69,17 @@ export const uploadPost = async (args: uploadPostProps) => {
   const docRef = doc(collectionRef);
 
   const contentToUpload: Post[] = [];
+  // increment post count
+  const userProfileRef = collection(firestore, "userProfiles");
+  const userProfileDocRef = doc(userProfileRef, username)
+  await setDoc(
+    userProfileDocRef,
+    { postCount: increment(1) },
+    { merge: true }
+  );
   // add posts start
   try {
     posts.forEach(async (post, i) => {
-      console.log(post);
       // 1) we save images into a directory that references the post
       const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`);
       if (!post?.blobData?.length) {
@@ -93,6 +100,7 @@ export const uploadPost = async (args: uploadPostProps) => {
 
         return;
       }
+      
       await uploadString(storageRef, post.blobData, "data_url")
         .then((snapshot) => {
           posts[i]["imagePath"] = snapshot.ref.fullPath;
@@ -114,10 +122,6 @@ export const uploadPost = async (args: uploadPostProps) => {
               postId: docRef.id,
             }
           );
-        })
-        .then(async () => {
-          const docRef = doc(firestore, "userProfiles", username);
-          await setDoc(docRef, { postCount: increment(1) }, { merge: true });
         });
     });
 
@@ -153,16 +157,16 @@ export const updateReaction = async ({
   );
 };
 
-export const getUserInfo = async(userId: string) => {
-  try{
-    const docRef = await getDoc(doc(firestore, 'userProfiles', userId))
-    if(docRef.exists()){
-      return docRef.data()
+export const getUserInfo = async (userId: string) => {
+  try {
+    const docRef = await getDoc(doc(firestore, "userProfiles", userId));
+    if (docRef.exists()) {
+      return docRef.data();
     }
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
-}
+};
 
 export const addNewReaction = async ({
   docId,
@@ -215,6 +219,3 @@ export const getPostByUsername = async (username: string) => {
   });
   return post;
 };
-
-
-
