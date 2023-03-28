@@ -2,11 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 
 const links = [
-  { url: "#", name: "schedule" },
-  { url: "#", name: "book something" },
-  { url: "#", name: "Porfolio" },
-  { url: "#", name: "movies" },
-  { url: "#", name: "payme" },
+
 ];
 
 

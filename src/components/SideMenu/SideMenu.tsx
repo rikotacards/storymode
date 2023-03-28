@@ -57,6 +57,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export const SideMenu: React.FC = () => {
   
   const auth = useAuth()
+  console.log(auth.isLoggedIn)
   if(!auth.isLoggedIn){
     return null
   }

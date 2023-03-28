@@ -4,23 +4,30 @@ import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
 import { doesUserProfileExist } from "@/firebase/usernameFunctions";
-import { Card, Divider, Typography, useTheme } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 import styles from "../styles/AddPost.module.css";
-
 
 export async function getServerSideProps({
   params,
 }: {
   params: { username: string };
 }) {
-  const {username} = params
-  const userProfileExists = await doesUserProfileExist(username)
-  if(!userProfileExists){
+  const { username } = params;
+  const userProfileExists = await doesUserProfileExist(username);
+  if (!userProfileExists) {
     return {
-      props: {error: {code: 4, message: "Broken page"}}
-    }
+      props: { error: { code: 4, message: "Broken page" } },
+    };
   }
   const posts = await getPostByUsername(params.username);
   return {
@@ -32,22 +39,22 @@ export async function getServerSideProps({
 
 interface ProfileProps {
   posts: PostFromDbProps[];
-  error: {code: number, message: string }
+  error: { code: number; message: string };
 }
 
 export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
+  const router = useRouter();
 
-  if(error?.code == 4){
+  if (error?.code == 4) {
     return (
       <div>
         <Card>
           <Typography>Broken page</Typography>
         </Card>
       </div>
-    )
-
+    );
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -57,8 +64,25 @@ export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
+  const hasNoPosts = posts.length === 0;
+  const makePost = (
+    <Card sx={{margin: 2}}>
+      <CardContent>
+        <Typography>It feels so empty here. Make a post!</Typography>
+        <Button
+        fullWidth
+        sx={{marginTop: 1}}
+        variant='contained'
+          onClick={() => {
+            router.push("/add-post");
+          }}
+        >
+          Make a post
+        </Button>
+      </CardContent>
+    </Card>
+  );
 
- 
   return (
     <>
       <Head>
@@ -67,16 +91,20 @@ export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <ProfileHeader />
-        <Divider sx={{width:'100%'}}/>
-    
-        <ProfileButtons handleChange={handleChange} value={value}/>
-        <TabPanel value={value} index={0} dir={theme.direction}>
-        <Gallery mode='column' posts={posts}/>
-      </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
-        < Gallery mode='grid' posts={posts}/>
-      </TabPanel>
+      <ProfileHeader />
+      <Divider sx={{ width: "100%" }} />
+      {hasNoPosts && makePost}
+      {!hasNoPosts && (
+        <>
+          <ProfileButtons handleChange={handleChange} value={value} />
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <Gallery mode="column" posts={posts} />
+          </TabPanel>
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <Gallery mode="grid" posts={posts} />
+          </TabPanel>
+        </>
+      )}
     </>
   );
 };

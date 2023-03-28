@@ -1,8 +1,5 @@
-import { Gallery } from "@/components/Gallery/Gallery";
-import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
-import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
-import { TabPanel } from "@/components/TabPanel/TabPanel";
-import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
+
+import {  PostFromDbProps } from "@/firebase/db";
 import { Card, CardContent, Divider, Typography, useTheme } from "@mui/material";
 import Head from "next/head";
 import React from "react";
