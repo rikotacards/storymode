@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-const links = [
+const links: {name: string, url: string}[] = [
 
 ];
 
