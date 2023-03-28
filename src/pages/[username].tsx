@@ -2,8 +2,8 @@ import { Gallery } from "@/components/Gallery/Gallery";
 import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
-import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
-import { doesUserProfileExist } from "@/firebase/usernameFunctions";
+import { useAuth } from "@/context/AuthContext";
+import { getPostByUsername, getUsername, PostFromDbProps } from "@/firebase/db";
 import {
   Button,
   Card,
@@ -15,7 +15,6 @@ import {
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
-import styles from "../styles/AddPost.module.css";
 
 export async function getServerSideProps({
   params,
@@ -23,29 +22,35 @@ export async function getServerSideProps({
   params: { username: string };
 }) {
   const { username } = params;
-  const userProfileExists = await doesUserProfileExist(username);
-  if (!userProfileExists) {
+  const uid = await getUsername(username);
+  if (!uid) {
     return {
       props: { error: { code: 4, message: "Broken page" } },
     };
   }
-  const posts = await getPostByUsername(params.username);
+  const posts = await getPostByUsername(username);
   return {
     props: {
       posts,
+      uid, 
+      username
     },
   };
 }
 
 interface ProfileProps {
   posts: PostFromDbProps[];
+  uname: {uid: string};
+  username: string;
   error: { code: number; message: string };
 }
 
-export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
+export const Profile: React.FC<ProfileProps> = ({ posts, error, uname, username }) => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const router = useRouter();
+  const auth = useAuth();
+  const uid = auth?.uid || ""
 
   if (error?.code == 4) {
     return (
@@ -61,10 +66,7 @@ export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
-  const hasNoPosts = posts.length === 0;
+  const hasNoPosts = posts.length === 0 && (uname?.uid == uid)
   const makePost = (
     <Card sx={{margin: 2}}>
       <CardContent>

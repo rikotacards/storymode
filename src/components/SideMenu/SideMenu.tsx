@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from "@/context/AuthContext";
 export const sideMenuWidth = 240;
 import MenuIcon from '@mui/icons-material/Menu';
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 export  const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon/> },
   { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
@@ -57,11 +58,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export const SideMenu: React.FC = () => {
   
   const auth = useAuth()
+  const userInfo = useGetUserInfo(auth?.uid as string)
   console.log(auth.isLoggedIn)
   if(!auth.isLoggedIn){
     return null
   }
-  const all = [...menuItems,   { name: "Profile", path: "/"+ (auth?.user?.uid || 'signin'), icon: <Avatar sx={{height: 24, width: 24}}/> },
+  const all = [...menuItems,   { name: "Profile", path: "/"+ (userInfo.username || 'signin'), icon: <Avatar sx={{height: 24, width: 24}}/> },
 ]
   
 

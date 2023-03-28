@@ -16,9 +16,7 @@ import React from "react";
 export const CreateUsername: React.FC = () => {
   const auth = useAuth();
   
-  if (!auth.uid) {
-    return <LinearProgress />;
-  }
+  
   const [isLoading, setLoading] = React.useState(false);
   const [hasError, setError] = React.useState(false);
   const [username, setUsernameChange] = React.useState("");
@@ -26,6 +24,9 @@ export const CreateUsername: React.FC = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsernameChange(e.target.value);
   };
+  if (!auth.uid) {
+    return <LinearProgress />;
+  }
   const onSubmit = () => {
     console.log('clickc')
     setLoading(true);

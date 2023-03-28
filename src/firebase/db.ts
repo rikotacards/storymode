@@ -64,7 +64,6 @@ export const addUserToDb = async (userId: string) => {
 
 export const uploadPost = async (args: uploadPostProps) => {
   const { username, posts } = args;
-
   const collectionRef = collection(firestore, "content", username, "posts");
   const docRef = doc(collectionRef);
 
@@ -161,7 +160,7 @@ export const getUsername = async (username: string) => {
   try {
     const docRef = await getDoc(doc(firestore, "usernames", username));
     if (docRef.exists()) {
-      return docRef.data();
+      return docRef.data()
     } else {
       return undefined
     }

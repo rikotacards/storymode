@@ -41,7 +41,7 @@ export const AddReactionButton: React.FC<AddReactionButtonProps> = ({onEmojiClic
     />
     {<Dialog onClose={handleClose} open={open}  >
       <div style={{display: 'flex'}}>
-      <Picker onEmojiClick={(d) => { console.log(d);onEmojiClick(d.unified, d.emoji)}}/>
+      <Picker onEmojiClick={(d) => {onEmojiClick(d.unified, d.emoji)}}/>
       </div>
     </Dialog>}
     </>

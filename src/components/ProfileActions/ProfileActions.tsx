@@ -14,9 +14,9 @@ export const ProfileActions: React.FC = () => {
   const router = useRouter();
   const { user } = useAuth();
   let uid = user?.uid;
-  const profileUid = router.asPath.replace("/", "");
-  const userInfo = useGetUserInfo(profileUid)
-  const { isFollowingUser } = useIsFollowing(uid || "1", profileUid);
+  const usernameInPath = router.query.username as string;
+  const userInfo = useGetUserInfo(user?.uid)
+  const { isFollowingUser } = useIsFollowing(uid || "1", usernameInPath);
   const [displayedFollow, setDisplayedFollow] = React.useState(isFollowingUser);
   
   React.useEffect(() => {
@@ -26,7 +26,7 @@ export const ProfileActions: React.FC = () => {
     if (!uid) {
       return;
     }
-    updateFollowers(uid, profileUid, !displayedFollow);
+    updateFollowers(uid, usernameInPath, !displayedFollow);
     setDisplayedFollow(!displayedFollow);
   };
   if(userInfo == undefined){
@@ -38,7 +38,7 @@ export const ProfileActions: React.FC = () => {
       <div className={styles.layout}>
         <div style={{ marginRight: "8px" }}>
           <Typography style={{ fontWeight: "400", fontSize: 20 }}>
-            {userInfo.username}
+            {usernameInPath}
           </Typography>
         </div>
         <div>

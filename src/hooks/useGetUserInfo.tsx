@@ -10,9 +10,7 @@ interface UserInfoProps {
   username: string;
 }
 
-export const useGetUserInfo = (uid?: string) => {
-  console.log(uid)
-  
+export const useGetUserInfo = (uid?: string) => {  
   const [userInfo, setUserInfo] = React.useState({} as UserInfoProps)
   const [isLoading, setLoading] = React.useState(true);
   React.useEffect(() => {
@@ -20,14 +18,12 @@ export const useGetUserInfo = (uid?: string) => {
       return;
     }
     getUserInfo(uid).then((res) => {
-      console.log('inside effect', res)
       if(res){
         setUserInfo(res as UserInfoProps);
       }
       setLoading(false);
     })
   }, [isLoading, uid])
-  console.log('INSIDE HOOK', userInfo)
   return {
     ...userInfo,
     isLoading
