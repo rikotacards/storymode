@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Home() {
-  
+  const auth = useAuth()
+  console.log(auth.isLoggedIn)
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
     <Head>
@@ -22,7 +23,7 @@ export default function Home() {
       <Card>
         <CardContent>
           <Typography>
-            You're currently not following anyone
+           { "You're currently not following anyone"}
           </Typography>
         </CardContent>
       </Card>

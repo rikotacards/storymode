@@ -6,20 +6,7 @@ import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
 import { Card, CardContent, Divider, Typography, useTheme } from "@mui/material";
 import Head from "next/head";
 import React from "react";
-import styles from "../styles/AddPost.module.css";
 
-// export async function getServerSideProps({
-//   params,
-// }: {
-//   params: { username: string };
-// }) {
-//   const posts = await getPostByUsername(params.username);
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// }
 
 interface HomeProps {
   posts: PostFromDbProps[];
@@ -39,7 +26,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
         <Card>
           <CardContent>
             <Typography>
-              You're currently not following anyone
+             {" You're currently not following anyone"}
             </Typography>
           </CardContent>
         </Card>

@@ -19,7 +19,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
       router.push(publicRoutes.signin);
     } 
    
-  }, [isLoggedIn, pathIsProtected]);
+  }, [isLoggedIn, pathIsProtected, router]);
   
   if(!isLoggedIn && pathIsProtected){
     return <LinearProgress/>
