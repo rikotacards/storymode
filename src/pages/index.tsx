@@ -2,9 +2,8 @@ import Head from 'next/head'
 import React from 'react';
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { AuthContext, useAuth } from '@/context/AuthContext'
+import {  useAuth } from '@/context/AuthContext'
 import { Card, CardContent, Typography } from '@mui/material';
-import ProtectedPageRoute from './protected-page-route';
 const inter = Inter({ subsets: ['latin'] })
 
 
