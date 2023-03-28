@@ -13,16 +13,15 @@ export const AddPostContainer: React.FC = () => {
   const postComponents = addPostContext.posts.map((data, i) => (
     <AddPostWidget key={data?.imageUrl || i} index={i} docRefId={docRef.id} />
   ));
-  console.log(postComponents);
   return (
     <div className={styles.addPostContainer}>
       {postComponents}
-        <div style={{ marginTop: "8px" }}>
-          <Button variant="outlined" fullWidth onClick={addPostContext.addPost}>
-            <AddCircleIcon fontSize="small"/>
-            Add Part
-          </Button>
-        </div>
+      <div style={{ marginTop: "8px" }}>
+        <Button variant="outlined" fullWidth onClick={addPostContext.addPost}>
+          <AddCircleIcon fontSize="small" />
+          Add Part
+        </Button>
+      </div>
       <div>
         <Button
           onClick={addPostContext.onPostClick}

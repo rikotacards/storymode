@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import styles from "./PostHeader.module.css";
 import { deletePost } from "@/firebase/db";
-import { username } from "@/context/AddPostContext";
 
 interface PostHeaderProps {
   author: string;
