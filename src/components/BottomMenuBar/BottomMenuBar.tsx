@@ -14,6 +14,9 @@ import { Avatar } from "@mui/material";
 export const BottomMenuBar: React.FC = () => {
   const route = useRouter()
   const auth = useAuth();
+  if(!auth.isLoggedIn){
+    return null
+  }
   let items = menuItems.map((item) => <IconButton key={item.path} onClick={() => route.push(item.path)}>{item.icon}</IconButton>)
   items = [...items,<IconButton key={auth?.user?.uid||'undefined'} onClick={() => route.push(`/${auth?.user?.uid || 'signin'}`)}>{<Avatar sx={{height: 24, width: 24}}/>}</IconButton> ]
   return (

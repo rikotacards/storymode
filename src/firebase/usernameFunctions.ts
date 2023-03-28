@@ -8,6 +8,10 @@ export const doesUsernameExist = async(username: string) => {
   }
   return false
 }
+export const doesUserProfileExist = async(uid: string) => {
+  const queryDoc = await getDoc(doc(firestore, "userProfiles", uid));
+  return !!queryDoc.exists()
+}
 
 export const addUsername = async(username: string, uid: string) => {
   try{

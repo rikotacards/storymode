@@ -3,7 +3,8 @@ import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { getPostByUsername, PostFromDbProps } from "@/firebase/db";
-import { Divider, useTheme } from "@mui/material";
+import { doesUserProfileExist } from "@/firebase/usernameFunctions";
+import { Card, Divider, Typography, useTheme } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 import styles from "../styles/AddPost.module.css";
@@ -14,6 +15,13 @@ export async function getServerSideProps({
 }: {
   params: { username: string };
 }) {
+  const {username} = params
+  const userProfileExists = await doesUserProfileExist(username)
+  if(!userProfileExists){
+    return {
+      props: {error: {code: 4, message: "Broken page"}}
+    }
+  }
   const posts = await getPostByUsername(params.username);
   return {
     props: {
@@ -24,11 +32,23 @@ export async function getServerSideProps({
 
 interface ProfileProps {
   posts: PostFromDbProps[];
+  error: {code: number, message: string }
 }
 
-export const Profile: React.FC<ProfileProps> = ({ posts }) => {
+export const Profile: React.FC<ProfileProps> = ({ posts, error }) => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
+
+  if(error?.code == 4){
+    return (
+      <div>
+        <Card>
+          <Typography>Broken page</Typography>
+        </Card>
+      </div>
+    )
+
+  }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
