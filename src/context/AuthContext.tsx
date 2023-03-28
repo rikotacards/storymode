@@ -58,7 +58,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
         setLogIn(!!user)
         setCurrentUser(user)
         addUserToDb(user.uid)
-        router.push('/')
+        console.log("REDIRECT")
       } else {
         setLogIn(false)
       }
@@ -85,7 +85,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
           setUser(user);
           // IdP data available using getAdditionalUserInfo(result)
           // ...
-        })
+        }).then(() => {router.push('/')})
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;

@@ -11,12 +11,7 @@ interface LayoutProps {
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
-  const auth = useAuth();
-  // const router = useRouter();
-  // console.log(router)
-  // if(!auth.isLoggedIn && router.pathname!=='/[username]'){
-  //   return <SignInNewUser/>
-  // }
+ 
   return (
     <div className={styles.main}>
       
