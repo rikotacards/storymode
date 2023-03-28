@@ -7,16 +7,9 @@ import { Card, CardContent, Typography } from '@mui/material';
 import ProtectedPageRoute from './protected-page-route';
 const inter = Inter({ subsets: ['latin'] })
 
-export const getServerSideProps = (context) =>
-  ProtectedPageRoute(context, '/sign-in', async () => {
-    // fetch propscon
-    console.log('protected and redirected.', context)
-    return {}
-  });
 
 export default function Home() {
-  const auth = useAuth()
-  console.log(auth.isLoggedIn)
+  
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
     <Head>
