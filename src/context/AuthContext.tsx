@@ -12,6 +12,7 @@ import {
 import { auth } from "@/firebase/clientApp";
 import { doc, setDoc } from "firebase/firestore";
 import { addUserToDb } from "@/firebase/db";
+import { useRouter } from "next/router";
 
 interface AuthContextWrapperProps {
   children: React.ReactNode;
@@ -21,6 +22,8 @@ interface AuthContextState {
   signInWithGooglePopUp: () => void;
   user: User | null | undefined;
   uid: string |null | undefined;
+  isLoggedIn: boolean;
+  signOut: () => void;
 }
 
 export const AuthContext = React.createContext<AuthContextState>({} as AuthContextState);
@@ -30,11 +33,12 @@ export const useAuth= ()=> {
 export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   children,
 }) => {
+  const router = useRouter();
   const provider = new GoogleAuthProvider();
   const [user, setUser] = React.useState<User | null>();
   const [currentUser, setCurrentUser] = React.useState<User | null>()
   const [loading, setLoading] = React.useState(true)
-
+  const [isLoggedIn, setLogIn] = React.useState(false);
   const [currUserId, setCurrUserId] = React.useState<string | undefined>(auth?.currentUser?.uid)
   // React.useEffect(() => {
   //   if (auth.currentUser !== null) {
@@ -50,9 +54,13 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if(user){
-
+        console.log(user)
+        setLogIn(!!user)
         setCurrentUser(user)
         addUserToDb(user.uid)
+        router.push('/')
+      } else {
+        setLogIn(false)
       }
 
       setLoading(false)
@@ -60,6 +68,10 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
 
     return unsubscribe
   }, [])
+  const signOut = () => {
+    router.push('/signin')
+    auth.signOut()
+  }
   const signInWithGooglePopUp = async () => {
     setPersistence(auth, browserLocalPersistence).then((d) => {
       signInWithPopup(auth, provider)
@@ -90,9 +102,10 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   const context: AuthContextState = {
     signInWithGooglePopUp,
     user: currentUser,
-    uid: currUserId
+    uid: currUserId, 
+    isLoggedIn,
+    signOut
   };
-  console.log('context', context)
 
   return (
     <AuthContext.Provider value={context}>{children}</AuthContext.Provider>

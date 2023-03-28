@@ -7,9 +7,10 @@ interface MenuItemProps {
   path: string;
   name: string;
   icon: React.ReactNode;
+  onClick?: () => void;
 }
 export const MenuItem: React.FC<MenuItemProps> = (props) => {
-  const { path, name, icon } = props;
+  const { path, name, icon , onClick} = props;
   const router = useRouter();
   const p = usePathname();
   return (
@@ -21,7 +22,7 @@ export const MenuItem: React.FC<MenuItemProps> = (props) => {
           padding: "12px 24px 12px 14px",
           width: '100%',
         }}
-        onClick={() => {router.push(path)}}
+        onClick={onClick ? onClick : () => {router.push(path)}}
       >
         <div style={{ marginRight: "16px" }}>{icon}</div>
         <ListItemText>

@@ -1,4 +1,4 @@
-import { Avatar, Card, CSSObject, MenuList, Paper, styled, SwipeableDrawer, Theme } from "@mui/material";
+import { Avatar, Button, Card, CSSObject, MenuList, Paper, styled, SwipeableDrawer, Theme } from "@mui/material";
 import React from "react";
 import MuiDrawer from '@mui/material/Drawer';
 
@@ -9,7 +9,7 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from "@/context/AuthContext";
 export const sideMenuWidth = 240;
-
+import MenuIcon from '@mui/icons-material/Menu';
 export  const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon/> },
   { name: "Explore", path: "/explore", icon: <ExploreIcon/> },
@@ -57,6 +57,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export const SideMenu: React.FC = () => {
   
   const auth = useAuth()
+  if(!auth.isLoggedIn){
+    return null
+  }
   const all = [...menuItems,   { name: "Profile", path: "/"+ (auth?.user?.uid || 'signin'), icon: <Avatar sx={{height: 24, width: 24}}/> },
 ]
   
@@ -67,6 +70,9 @@ export const SideMenu: React.FC = () => {
         {all.map((item) => (
           <MenuItem icon={item.icon} key={item.name} name={item.name} path={item.path} />
         ))}
+        <div>
+          <MenuItem name={'sign out'} icon={<MenuIcon/>} path='/signout' onClick={auth.signOut}/>
+        </div>
       </Drawer>
     </Paper>
   );

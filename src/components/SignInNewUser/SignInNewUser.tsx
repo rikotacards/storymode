@@ -23,7 +23,6 @@ export const SignInNewUser: React.FC = () => {
         Sign In with Google
       </Button>
       </div>
-      <Button onClick={() => {auth.signOut()}}>Sign out</Button>
     </div>
   )
 }

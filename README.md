@@ -133,3 +133,5 @@ https://swiperjs.com/demos#pagination
 https://codepen.io/MAB015/pen/pZjYbX
 * Css crop image to square, responsive
 https://stackoverflow.com/questions/15167545/how-to-crop-a-rectangular-image-into-a-square-with-css
+* Protected page route
+https://shipsaas.com/blog/create-protected-route-nextjs
