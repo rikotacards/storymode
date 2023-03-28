@@ -20,6 +20,18 @@ const firebaseConfigHardCoded = {
   measurementId: "G-4Y0H8V2VZY"
 };
 
+const firebaseConfigApacDb = {
+  
+    apiKey: "AIzaSyA6terG0jvp_XqDI3NpiB3ZNEE1riWSTyA",
+    authDomain: "storymode-3427d.firebaseapp.com",
+    projectId: "storymode-3427d",
+    storageBucket: "storymode-3427d.appspot.com",
+    messagingSenderId: "506291013940",
+    appId: "1:506291013940:web:a291f532905ba85f927d61",
+    measurementId: "G-3YEQESN4EC"
+
+}
+
 // Initialize Firebase
 
 
@@ -37,7 +49,7 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfigHardCoded);
+const app = initializeApp(firebaseConfigApacDb);
 
 // Initialize Auth
 
