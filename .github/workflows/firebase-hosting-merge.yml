@@ -18,3 +18,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STORYMODE_3427D }}'
           channelId: live
           projectId: storymode-3427d
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
