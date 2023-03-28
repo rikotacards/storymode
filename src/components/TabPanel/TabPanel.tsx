@@ -28,9 +28,9 @@ export const TabPanel: React.FC<TabPanelProps> =(props: TabPanelProps)=> {
       {...other}
     >
       {value === index && (
-        <Box>
+        <>
           {children}
-        </Box>
+        </>
       )}
     </div>
   );
