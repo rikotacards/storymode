@@ -62,7 +62,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
                   paddingRight: "10%",
                 }}
               >
-                <PostTextContent key={caption + i} caption={caption} />
+                <PostTextContent bold key={caption + i} caption={caption} />
               </div>
             </SwiperSlide>
           ))}

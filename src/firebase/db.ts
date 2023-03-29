@@ -249,5 +249,6 @@ export const getPostByUsername = async (username: string) => {
     };
     return data;
   });
+  console.log("GET POST BY USERNAME", post)
   return post;
 };

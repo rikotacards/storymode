@@ -14,7 +14,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   const pathIsProtected = !!protectedRoutes[router.pathname];
   
   React.useEffect(() => {
-    if(!isLoading && isLoggedIn && pathIsProtected){
+    if(!isLoading && isLoggedIn){
       return
     }
     if (!isLoggedIn && pathIsProtected){

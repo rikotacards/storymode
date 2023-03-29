@@ -1,36 +1,58 @@
-import { PostFromDbProps } from '@/firebase/db';
-import React from 'react';
-import styles from './Gallery.module.css';
-import { PostPreview } from '../PostPreview/PostPreview';
-import { PostWithImage } from '../PostWithImage/PostWithImage';
+import { PostFromDbProps } from "@/firebase/db";
+import React from "react";
+import styles from "./Gallery.module.css";
+import { PostPreview } from "../PostPreview/PostPreview";
+import { PostWithImage } from "../PostWithImage/PostWithImage";
+import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
+import { LinearProgress } from "@mui/material";
+import { useRouter } from "next/router";
 interface GalleryProps {
-  posts: PostFromDbProps[];
-  mode: 'grid' | 'column'
+  // posts: PostFromDbProps[];
+  mode: "grid" | "column";
 }
-export const Gallery: React.FC<GalleryProps> = ({mode,posts}) => {
-  const galleryItems = posts.map((post,i) => {
-    if(mode === 'grid'){
-      return(
-        <PostPreview  postId={post.postId} key={post.content[0].caption + i} post={post.content[0]}/>
-      )
+export const Gallery: React.FC<GalleryProps> = ({ mode }) => {
+  const router = useRouter();
+  const usernameInPath = router.query.username;
+  const postRes = useFetchPostsByUser(usernameInPath);
+  console.log('bob', postRes)
+  if (postRes.isLoading) {
+    return <LinearProgress style={{ width: "100%" }} />;
+  }
+  const galleryItems = postRes.posts.map((post, i) => {
+    if (mode === "grid") {
+      return (
+        <PostPreview
+          postId={post.postId}
+          key={post.content[0].caption + i}
+          post={post.content[0]}
+        />
+      );
     }
     return (
-      <PostWithImage postTime={post.postTime} key={i} author={post.author} postId={post.postId} content={post.content}/>
-    )
-    
-    
-  })
-  if (mode=='grid')
-  return (
-    <section className={styles['post-list']}>
-      {galleryItems}
-    </section>
-  )
+      <PostWithImage
+        postTime={post.postTime}
+        key={i}
+        author={post.author}
+        postId={post.postId}
+        content={post.content}
+      />
+    );
+  });
+  if (mode == "grid")
+    return <section className={styles["post-list"]}>{galleryItems}</section>;
 
-    return (
-      <main style={{ width: '100%', alignContent:'center', flexDirection: 'column', display: 'flex', alignItems: 'center',  overflow: 'hidden'}}>
-        {galleryItems}
-      </main>
-    )
-  
-}
+  return (
+    <main
+      style={{
+        width: "100%",
+        alignContent: "center",
+        flexDirection: "column",
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+      }}
+    >
+      {galleryItems}
+    </main>
+  );
+};

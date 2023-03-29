@@ -1,9 +1,12 @@
 import { Gallery } from "@/components/Gallery/Gallery";
 import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
+import { ProfileHeaderSmall } from "@/components/ProfileHeaderSmall/ProfileHeaderSmall";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
-import { getPostByUsername, getUsername, PostFromDbProps } from "@/firebase/db";
+import { PostFromDbProps } from "@/firebase/db";
+import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
+import { useGetUidFromUsername } from "@/hooks/useFetchUidFromUsername";
 import {
   Button,
   Card,
@@ -17,92 +20,52 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-import useSWR from 'swr'
-
-const fetchUsername = (username:string) => {
-  console.log('A', username)
-  return getUsername(username).then((res) => {
-    if(res){
-      return res
-    }
-  })
-}
-const fetchPostsByUser = (username:string) => {
-  console.log('B', username)
-  return getPostByUsername(username).then((res) => {
-    console.log(res)
-    if(res){
-      console.log('data', res)
-      return res
-    }
-  })
-}
-const useFetchUsername = (username?: string | string[]) => {
-  console.log('USERNAME', username)
-  const {data, error, isLoading} = useSWR(username, fetchUsername);
-  return {
-    data, 
-    error, 
-    isLoading
-  }
-}
-const useFetchPostsByUser = (username?: string | string[]) => {
-  console.log('P', username)
-  const {data, error, isLoading} = useSWR(username, fetchPostsByUser);
-  return {
-    data, 
-    error, 
-    isLoading
-  }
-}
-
 
 interface ProfileProps {
   posts: PostFromDbProps[];
-  uname: {uid: string};
+  uname: { uid: string };
   username: string;
   error: { code: number; message: string };
 }
-
 
 export const Profile: React.FC<ProfileProps> = () => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const router = useRouter();
-  const usernameInPath = router.query.username
+  const usernameInPath = router.query.username;
   const auth = useAuth();
-  const uid = auth?.uid || ""
+  const uid = auth?.uid || "";
 
-  const {data: postData, error: postError, isLoading: postIsLoading} = useFetchPostsByUser(usernameInPath);
-  const {data: usernameData, error: usernameError, isLoading: usernameIsLoading} = useFetchUsername(usernameInPath)
-  // console.log('DATA', data)
-  // console.log('res', res)
-  if(postIsLoading || usernameIsLoading){
-    return (<LinearProgress/>)
+  const usernameRes = useGetUidFromUsername(usernameInPath);
+
+  if ( usernameRes.isLoading || !auth) {
+    return (
+        <LinearProgress style={{width: '100%'}} />
+    );
   }
-  if(usernameError | postError){
+  if ( usernameRes.error) {
     return (
       <Card>
         <CardContent>
-          <Typography color='error'>Something went wrong</Typography>
+          <Typography color="error">Something went wrong</Typography>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const hasNoPosts = !postData?.length && (usernameInPath == uid)
+  const hasNoPosts =  usernameInPath == uid;
   const makePost = (
-    <Card sx={{margin: 2}}>
+    <Card sx={{ margin: 2 }}>
       <CardContent>
         <Typography>It feels so empty here. Make a post!</Typography>
         <Button
-        fullWidth
-        sx={{marginTop: 1}}
-        variant='contained'
+          fullWidth
+          sx={{ marginTop: 1 }}
+          variant="contained"
           onClick={() => {
             router.push("/add-post");
           }}
@@ -121,20 +84,25 @@ export const Profile: React.FC<ProfileProps> = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ProfileHeader />
+      <ProfileHeaderSmall />
       <Divider sx={{ width: "100%" }} />
       {hasNoPosts && makePost}
       {!hasNoPosts && (
         <>
           <ProfileButtons handleChange={handleChange} value={value} />
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <Gallery mode="column" posts={postData as PostFromDbProps[] || []} />
+            <Gallery
+              mode="column"
+            />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Gallery mode="grid" posts={postData as PostFromDbProps[] || []} />
+            <Gallery
+              mode="grid"
+            />
           </TabPanel>
         </>
       )}
+      <div style={{height: '50px'}}/>
     </>
   );
 };

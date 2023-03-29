@@ -13,7 +13,6 @@ import React from "react";
 import MuiDrawer from "@mui/material/Drawer";
 
 import { MenuItem } from "../MenuItem/MenuItem";
-import styles from "./SideMenu.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
 import AddIcon from "@mui/icons-material/Add";
@@ -66,7 +65,7 @@ const Drawer = styled(MuiDrawer, {
 
 export const SideMenu: React.FC = () => {
   const auth = useAuth();
-  const userInfo = useGetUserInfo(auth?.uid as string);
+  const {data} = useGetUserInfo(auth?.uid as string);
   if (!auth.isLoggedIn) {
     return null;
   }
@@ -74,7 +73,7 @@ export const SideMenu: React.FC = () => {
     ...menuItems,
     {
       name: "Profile",
-      path: "/" + (userInfo.username || "signin"),
+      path: "/" + (data?.username || "signin"),
       icon: <Avatar sx={{ height: 24, width: 24 }} />,
     },
   ];

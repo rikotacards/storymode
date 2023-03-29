@@ -1,6 +1,6 @@
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {  useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { Avatar } from "@mui/material";
+import { Avatar, Card, CardContent, LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { ProfileActions } from "../ProfileActions/ProfileActions";
@@ -13,13 +13,17 @@ export const ProfileHeader: React.FC = () => {
   const px = isLessThanMd ? 90 : 180;
   const router = useRouter();
   const uid = router.query.username as string;
-  const userInfo = useGetUserInfo(uid)
-  console.log('profileheader', userInfo)
-  React.useEffect(() => {
-
-  }, [userInfo?.isLoading])
-  if(!userInfo){
-    return <></>
+  const {data, isLoading, error} = useGetUserInfo(uid)
+  console.log('profileheader', data)
+  if(isLoading){
+    return <LinearProgress/>
+  }
+  if(error){
+    return <Card>
+      <CardContent>
+        Something went wrong
+      </CardContent>
+    </Card>
   }
   return (
     <div className={styles.container}>
@@ -30,7 +34,7 @@ export const ProfileHeader: React.FC = () => {
       <div className={styles.actionsLinksContainer}>
         {!isLessThanMd && <ProfileActions />}
         <ProfileStats />
-        <ProfilePersonalInfo bio={userInfo?.bio} displayedName={userInfo?.username} />
+        <ProfilePersonalInfo bio={data?.bio} displayedName={data?.username} />
         <ProfileLinks />
       </div>
     </div>

@@ -1,7 +1,4 @@
 import React from 'react';
-import {  collection, doc, setDoc, Timestamp } from "firebase/firestore";
-import { firestore } from "@/firebase/clientApp";
-import { getStorage, ref, uploadString } from "firebase/storage";
 import { uploadPost } from '@/firebase/db';
 import { useAuth } from './AuthContext';
 import { useGetUserInfo } from '@/hooks/useGetUserInfo';
@@ -32,7 +29,7 @@ interface PostContextProps {
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: '', imagePath: ''}])
   const auth = useAuth();
-  const userInfo = useGetUserInfo(auth?.uid as string)
+  const {data} = useGetUserInfo(auth?.uid as string)
   const onPostClick = async() => {
     if(!auth?.user?.uid){
       console.log('user needs to be logged in')
@@ -40,7 +37,7 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
     }
    try {
     const res = uploadPost({
-      username:userInfo.username || auth.user.uid, 
+      username:data?.username || auth.user.uid, 
       posts
     })
    } catch (e) {
