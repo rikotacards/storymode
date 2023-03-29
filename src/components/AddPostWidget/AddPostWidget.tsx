@@ -16,14 +16,16 @@ export const AddPostWidget: React.FC<AddPostWidgetProps> = ({
 }) => {
   const addPostContext = React.useContext(AddPostContext);
   const { posts } = addPostContext;
+  const ref = React.useRef<HTMLInputElement>(null);
 
   return (
     <div className={styles.layout}>
       <div className={styles.postDetails}>
         <div className={styles.imageAndCaption}>
           <UploadImageThumbnail index={index} />
-          <div className={styles.textInputContainer}>
+          <div className={styles.textInputContainer} onClick={() => {ref?.current?.click()}}>
             <Input
+            ref={ref}
               placeholder={"Write your caption..."}
               fullWidth
               multiline

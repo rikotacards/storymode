@@ -200,6 +200,14 @@ export const getUserInfo = async (userId: string) => {
   }
 };
 
+export const getUsernames = async () => {
+  const querySnapshot = await getDocs(
+    collection(firestore, "usernames")
+  );
+  const post = querySnapshot.docs
+  return post;
+}
+
 export const addNewReaction = async ({
   docId,
   emoji,
@@ -237,6 +245,9 @@ export const getImagePath = (imagePath: string) => {
 };
 
 export const getPostByUsername = async (username: string) => {
+  if(!username){
+    return []
+  }
   const querySnapshot = await getDocs(
     collection(firestore, "content", username, "posts")
   );
@@ -247,7 +258,28 @@ export const getPostByUsername = async (username: string) => {
       postTime: doc.data().postTime?.toDate().getTime(),
       postId: doc.id,
     };
-    return data;
+    return data as PostFromDbProps
   });
+  console.log("GET POST BY USERNAME", post)
   return post;
 };
+
+const getMyFollowings = async (username: string) => {
+  const querySnapshot = await getDocs(
+    collection(firestore, "userProfiles", username, "following")
+  );
+  return querySnapshot.docs.map((data) => data.id)
+}
+
+export const getPostsFromFollowings = async(username:string) => {
+  const users = await getMyFollowings(username);
+  let posts: PostFromDbProps[] = [];
+  users.forEach(async(user) => {
+    getPostByUsername(user).then((post) => {
+      console.log(post)
+      post.forEach((data) => posts.push(data))
+    })
+  })
+  console.log('osers', posts)
+  return posts;
+}

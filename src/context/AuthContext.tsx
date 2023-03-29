@@ -41,7 +41,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   const [isLoading, setLoading] = React.useState(true)
   const [isLoggedIn, setLogIn] = React.useState(false);
   const [currUserId, setCurrUserId] = React.useState<string | undefined>(auth?.currentUser?.uid)
-
+  console.log('AUTHCONTEXT', user)
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if(user){
@@ -49,6 +49,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
         setCurrentUser(user)
         setCurrUserId(user.uid)
         addUserToDb(user.uid)
+        setUser(user)
       } else {
         setLogIn(false)
       }

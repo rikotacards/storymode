@@ -1,25 +1,27 @@
 import { useAuth } from "@/context/AuthContext";
-import { getUserInfo } from "@/firebase/db";
+import { useGetUidFromUsername } from "@/hooks/useFetchUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { useRouter } from "next/router";
 import React from "react";
 import styles from "./ProfileStats.module.css";
 export const ProfileStats: React.FC = () => {
-  const auth = useAuth();
   const route = useRouter();
-  const uid = route.query.username as string;
-  const userInfo = useGetUserInfo(uid)
-  
-  return (
+  const username = route.query.username as string;
+
+  const userInfoRes = useGetUserInfo(username)
+  return (  
     <div className={styles.container}>
       <div className={styles.stats}>
-        <span style={{ fontWeight: "600" }}>{userInfo?.postCount || 0}</span> posts
+        <div style={{ fontWeight: "600" }}>{userInfoRes.data?.postCount || 0}</div> 
+        <div>posts</div>
       </div>
       <div className={styles.stats}>
-        <span style={{ fontWeight: "600" }}>{userInfo?.followersCount || 0}</span> followers
+        <div style={{ fontWeight: "600" }}>{userInfoRes.data?.followersCount || 0}</div> 
+        <div>followers</div>
       </div>
       <div className={styles.stats}>
-        <span style={{ fontWeight: "600" }}>{userInfo?.followingCount || 0}</span> following
+        <div style={{ fontWeight: "600" }}>{userInfoRes.data?.followingCount || 0}</div>
+        <div>following</div>
       </div>
     </div>
   );

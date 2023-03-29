@@ -1,26 +1,30 @@
 import Head from "next/head";
 import React from "react";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+
 import { useAuth } from "@/context/AuthContext";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-const inter = Inter({ subsets: ["latin"] });
+import { Feed } from "@/components/Feed/Feed";
 
 export default function Home() {
   const auth = useAuth();
-  console.log('authehhd', auth)
-  const userInfo = useGetUserInfo(auth?.uid as string | undefined)
-  console.log(userInfo)
+  const { data, error, isLoading } = useGetUserInfo(auth?.uid as string);
+  React.useEffect(() => {
+
+  }, [isLoading])
+  if (isLoading) {
+    return <LinearProgress />;
+  }
   return (
     <div
       style={{
-        height: "100%",
+        // height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        width: '100%'
       }}
     >
       <Head>
@@ -30,12 +34,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div style={{ padding: "8px" }}>
-       {!userInfo?.username && <CreateUsername />}
-        <Card sx={{margin:1}}>
-          <CardContent>
-            <Typography>{"You're currently not following anyone"}</Typography>
-          </CardContent>
-        </Card>
+        {!data && <CreateUsername />}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+        }}
+      >
+        <Feed />
       </div>
     </div>
   );

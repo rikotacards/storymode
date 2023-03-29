@@ -1,6 +1,6 @@
 import React from 'react'
 import {  createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { Button, Input } from '@mui/material';
+import { Button, Card, CardContent, Input } from '@mui/material';
 import { AuthContext } from '@/context/AuthContext';
 import { auth } from '@/firebase/clientApp';
 
@@ -16,12 +16,16 @@ export const SignInNewUser: React.FC = () => {
   
 
   return (
-    <div style={{display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <div>
-
-      <Button  onClick={(e) => {e.preventDefault; return  signInWithGooglePopUp()}}>
+    <Card>
+    <CardContent style={{display: 'flex', flexDirection: 'column'}}>
+      Sign in to play
+      <Button variant='outlined'  onClick={(e) => {e.preventDefault; return  signInWithGooglePopUp()}}>
         Sign In with Google
       </Button>
+    </CardContent>
+    </Card>
       </div>
     </div>
   )
