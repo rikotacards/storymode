@@ -200,6 +200,14 @@ export const getUserInfo = async (userId: string) => {
   }
 };
 
+export const getUsernames = async () => {
+  const querySnapshot = await getDocs(
+    collection(firestore, "usernames")
+  );
+  const post = querySnapshot.docs
+  return post;
+}
+
 export const addNewReaction = async ({
   docId,
   emoji,
@@ -247,7 +255,7 @@ export const getPostByUsername = async (username: string) => {
       postTime: doc.data().postTime?.toDate().getTime(),
       postId: doc.id,
     };
-    return data;
+    return data as PostFromDbProps
   });
   console.log("GET POST BY USERNAME", post)
   return post;

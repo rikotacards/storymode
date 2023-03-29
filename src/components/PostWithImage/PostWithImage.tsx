@@ -70,7 +70,7 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
       )}
       <PostActions postId={postId} />
       {hasImages && (
-        <Swiper onInit={(ev) => setswiper(ev)}>
+        <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>
           {captions.map((caption, i) => {
             return (
               <SwiperSlide key={caption + i}>

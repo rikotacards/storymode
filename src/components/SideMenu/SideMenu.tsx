@@ -22,7 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
-  { name: "Explore", path: "/explore", icon: <ExploreIcon /> },
+  { name: "Search", path: "/search", icon: <ExploreIcon /> },
   { name: "Add Post", path: "/add-post", icon: <AddIcon /> },
 ];
 const openedMixin = (theme: Theme): CSSObject => ({

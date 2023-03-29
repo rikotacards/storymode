@@ -19,17 +19,17 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({hideName}) => {
   let uid = user?.uid;
   const usernameInPath = router.query.username as string;
   const {data} = useGetUserInfo(user?.uid as string)
-  const { isFollowingUser } = useIsFollowing(uid || "1", usernameInPath);
+  const { isFollowingUser } = useIsFollowing(data?.username || "1", usernameInPath);
   const [displayedFollow, setDisplayedFollow] = React.useState(isFollowingUser);
   
   React.useEffect(() => {
     setDisplayedFollow(isFollowingUser);
   }, [uid, isFollowingUser]);
   const onFollowClick = () => {
-    if (!uid) {
+    if (!data?.username) {
       return;
     }
-    updateFollowers(uid, usernameInPath, !displayedFollow);
+    updateFollowers(data.username, usernameInPath, !displayedFollow);
     setDisplayedFollow(!displayedFollow);
   };
   if(data == undefined){

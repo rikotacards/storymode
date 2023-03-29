@@ -14,7 +14,7 @@ const SignIn = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main style={{display: 'flex', width: '100%', height: '100%'}}>
         <SignInNewUser/>
       </main>
        

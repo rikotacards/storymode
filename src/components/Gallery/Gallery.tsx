@@ -18,7 +18,7 @@ export const Gallery: React.FC<GalleryProps> = ({ mode }) => {
   if (postRes.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }
-  const galleryItems = postRes.posts.map((post, i) => {
+  const galleryItems = postRes.posts.map((post:PostFromDbProps, i) => {
     if (mode === "grid") {
       return (
         <PostPreview
