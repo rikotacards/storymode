@@ -42,16 +42,13 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   const [isLoggedIn, setLogIn] = React.useState(false);
   const [currUserId, setCurrUserId] = React.useState<string | undefined>(auth?.currentUser?.uid)
 
-  console.log(auth, currUserId)
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if(user){
-        console.log(user)
         setLogIn(!!user)
         setCurrentUser(user)
         setCurrUserId(user.uid)
         addUserToDb(user.uid)
-        console.log("REDIRECT")
       } else {
         setLogIn(false)
       }
@@ -74,7 +71,6 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
           // const token = credential.accessToken;
           // The signed-in user info.
           const user = result.user;
-          console.log(user);
           setUser(user);
           // IdP data available using getAdditionalUserInfo(result)
           // ...

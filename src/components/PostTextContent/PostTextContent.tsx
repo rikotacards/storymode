@@ -6,7 +6,7 @@ interface PostTextContent {
 export const PostTextContent: React.FC<PostTextContent> = ({ caption }) => {
   return (
     <div>
-      <Typography>
+      <Typography variant='h6' style={{fontWeight: 500}}>
         {caption ||
           "Hi everyone! This is my first post in Lofo. Hope everyone likes it.This was me at Hong Kong Fintech week, just recording something."}
       </Typography>
