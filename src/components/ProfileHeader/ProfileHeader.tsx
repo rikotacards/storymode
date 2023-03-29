@@ -24,7 +24,7 @@ export const ProfileHeader: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.avatarContainer}>
-        <Avatar sx={{ width: px, height: px }}>{userInfo?.username?.[0]}</Avatar>
+        <Avatar sx={{ width: px, height: px }}>{uid?.[0]}</Avatar>
         {isLessThanMd && <ProfileActions/>}
       </div>
       <div className={styles.actionsLinksContainer}>

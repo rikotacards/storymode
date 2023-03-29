@@ -28,7 +28,7 @@ export const Gallery: React.FC<GalleryProps> = ({mode,posts}) => {
   )
 
     return (
-      <main style={{ flexDirection: 'column', display: 'flex', overflow: 'hidden'}}>
+      <main style={{ width: '100%', alignContent:'center', flexDirection: 'column', display: 'flex', alignItems: 'center',  overflow: 'hidden'}}>
         {galleryItems}
       </main>
     )

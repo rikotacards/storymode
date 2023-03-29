@@ -19,7 +19,7 @@ export const SignInNewUser: React.FC = () => {
     <div style={{display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center'}}>
       <div>
 
-      <Button  onClick={(e) => {e.preventDefault(); signInWithGooglePopUp}}>
+      <Button  onClick={(e) => {e.preventDefault; return  signInWithGooglePopUp()}}>
         Sign In with Google
       </Button>
       </div>

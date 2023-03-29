@@ -7,7 +7,7 @@ interface PostTextContentProps {
 export const PostTextContent: React.FC<PostTextContentProps> = ({caption}) => {
   return (
       <div className={styles.textContentWrapper}>
-        <Typography variant='h4'>
+        <Typography variant='h2'>
           {caption}
         </Typography>
       </div>

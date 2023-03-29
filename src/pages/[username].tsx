@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   Divider,
+  LinearProgress,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -16,27 +17,45 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 
-export async function getServerSideProps({
-  params,
-}: {
-  params: { username: string };
-}) {
-  const { username } = params;
-  const uid = await getUsername(username);
-  if (!uid) {
-    return {
-      props: { error: { code: 4, message: "Broken page" } },
-    };
-  }
-  const posts = await getPostByUsername(username);
-  return {
-    props: {
-      posts,
-      uid, 
-      username
-    },
-  };
+import useSWR from 'swr'
+
+const fetchUsername = (username:string) => {
+  console.log('A', username)
+  return getUsername(username).then((res) => {
+    if(res){
+      return res
+    }
+  })
 }
+const fetchPostsByUser = (username:string) => {
+  console.log('B', username)
+  return getPostByUsername(username).then((res) => {
+    console.log(res)
+    if(res){
+      console.log('data', res)
+      return res
+    }
+  })
+}
+const useFetchUsername = (username?: string | string[]) => {
+  console.log('USERNAME', username)
+  const {data, error, isLoading} = useSWR(username, fetchUsername);
+  return {
+    data, 
+    error, 
+    isLoading
+  }
+}
+const useFetchPostsByUser = (username?: string | string[]) => {
+  console.log('P', username)
+  const {data, error, isLoading} = useSWR(username, fetchPostsByUser);
+  return {
+    data, 
+    error, 
+    isLoading
+  }
+}
+
 
 interface ProfileProps {
   posts: PostFromDbProps[];
@@ -45,28 +64,37 @@ interface ProfileProps {
   error: { code: number; message: string };
 }
 
-export const Profile: React.FC<ProfileProps> = ({ posts, error, uname, username }) => {
+
+export const Profile: React.FC<ProfileProps> = () => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const router = useRouter();
+  const usernameInPath = router.query.username
   const auth = useAuth();
   const uid = auth?.uid || ""
 
-  if (error?.code == 4) {
+  const {data: postData, error: postError, isLoading: postIsLoading} = useFetchPostsByUser(usernameInPath);
+  const {data: usernameData, error: usernameError, isLoading: usernameIsLoading} = useFetchUsername(usernameInPath)
+  // console.log('DATA', data)
+  // console.log('res', res)
+  if(postIsLoading || usernameIsLoading){
+    return (<LinearProgress/>)
+  }
+  if(usernameError | postError){
     return (
-      <div>
-        <Card>
-          <Typography>Broken page</Typography>
-        </Card>
-      </div>
-    );
+      <Card>
+        <CardContent>
+          <Typography color='error'>Something went wrong</Typography>
+        </CardContent>
+      </Card>
+    )
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  const hasNoPosts = posts.length === 0 && (uname?.uid == uid)
+  const hasNoPosts = !postData?.length && (usernameInPath == uid)
   const makePost = (
     <Card sx={{margin: 2}}>
       <CardContent>
@@ -100,10 +128,10 @@ export const Profile: React.FC<ProfileProps> = ({ posts, error, uname, username 
         <>
           <ProfileButtons handleChange={handleChange} value={value} />
           <TabPanel value={value} index={0} dir={theme.direction}>
-            <Gallery mode="column" posts={posts} />
+            <Gallery mode="column" posts={postData as PostFromDbProps[] || []} />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Gallery mode="grid" posts={posts} />
+            <Gallery mode="grid" posts={postData as PostFromDbProps[] || []} />
           </TabPanel>
         </>
       )}
