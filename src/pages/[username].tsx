@@ -37,8 +37,12 @@ export const Profile: React.FC<ProfileProps> = () => {
   const uid = auth?.uid || "";
 
   const usernameRes = useGetUidFromUsername(usernameInPath);
-
-  if ( usernameRes.isLoading || !auth) {
+  const postRes = useFetchPostsByUser(usernameInPath);
+  console.log('bob', postRes)
+  if (postRes.isLoading) {
+    return <LinearProgress style={{ width: "100%" }} />;
+  }
+  if (!postRes?.posts || usernameRes.isLoading || !auth) {
     return (
         <LinearProgress style={{width: '100%'}} />
     );
@@ -92,12 +96,14 @@ export const Profile: React.FC<ProfileProps> = () => {
           <ProfileButtons handleChange={handleChange} value={value} />
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Gallery
+            posts={postRes.posts}
               mode="column"
             />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Gallery
               mode="grid"
+              posts={postRes.posts}
             />
           </TabPanel>
         </>

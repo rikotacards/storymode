@@ -10,11 +10,15 @@ export const SearchResultUser: React.FC<SearchResultUserProps> = ({
   const router = useRouter();
   return (
     <div
-    onClick={() => {router.push('/'+ username)}}
+      onClick={() => {
+        router.push("/" + username);
+      }}
       style={{
         display: "flex",
-        marginBottom: "8px",
-        marginRight: "8xp",
+        marginBottom: "16px",
+        marginLeft: "8px",
+        marginTop: "16px",
+
         alignItems: "center",
       }}
     >

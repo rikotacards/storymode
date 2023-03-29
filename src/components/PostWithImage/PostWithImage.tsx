@@ -10,12 +10,19 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
+import { LinearProgress } from "@mui/material";
+import { useRouter } from "next/router";
 
 export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
   const images: string[] = [];
   const captions: string[] = [];
-
+  const router = useRouter();
+  const usernameInPath = router.query.username;
+  const postRes = useFetchPostsByUser(usernameInPath);
+  console.log('bob', postRes)
+ 
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
     captions.push(c.caption);
@@ -27,7 +34,9 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
   const hasImages = images.length > 0;
   const next = React.useCallback(() => myswiper.slideNext(), [myswiper]);
   const prev = React.useCallback(() => myswiper.slidePrev(), [myswiper]);
-
+  if (postRes.isLoading) {
+    return <LinearProgress style={{ width: "100%" }} />;
+  }
   return (
     <PostWrapper author={author} postId={postId}>
       {hasImages && (

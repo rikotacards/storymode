@@ -2,6 +2,7 @@ import { protectedRoutes, publicRoutes } from "@/constants/routes";
 import { useAuth } from "@/context/AuthContext";
 import { LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
+import Router from "next/router"
 import React from "react";
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -14,8 +15,11 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   const pathIsProtected = !!protectedRoutes[router.pathname];
   
   React.useEffect(() => {
-    if(!isLoading && isLoggedIn){
+    if(isLoading && !isLoggedIn){
       return
+    }
+    if(!isLoading && isLoggedIn){
+      return;
     }
     if (!isLoggedIn && pathIsProtected){
       console.log('not logged in, path is protected')

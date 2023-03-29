@@ -9,16 +9,11 @@ import { useRouter } from "next/router";
 interface GalleryProps {
   // posts: PostFromDbProps[];
   mode: "grid" | "column";
+  posts: PostFromDbProps[];
 }
-export const Gallery: React.FC<GalleryProps> = ({ mode }) => {
-  const router = useRouter();
-  const usernameInPath = router.query.username;
-  const postRes = useFetchPostsByUser(usernameInPath);
-  console.log('bob', postRes)
-  if (postRes.isLoading) {
-    return <LinearProgress style={{ width: "100%" }} />;
-  }
-  const galleryItems = postRes.posts.map((post:PostFromDbProps, i) => {
+export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
+ 
+  const galleryItems = posts.map((post:PostFromDbProps, i) => {
     if (mode === "grid") {
       return (
         <PostPreview

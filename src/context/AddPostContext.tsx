@@ -2,6 +2,7 @@ import React from 'react';
 import { uploadPost } from '@/firebase/db';
 import { useAuth } from './AuthContext';
 import { useGetUserInfo } from '@/hooks/useGetUserInfo';
+import { useRouter } from 'next/router';
 
 export interface Post {
   imagePath: string;
@@ -29,6 +30,7 @@ interface PostContextProps {
 export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) => {
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: '', imagePath: ''}])
   const auth = useAuth();
+  const route = useRouter();
   const {data} = useGetUserInfo(auth?.uid as string)
   const onPostClick = async() => {
     if(!auth?.user?.uid){
@@ -36,9 +38,11 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
       return;
     }
    try {
-    const res = uploadPost({
+    const res = await  uploadPost({
       username:data?.username || auth.user.uid, 
       posts
+    }).then(() => {
+      route.push('/')
     })
    } catch (e) {
     console.log(e)

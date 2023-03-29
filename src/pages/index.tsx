@@ -5,22 +5,26 @@ import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { Feed } from "@/components/Feed/Feed";
 
 export default function Home() {
   const auth = useAuth();
-  const {data, error, isLoading} = useGetUserInfo(auth?.uid as string)
-  console.log(data)
-  if(isLoading){
-    return <LinearProgress/>
+  const { data, error, isLoading } = useGetUserInfo(auth?.uid as string);
+  React.useEffect(() => {
+
+  }, [isLoading])
+  if (isLoading) {
+    return <LinearProgress />;
   }
   return (
     <div
       style={{
-        height: "100%",
+        // height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        width: '100%'
       }}
     >
       <Head>
@@ -30,12 +34,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div style={{ padding: "8px" }}>
-       {!data?.username && <CreateUsername />}
-        <Card sx={{margin:1}}>
-          <CardContent>
-            <Typography>{"You're currently not following anyone"}</Typography>
-          </CardContent>
-        </Card>
+        {!data && <CreateUsername />}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+        }}
+      >
+        <Feed />
       </div>
     </div>
   );
