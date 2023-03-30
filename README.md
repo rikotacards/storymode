@@ -135,3 +135,5 @@ https://codepen.io/MAB015/pen/pZjYbX
 https://stackoverflow.com/questions/15167545/how-to-crop-a-rectangular-image-into-a-square-with-css
 * Protected page route
 https://shipsaas.com/blog/create-protected-route-nextjs
+* Routing middlewear
+https://danishshakeel.me/protected-routes-in-nextjs/

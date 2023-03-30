@@ -1,6 +1,6 @@
 export const protectedRoutes:{[key: string]: {}} = {
   '/': {},
-  '/explore': {},
+  '/search': {},
   '/add-post': {}
 }
 

@@ -5,7 +5,8 @@ const fetcher = ([username]: string[]) => {
   return getPostsFromFollowings(username).then((res) => {
     if(res){
       return res
-    }
+    } 
+    return []
   })
 }
 export const useGetMyFeed = (username: string) => {

@@ -1,11 +1,14 @@
 
 .belowImage {
-  padding-left: 4px;
-  padding-right: 4px;
+  padding: 0 16px;
 }
 .swiper {
   width: 100%;
   height: 100%;
+}
+.reactionsContainer {
+    padding: 4px 8px 0px 14px;
+
 }
 
 .swiper-slide {

@@ -6,20 +6,23 @@ import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
+import { useRouter } from "next/router";
+import { publicRoutes } from "@/constants/routes";
 
 export default function Home() {
   const auth = useAuth();
-  const { data, error, isLoading } = useGetUserInfo(auth?.uid as string);
-  React.useEffect(() => {
+  
 
-  }, [isLoading])
-  if (isLoading) {
+  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
+  console.log('abc', data)
+  
+  if (auth.isLoading) {
     return <LinearProgress />;
   }
+ 
   return (
     <div
       style={{
-        // height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

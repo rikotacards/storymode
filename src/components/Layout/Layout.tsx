@@ -14,6 +14,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
   const router = useRouter();
+ 
   const {signInWithGooglePopUp} = React.useContext(AuthContext);
 
   return (

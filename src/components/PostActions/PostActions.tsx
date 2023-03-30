@@ -23,18 +23,25 @@ export const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
   };
   return (
     <>
-  
-    <div className={styles.postactions} onClick={onOpen}>
-      <Reactions postId={postId} />
-      <ShareButton />
-      {/* <PartCount/> */}
-      <div className={styles.bookmarkButton}>
-        <BookmarkButton active={false} />
+      <div
+        className={styles.postactions}
+        onClick={(e) => {
+          e.preventDefault();
+          return onOpen();
+        }}
+      >
+        <div style={{ pointerEvents: auth?.isLoggedIn ? undefined : "none", display: 'flex'}}>
+          <Reactions postId={postId} />
+          <ShareButton />
+        </div>
+        {/* <PartCount/> */}
+        <div className={styles.bookmarkButton}>
+          <BookmarkButton active={false} />
+        </div>
       </div>
-    </div>
-     <Dialog open={open} onClose={onClose}>
-     <SignInNewUser />
-   </Dialog>
-   </>
+      <Dialog open={open} onClose={onClose}>
+        <SignInNewUser />
+      </Dialog>
+    </>
   );
 };

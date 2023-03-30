@@ -1,26 +1,37 @@
-import { PostWithImage } from "@/components/PostWithImage/PostWithImage";
-import { PostFromDbProps } from "@/firebase/db";
+import { useAuth } from "@/context/AuthContext";
 import { useGetMyFeed } from "@/hooks/useGetMyFeed";
-import {
-  Card,
-  CardContent,
-  Divider,
-  LinearProgress,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 import { Gallery } from "../Gallery/Gallery";
 import { TabPanel } from "../TabPanel/TabPanel";
 
 export const Feed: React.FC = () => {
-  const { data, isLoading, error } = useGetMyFeed("max");
-  if (!data || isLoading) {
+  const auth = useAuth();
+  const router = useRouter();
+  if (!auth?.isLoggedIn) {
+    router.push("/signin");
+  }
+
+  const userInfoRes = useGetUserInfo(auth?.uid || "");
+  console.log('infeed', userInfoRes)
+  const feedRes = useGetMyFeed(userInfoRes?.data?.username);
+  React.useEffect(() => {}, [auth?.isLoggedIn, feedRes.isLoading]);
+  if (!userInfoRes.data && feedRes?.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }
-  console.log('zyz', data)
-  
+  if (!feedRes?.data) {
+    return (
+      <Card>
+        <CardContent>
+          <Typography>{" You're currently not following anyone"}</Typography>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <div>
       <Head>
@@ -31,17 +42,8 @@ export const Feed: React.FC = () => {
       </Head>
 
       <div>
-        {data?.length === 0 && (
-          <Card>
-            <CardContent>
-              <Typography>
-                {" You're currently not following anyone"}
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
         <TabPanel value={0} index={0}>
-          <Gallery posts={data} mode="column" />
+          <Gallery posts={feedRes.data || []} mode="column" />
         </TabPanel>
       </div>
       <div style={{ height: "50px" }} />

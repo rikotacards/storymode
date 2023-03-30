@@ -12,7 +12,6 @@ const fetcher = ([username]: string[]) => {
 }
 export const  useFetchPostsByUser = (username?: string | string[]) => {
   const {data, error, isLoading} = useSWR([username, 'useFetchPostsByUser'], fetcher);
-  console.log('userFetch', data)
   return {
     posts: data || [], 
     error, 

@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext";
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {  useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Avatar, Card, CardContent, LinearProgress } from "@mui/material";
@@ -9,12 +10,13 @@ import { ProfilePersonalInfo } from "../ProfilePersonalInfo/ProfilePersonalInfo"
 import { ProfileStats } from "../ProfileStats/ProfileStats";
 import styles from "./ProfileHeader.module.css";
 export const ProfileHeader: React.FC = () => {
+  const auth = useAuth();
   const isLessThanMd = useGetBreakpoints("sm");
   const px = isLessThanMd ? 90 : 180;
   const router = useRouter();
   const uid = router.query.username as string;
   const {data, isLoading, error} = useGetUserInfo(uid)
-  console.log('profileheader', data)
+  console.log('profileheader', uid)
   if(isLoading){
     return <LinearProgress/>
   }
@@ -28,7 +30,7 @@ export const ProfileHeader: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.avatarContainer}>
-        <Avatar sx={{ width: px, height: px }}>{uid?.[0]}</Avatar>
+        <Avatar sx={{ width: px, height: px }}>{uid[0]}</Avatar>
         {isLessThanMd && <ProfileActions/>}
       </div>
       <div className={styles.actionsLinksContainer}>

@@ -4,7 +4,7 @@ import { useAuth } from './AuthContext';
 import { useGetUserInfo } from '@/hooks/useGetUserInfo';
 import { useRouter } from 'next/router';
 
-export interface Post {
+export interface PostType {
   imagePath: string;
   imageUrl?: string; 
   caption: string;
@@ -12,7 +12,7 @@ export interface Post {
 }
 
 interface AddPostContextProps {
-  posts: Post[];
+  posts: PostType[];
   addPost: () => void;
   onTextChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
   addImage: (imageUrl: string, index: number, blobData:string) => void;

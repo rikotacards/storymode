@@ -1,12 +1,10 @@
-import { Post } from "@/context/AddPostContext";
+import { PostType } from "@/context/AddPostContext";
 import React from "react";
 import styles from "./PostPreview.module.css";
 import { getImagePath } from "@/firebase/db";
-import { Dialog, Typography } from "@mui/material";
-import { PostWithImage } from "../PostWithImage/PostWithImage";
 
 interface PostPreviewProps {
-  post: Post;
+  post: PostType;
   postId: string;
 }
 export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {

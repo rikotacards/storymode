@@ -18,14 +18,11 @@ export const SignInNewUser: React.FC = () => {
   return (
     <div style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
       <div>
-    <Card>
-    <CardContent style={{display: 'flex', flexDirection: 'column'}}>
-      Sign in to play
-      <Button variant='outlined'  onClick={(e) => {e.preventDefault; return  signInWithGooglePopUp()}}>
+   
+      <Button variant='contained'  onClick={(e) => {e.preventDefault; return  signInWithGooglePopUp()}}>
         Sign In with Google
       </Button>
-    </CardContent>
-    </Card>
+    
       </div>
     </div>
   )
