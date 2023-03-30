@@ -26,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         autoHideDuration={6000}
         onClose={() => {}}
         message="Welcome"
-        action={<Button variant='contained' onClick={(e) => {e.preventDefault(); return signInWithGooglePopUp}}>Sign Up</Button>}
+        action={<Button variant='contained' onClick={(e) => {e.preventDefault();signInWithGooglePopUp()}}>Sign Up</Button>}
       />
     </div>
   );

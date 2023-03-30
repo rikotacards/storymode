@@ -23,7 +23,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({imagePath}) =
       alignItems: 'center', 
       overflow: 'hidden',  
       position: 'relative'}}>
-      <Image 
+      <img 
       style={{objectFit: 'cover'}} 
       alt={imagePath}
       src={path}
