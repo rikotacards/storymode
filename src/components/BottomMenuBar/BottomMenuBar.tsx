@@ -12,7 +12,6 @@ export const BottomMenuBar: React.FC = () => {
   const route = useRouter();
   const auth = useAuth();
   const menuItems = useGetMenuItems();
-  console.log("BMENU", auth?.isLoggedIn)
   if (!auth.isLoggedIn) {
     return null;
   }

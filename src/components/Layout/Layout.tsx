@@ -21,7 +21,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className={styles.main}>
       <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
       <main className={styles.mainColumn}>{children}</main>
-      {md && <BottomMenuBar />}
+      {auth?.isLoggedIn && md && <BottomMenuBar />}
       <Snackbar
         open={!auth?.isLoggedIn && router.pathname=='/[username]'}
         autoHideDuration={6000}

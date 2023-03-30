@@ -12,6 +12,9 @@ import { publicRoutes } from "@/constants/routes";
 export default function Home() {
   const auth = useAuth();
   
+  if(!auth.isLoggedIn){
+    return <LinearProgress sx={{width: '100%'}}/>
+  }
 
   const { data, isLoading } = useGetUserInfo(auth?.uid as string);
   console.log('abc', data)

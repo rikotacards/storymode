@@ -277,10 +277,8 @@ export const getPostsFromFollowings = async(username:string) => {
   let posts: PostFromDbProps[] = [];
   users.forEach(async(user) => {
     getPostByUsername(user).then((post) => {
-      console.log(post)
       post.forEach((data) => posts.push(data))
     })
   })
-  console.log('osers', posts)
   return posts;
 }

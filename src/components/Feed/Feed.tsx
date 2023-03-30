@@ -11,10 +11,7 @@ import { TabPanel } from "../TabPanel/TabPanel";
 export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
-  if (!auth?.isLoggedIn) {
-    router.push("/signin");
-  }
-
+ 
   const userInfoRes = useGetUserInfo(auth?.uid || "");
   console.log('infeed', userInfoRes)
   const feedRes = useGetMyFeed(userInfoRes?.data?.username);
@@ -24,9 +21,9 @@ export const Feed: React.FC = () => {
   }
   if (!feedRes?.data) {
     return (
-      <Card>
+      <Card sx={{margin: 1, display: 'flex'}}>
         <CardContent>
-          <Typography>{" You're currently not following anyone"}</Typography>
+          <Typography>{"You're currently not following anyone"}</Typography>
         </CardContent>
       </Card>
     );
