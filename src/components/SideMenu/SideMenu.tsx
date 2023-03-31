@@ -20,6 +20,8 @@ import { useAuth } from "@/context/AuthContext";
 export const sideMenuWidth = 240;
 import MenuIcon from "@mui/icons-material/Menu";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { auth } from "@/firebase/clientApp";
+import { useRouter } from "next/router";
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
   { name: "Search", path: "/search", icon: <ExploreIcon /> },
@@ -64,9 +66,10 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const SideMenu: React.FC = () => {
-  const auth = useAuth();
-  const {data} = useGetUserInfo(auth?.uid as string);
-  if (!auth.isLoggedIn) {
+  const authHook = useAuth();
+  const router = useRouter();
+  const {data} = useGetUserInfo(authHook?.user?.uid as string);
+  if (!authHook.isLoggedIn) {
     return null;
   }
   const all = [
@@ -94,7 +97,7 @@ export const SideMenu: React.FC = () => {
             name={"sign out"}
             icon={<MenuIcon />}
             path="/signout"
-            onClick={auth.signOut}
+            onClick={() => {router.push('/signin'); authHook.onLogout()}}
           />
         </div>
       </Drawer>

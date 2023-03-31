@@ -1,3 +1,5 @@
+'use client';
+
 import Head from "next/head";
 import React from "react";
 
@@ -6,20 +8,22 @@ import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
+import { useRouter } from "next/router";
+import { publicRoutes } from "@/constants/routes";
 
 export default function Home() {
   const auth = useAuth();
-  const { data, error, isLoading } = useGetUserInfo(auth?.uid as string);
-  React.useEffect(() => {
-
-  }, [isLoading])
-  if (isLoading) {
-    return <LinearProgress />;
+  console.log('INDEX RENDERD')
+  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
+  
+  if(!auth.isLoggedIn){
+    return <LinearProgress sx={{width: '100%'}}/>
   }
+
+ 
   return (
     <div
       style={{
-        // height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

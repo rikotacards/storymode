@@ -14,14 +14,13 @@ import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
 import { LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
 
-export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
+export const Post: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
   const images: string[] = [];
   const captions: string[] = [];
   const router = useRouter();
   const usernameInPath = router.query.username;
   const postRes = useFetchPostsByUser(usernameInPath);
-  console.log('bob', postRes)
  
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
@@ -77,14 +76,17 @@ export const PostWithImage: React.FC<PostFromDbProps> = (props) => {
           ))}
         </Swiper>
       )}
+      <div className={styles.reactionsContainer}>
+
       <PostActions postId={postId} />
+      </div>
       {hasImages && (
         <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>
           {captions.map((caption, i) => {
             return (
               <SwiperSlide key={caption + i}>
                 <div className={styles.belowImage} key={caption + i}>
-                  <PostTextContent caption={caption} />
+                  <PostTextContent fontWeight={500} caption={caption} />
                 </div>
               </SwiperSlide>
             );

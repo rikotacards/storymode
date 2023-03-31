@@ -19,17 +19,17 @@ import {
   ref,
   uploadString,
 } from "firebase/storage";
-import { Post } from "@/context/AddPostContext";
+import { PostType } from "@/context/AddPostContext";
 const storage = getStorage();
 
 interface uploadPostProps {
   username: string;
-  posts: Post[];
+  posts: PostType[];
 }
 
 export interface PostFromDbProps {
   author: string;
-  content: Post[];
+  content: PostType[];
   postTime: number;
   postId: string;
 }
@@ -67,7 +67,7 @@ export const uploadPost = async (args: uploadPostProps) => {
   const collectionRef = collection(firestore, "content", username, "posts");
   const docRef = doc(collectionRef);
 
-  const contentToUpload: Post[] = [];
+  const contentToUpload: PostType[] = [];
   // increment post count
   const userProfileRef = collection(firestore, "userProfiles");
   const userProfileDocRef = doc(userProfileRef, username)
@@ -276,10 +276,8 @@ export const getPostsFromFollowings = async(username:string) => {
   let posts: PostFromDbProps[] = [];
   users.forEach(async(user) => {
     getPostByUsername(user).then((post) => {
-      console.log(post)
       post.forEach((data) => posts.push(data))
     })
   })
-  console.log('osers', posts)
   return posts;
 }

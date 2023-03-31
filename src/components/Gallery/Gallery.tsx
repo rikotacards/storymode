@@ -2,10 +2,8 @@ import { PostFromDbProps } from "@/firebase/db";
 import React from "react";
 import styles from "./Gallery.module.css";
 import { PostPreview } from "../PostPreview/PostPreview";
-import { PostWithImage } from "../PostWithImage/PostWithImage";
-import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
-import { LinearProgress } from "@mui/material";
-import { useRouter } from "next/router";
+import { Post } from "../PostWithImage/PostWithImage";
+
 interface GalleryProps {
   // posts: PostFromDbProps[];
   mode: "grid" | "column";
@@ -24,7 +22,7 @@ export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
       );
     }
     return (
-      <PostWithImage
+      <Post
         postTime={post.postTime}
         key={i}
         author={post.author}

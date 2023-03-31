@@ -5,7 +5,7 @@ import { useGetUserInfo } from "./useGetUserInfo";
 import React from 'react';
 export const useGetMenuItems = () => {
   const auth = useAuth();
-  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
+  const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
   
   
   

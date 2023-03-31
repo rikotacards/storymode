@@ -11,11 +11,11 @@ interface UserInfoProps {
 }
 
 const fetcher = ([uid]: string[]) => {
-  if(!uid){
-    return undefined
-  }
+ 
   return getUserInfo(uid as string).then((res) => {
     return res
+  }).catch((e) => {
+    return e
   })
 }
 export const useGetUserInfo = (uid: string | string[]) => {
