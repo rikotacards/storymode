@@ -25,7 +25,7 @@ export default function Search() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  const { data, error, isLoading } = useGetUserInfo(auth?.uid as string);
+  const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid as string);
   console.log(data);
   if (isLoading) {
     return <LinearProgress />;

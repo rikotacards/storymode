@@ -6,6 +6,7 @@ import { SideMenu } from "../SideMenu/SideMenu";
 import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
 import styles from "./Layout.module.css";import { AuthContext, useAuth } from '@/context/AuthContext';
 import { useRouter } from "next/router";
+import { signInWithGooglePopUp } from "@/firebase/signInWithGooglePop";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,8 +16,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const auth = useAuth();
   const router = useRouter();
  
-  const {signInWithGooglePopUp} = React.useContext(AuthContext);
-
   return (
     <div className={styles.main}>
       <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
@@ -27,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         autoHideDuration={6000}
         onClose={() => {}}
         message="Welcome"
-        action={<Button variant='contained' onClick={(e) => {e.preventDefault();signInWithGooglePopUp()}}>Sign Up</Button>}
+        action={<Button variant='contained' onClick={(e) => {e.preventDefault();signInWithGooglePopUp().then(() => {router.push('/')})}}>Sign Up</Button>}
       />
     </div>
   );

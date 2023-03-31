@@ -20,19 +20,21 @@ interface MyAppProps extends AppProps {
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
-    <CacheProvider value={emotionCache}>
-      <AuthContextWrapper>
+    <AuthContextWrapper>
+      <CacheProvider value={emotionCache}>
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
+          <RouteGuard>
             <Layout>
               <Component {...pageProps} />
             </Layout>
+          </RouteGuard>
         </ThemeProvider>
-      </AuthContextWrapper>
-    </CacheProvider>
+      </CacheProvider>
+    </AuthContextWrapper>
   );
 }

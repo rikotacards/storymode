@@ -191,7 +191,6 @@ export const getUserInfo = async (userId: string) => {
   try {
     const docRef = await getDoc(doc(firestore, "userProfiles", userId));
     if (docRef.exists()) {
-      console.log(docRef.data())
       return docRef.data();
     } else {
       return undefined

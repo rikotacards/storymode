@@ -3,10 +3,11 @@ import {  createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, U
 import { Button, Card, CardContent, Input } from '@mui/material';
 import { AuthContext } from '@/context/AuthContext';
 import { auth } from '@/firebase/clientApp';
+import { signInWithGooglePopUp } from '@/firebase/signInWithGooglePop';
 
 export const SignInNewUser: React.FC = () => {
-  const {signInWithGooglePopUp} = React.useContext(AuthContext);
- 
+
+  
   
   const [state, setState] = React.useState({})
   const [user, setUser] = React.useState<User | undefined>()

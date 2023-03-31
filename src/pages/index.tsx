@@ -1,3 +1,5 @@
+'use client';
+
 import Head from "next/head";
 import React from "react";
 
@@ -11,17 +13,13 @@ import { publicRoutes } from "@/constants/routes";
 
 export default function Home() {
   const auth = useAuth();
+  console.log('INDEX RENDERD')
+  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
   
   if(!auth.isLoggedIn){
     return <LinearProgress sx={{width: '100%'}}/>
   }
 
-  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
-  console.log('abc', data)
-  
-  if (auth.isLoading) {
-    return <LinearProgress />;
-  }
  
   return (
     <div

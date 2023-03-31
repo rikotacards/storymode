@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/context/AuthContext";
 import { useGetMyFeed } from "@/hooks/useGetMyFeed";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
@@ -10,10 +11,8 @@ import { TabPanel } from "../TabPanel/TabPanel";
 
 export const Feed: React.FC = () => {
   const auth = useAuth();
-  const router = useRouter();
  
-  const userInfoRes = useGetUserInfo(auth?.uid || "");
-  console.log('infeed', userInfoRes)
+  const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
   const feedRes = useGetMyFeed(userInfoRes?.data?.username);
   React.useEffect(() => {}, [auth?.isLoggedIn, feedRes.isLoading]);
   if (!userInfoRes.data && feedRes?.isLoading) {

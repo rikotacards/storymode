@@ -34,7 +34,7 @@ export const Profile: React.FC<ProfileProps> = () => {
   const router = useRouter();
   const usernameInPath = router.query.username;
   const auth = useAuth();
-  const uid = auth?.uid || "";
+  const uid = auth?.user?.uid || "";
 
   const usernameRes = useGetUidFromUsername(usernameInPath);
   const postRes = useFetchPostsByUser(usernameInPath);

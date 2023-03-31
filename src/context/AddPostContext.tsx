@@ -31,7 +31,7 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
   const [posts, setPosts] = React.useState([{imageUrl:'', caption:'', blobData: '', imagePath: ''}])
   const auth = useAuth();
   const route = useRouter();
-  const {data} = useGetUserInfo(auth?.uid as string)
+  const {data} = useGetUserInfo(auth?.user?.uid as string)
   const onPostClick = async() => {
     if(!auth?.user?.uid){
       console.log('user needs to be logged in')

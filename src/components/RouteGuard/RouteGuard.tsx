@@ -10,13 +10,22 @@ interface RouteGuardProps {
 }
 export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   const {children} = props;
-  const [show, setShow] = React.useState(false);
-  const route = useRouter();
+  const {isLoading, isLoggedIn, user} = useAuth();
+  const router = useRouter();
+  const isProtectedPath = protectedRoutes[router.pathname] !== undefined
+  React.useEffect(() => {
+    console.log('in effect', isLoading, isLoggedIn)
+    if(!isLoading && !isLoggedIn && isProtectedPath){
+      router.push('/signin')
+    }
+  }, [isLoading, isLoggedIn, isProtectedPath])
   
-  if(!auth.currentUser){
-    return <SignInNewUser/>
-  }
- 
+  if((isLoading || !isLoggedIn) && isProtectedPath){
+    console.log('were here', isLoading, isLoggedIn)
+    return (
+      <LinearProgress sx={{width: '100%'}}/>
+    )
+  } 
 
   return <div>{children}</div>;
 };
