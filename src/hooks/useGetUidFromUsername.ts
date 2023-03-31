@@ -1,14 +1,16 @@
-import { getUsername } from '@/firebase/db';
+import { getPostsFromFollowings, getUidFromUsername, getUsernames } from '@/firebase/db';
 import useSWR from 'swr';
 
 const fetcher = ([username]: string[]) => {
-  return getUsername(username).then((res) => {
+  return getUidFromUsername(username).then((res) => {
+    console.log(res)
     if(res){
       return res
-    }
+    } 
+    return []
   })
 }
-export const useGetUidFromUsername = (username?: string | string[]) => {
+export const useGetUidFromUsername = (username: string) => {
   const {data, error, isLoading} = useSWR([username, 'useGetUidFromUsername'], fetcher);
   return {
     data, 

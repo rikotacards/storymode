@@ -25,7 +25,7 @@ import { PostType } from "@/context/AddPostContext";
 const storage = getStorage();
 
 interface uploadPostProps {
-  username: string;
+  uid: string;
   posts: PostType[];
 }
 
@@ -36,11 +36,11 @@ export interface PostFromDbProps {
   postId: string;
 }
 
-export const deletePost = async (username: string, postId: string) => {
-  await deleteDoc(doc(firestore, "content", username, "posts", postId));
+export const deletePost = async (uid: string, postId: string) => {
+  await deleteDoc(doc(firestore, "content", uid, "posts", postId));
   await deleteDoc(doc(firestore, "reactions", postId));
   // Create a root reference
-  const listRef = ref(storage, `${username}/${postId}`);
+  const listRef = ref(storage, `${uid}/${postId}`);
   // Create a reference
   listAll(listRef).then((res) => {
     res.items.forEach((item) => {
@@ -55,39 +55,53 @@ export const deletePost = async (username: string, postId: string) => {
     });
   });
 
-  const docRef = doc(firestore, "userProfiles", username);
+  const docRef = doc(firestore, "userProfiles", uid);
   await setDoc(docRef, { postCount: increment(-1) }, { merge: true });
 };
 
+const updateUidToUsername = async (uid: string, username: string) => {
+  const uidToUsernameRef = doc(firestore, "uidToUsername", uid);
+  await setDoc(uidToUsernameRef, { username: username || "" });
+};
+//init a user to db
 export const addUserToDb = async (userId: string) => {
   // Create mapping between uid to username
-  const uidToUsernameRef = doc(firestore, "uidToUsername", userId);
-  setDoc(uidToUsernameRef, {username: ""})
+  updateUidToUsername(userId, "");
 
   // add self as follower
-  const followersRef = doc(firestore, "userProfiles", userId, "followers", userId)
-  setDoc(followersRef, {followDate:  Timestamp.fromDate(new Date())}, {merge: true})
-  
+  const followersRef = doc(
+    firestore,
+    "userProfiles",
+    userId,
+    "followers",
+    userId
+  );
+  setDoc(
+    followersRef,
+    { followDate: Timestamp.fromDate(new Date()) },
+    { merge: true }
+  );
+
   // create a userProfile
   const userProfileRef = doc(firestore, "userProfiles", userId);
   setDoc(userProfileRef, { userId: userId }, { merge: true });
 };
 
 export const uploadPost = async (args: uploadPostProps) => {
-  const { username, posts } = args;
-  const collectionRef = collection(firestore, "content", username, "posts");
+  const { uid, posts } = args;
+  const collectionRef = collection(firestore, "content", uid, "posts");
   const docRef = doc(collectionRef);
 
   const contentToUpload: PostType[] = [];
   // increment post count
   const userProfileRef = collection(firestore, "userProfiles");
-  const userProfileDocRef = doc(userProfileRef, username);
+  const userProfileDocRef = doc(userProfileRef, uid);
   await setDoc(userProfileDocRef, { postCount: increment(1) }, { merge: true });
   // add posts start
   try {
     posts.forEach(async (post, i) => {
       // 1) we save images into a directory that references the post
-      const storageRef = ref(storage, `${username}/${docRef.id}/${i}.jpg`);
+      const storageRef = ref(storage, `${uid}/${docRef.id}/${i}.jpg`);
       if (!post?.blobData?.length) {
         // NO PHOTOS
         contentToUpload.push({
@@ -97,9 +111,9 @@ export const uploadPost = async (args: uploadPostProps) => {
 
         // These 'then' are linked up because we need the content to upload array
         // if we didn't use the then, then the array would be empty.
-        await setDoc(doc(firestore, "content", username, "posts", docRef.id), {
+        await setDoc(doc(firestore, "content", uid, "posts", docRef.id), {
           postTime: Timestamp.fromDate(new Date()),
-          author: username,
+          author: uid,
           content: contentToUpload,
           postId: docRef.id,
         });
@@ -120,10 +134,10 @@ export const uploadPost = async (args: uploadPostProps) => {
           // These 'then' are linked up because we need the content to upload array
           // if we didn't use the then, then the array would be empty.
           await setDoc(
-            doc(firestore, "content", username, "posts", docRef.id),
+            doc(firestore, "content", uid, "posts", docRef.id),
             {
               postTime: Timestamp.fromDate(new Date()),
-              author: username,
+              author: uid,
               content: contentToUpload,
               postId: docRef.id,
             }
@@ -175,6 +189,31 @@ export const getUsername = async (username: string) => {
     console.log(e);
   }
 };
+export const getUsernameFromUid = async (uid: string) => {
+  try {
+    const docRef = await getDoc(doc(firestore, "uidToUsername", uid));
+    if (docRef.exists()) {
+      return docRef.data();
+    } else {
+      return undefined;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const getUidFromUsername = async (username: string) => {
+  try {
+    const docRef = await getDoc(doc(firestore, "usernames", username));
+    if (docRef.exists()) {
+      return docRef.id;
+    } else {
+      return undefined;
+    }
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
 
 export const updateUserProfileInfo = async (
   uid: string,
@@ -185,19 +224,23 @@ export const updateUserProfileInfo = async (
   await setDoc(docRef, update, { merge: true });
 };
 
-export const setUsername = async (username: string, uid: string) => {
+export const updateUsernameToUid = async (uid: string, username: string) => {
   const docRef = doc(firestore, "usernames", username);
   await setDoc(docRef, { uid: uid }, { merge: true }).then(() => {
     return { status: "done" };
   });
+};
+
+export const setUsername = async (username: string, uid: string) => {
+  await updateUidToUsername(uid, username);
+  await updateUsernameToUid(uid, username)
   await updateUserProfileInfo(uid, { username });
 };
 
 export const getUserInfo = async (userId?: string) => {
-  
   try {
-    if(!userId){
-      return undefined
+    if (!userId) {
+      return undefined;
     }
     const userInfo = await getDoc(doc(firestore, "userProfiles", userId));
     if (userInfo.exists()) {
@@ -242,10 +285,9 @@ export const getReactions = async (docId: string) => {
     }
     const reactions = queryDoc.data();
     return reactions;
-  } catch (e){
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
-  
 };
 
 export const getImagePath = (imagePath: string) => {
@@ -257,14 +299,14 @@ export const getImagePath = (imagePath: string) => {
     });
 };
 
-export const getPostByUsername = async (username: string) => {
+export const getPostsByUid = async (uid: string) => {
   try {
-    if (!username) {
+    if (!uid) {
       return [];
     }
     const querySnapshot = await getDocs(
-      collection(firestore, "content", username, "posts")
-    )
+      collection(firestore, "content", uid, "posts")
+    );
     const post = querySnapshot.docs.map((doc) => {
       // doc.data() is never undefined for query doc snapshots
       const data = {
@@ -280,22 +322,24 @@ export const getPostByUsername = async (username: string) => {
   }
 };
 
-const getMyFollowings = async (username: string) => {
+const getMyFollowings = async (uid: string) => {
   const querySnapshot = await getDocs(
-    collection(firestore, "userProfiles", username, "following")
+    collection(firestore, "userProfiles", uid, "following")
   );
   return querySnapshot.docs.map((data) => data.id);
 };
 
 // feed
-export const getPostsFromFollowings = async (username: string) => {
-  const users = await getMyFollowings(username);
+export const getPostsFromFollowings = async (uid: string) => {
+  const users = await getMyFollowings(uid);
   const postsPerUser = await Promise.all(
-    users.map(async (user) => await getPostByUsername(user))
+    users.map(async (user) => await getPostsByUid(user))
   ).then((res) => {
-    return res
+    return res;
   });
   let res: PostFromDbProps[] = [];
-  postsPerUser.forEach((post) => {res = [...res, ...post as PostFromDbProps[]]})
-  return res.sort((a,b) => b.postTime-a.postTime)
+  postsPerUser.forEach((post) => {
+    res = [...res, ...(post as PostFromDbProps[])];
+  });
+  return res.sort((a, b) => b.postTime - a.postTime);
 };

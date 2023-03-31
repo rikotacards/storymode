@@ -1,8 +1,8 @@
-import { getPostByUsername } from '@/firebase/db'
+import { getPostsByUid } from '@/firebase/db'
 import useSWR from 'swr'
 
 const fetcher = ([username]: string[]) => {
-  return getPostByUsername(username).then((res) => {
+  return getPostsByUid(username).then((res) => {
     if(res){
       return res
     } 

@@ -15,9 +15,6 @@ export const BottomMenuBar: React.FC = () => {
   const auth = useAuth();
   const theme = useTheme();
   const menuItems = useGetMenuItems();
-  if (!auth.isLoggedIn) {
-    return null;
-  }
 
   let items = menuItems.map((item, i) => (
     <div

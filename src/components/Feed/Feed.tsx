@@ -18,9 +18,9 @@ import { TabPanel } from "../TabPanel/TabPanel";
 export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
-  console.log(auth)
   const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
-  const feedRes = useGetMyFeed(userInfoRes?.data?.username);
+  console.log('brozki',  userInfoRes)
+  const feedRes = useGetMyFeed(auth?.user?.uid || "");
   if (!userInfoRes.data && feedRes?.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }

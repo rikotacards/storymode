@@ -39,7 +39,7 @@ export const AddPostContextWrapper: React.FC<PostContextProps> = ({children}) =>
     }
    try {
     const res = await  uploadPost({
-      username:data?.username || auth.user.uid, 
+      uid: auth.user.uid, 
       posts
     }).then(() => {
       route.push('/')

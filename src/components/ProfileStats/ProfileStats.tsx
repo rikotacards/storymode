@@ -1,5 +1,3 @@
-import { useAuth } from "@/context/AuthContext";
-import { useGetUidFromUsername } from "@/hooks/useFetchUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { useRouter } from "next/router";
 import React from "react";
