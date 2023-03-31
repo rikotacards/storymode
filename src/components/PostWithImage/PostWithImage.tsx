@@ -10,7 +10,7 @@ import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
+import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import { LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
 
@@ -20,7 +20,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   const captions: string[] = [];
   const router = useRouter();
   const usernameInPath = router.query.username;
-  const postRes = useFetchPostsByUser(usernameInPath);
+  const postRes = useGetPostsByUid(usernameInPath);
  
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);

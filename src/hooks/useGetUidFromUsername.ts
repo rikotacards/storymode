@@ -1,4 +1,4 @@
-import { getPostsFromFollowings, getUidFromUsername, getUsernames } from '@/firebase/db';
+import {  getUidFromUsername } from '@/firebase/db';
 import useSWR from 'swr';
 
 const fetcher = ([username]: string[]) => {

@@ -5,7 +5,7 @@ import { ProfileHeaderSmall } from "@/components/ProfileHeaderSmall/ProfileHeade
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
 import { getUidFromUsername, PostFromDbProps } from "@/firebase/db";
-import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
+import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import {
   Button,
@@ -41,7 +41,7 @@ export const Profile: React.FC<ProfileProps> = () => {
     posts: PostFromDbProps[];
     error: any;
     isLoading: boolean;
-} = useFetchPostsByUser(uidFromUsernameRes.data);
+} = useGetPostsByUid(uidFromUsernameRes?.data?.uid);
   if (postRes.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }

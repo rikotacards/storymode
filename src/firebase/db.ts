@@ -205,7 +205,7 @@ export const getUidFromUsername = async (username: string) => {
   try {
     const docRef = await getDoc(doc(firestore, "usernames", username));
     if (docRef.exists()) {
-      return docRef.id;
+      return docRef.data()
     } else {
       return undefined;
     }
