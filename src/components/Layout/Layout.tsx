@@ -7,7 +7,7 @@ import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
 import styles from "./Layout.module.css";
 import { AuthContext, useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
-import { signInWithGooglePopUp } from "@/firebase/signInWithGooglePop";
+import { useSignInWithGooglePopUp } from "@/firebase/useSignInWithGooglePop";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,6 +16,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
   const router = useRouter();
+  const signIn = useSignInWithGooglePopUp();
 
   return (
     <div className={styles.main}>
@@ -32,7 +33,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             variant="contained"
             onClick={(e) => {
               e.preventDefault();
-              signInWithGooglePopUp();
+              signIn.signIn();
             }}
           >
             Sign Up
