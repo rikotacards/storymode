@@ -6,6 +6,8 @@ import {
   getDoc,
   getDocs,
   increment,
+  orderBy,
+  query,
   setDoc,
   Timestamp,
   updateDoc,
@@ -58,6 +60,15 @@ export const deletePost = async (username: string, postId: string) => {
 };
 
 export const addUserToDb = async (userId: string) => {
+  // Create mapping between uid to username
+  const uidToUsernameRef = doc(firestore, "uidToUsername", userId);
+  setDoc(uidToUsernameRef, {username: ""})
+
+  // add self as follower
+  const followersRef = doc(firestore, "userProfiles", userId, "followers", userId)
+  setDoc(followersRef, {followDate:  Timestamp.fromDate(new Date())}, {merge: true})
+  
+  // create a userProfile
   const userProfileRef = doc(firestore, "userProfiles", userId);
   setDoc(userProfileRef, { userId: userId }, { merge: true });
 };
@@ -70,12 +81,8 @@ export const uploadPost = async (args: uploadPostProps) => {
   const contentToUpload: PostType[] = [];
   // increment post count
   const userProfileRef = collection(firestore, "userProfiles");
-  const userProfileDocRef = doc(userProfileRef, username)
-  await setDoc(
-    userProfileDocRef,
-    { postCount: increment(1) },
-    { merge: true }
-  );
+  const userProfileDocRef = doc(userProfileRef, username);
+  await setDoc(userProfileDocRef, { postCount: increment(1) }, { merge: true });
   // add posts start
   try {
     posts.forEach(async (post, i) => {
@@ -99,7 +106,7 @@ export const uploadPost = async (args: uploadPostProps) => {
 
         return;
       }
-      
+
       await uploadString(storageRef, post.blobData, "data_url")
         .then((snapshot) => {
           posts[i]["imagePath"] = snapshot.ref.fullPath;
@@ -160,40 +167,43 @@ export const getUsername = async (username: string) => {
   try {
     const docRef = await getDoc(doc(firestore, "usernames", username));
     if (docRef.exists()) {
-      return docRef.data()
+      return docRef.data();
     } else {
-      return undefined
+      return undefined;
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export const updateUserProfileInfo = async(uid: string, update: {[key: string]: any}) => {
+export const updateUserProfileInfo = async (
+  uid: string,
+  update: { [key: string]: any }
+) => {
   const collectionRef = collection(firestore, "userProfiles");
   const docRef = doc(collectionRef, uid);
-  await setDoc(
-    docRef,
-    update,
-    { merge: true }
-  );
-}
+  await setDoc(docRef, update, { merge: true });
+};
 
 export const setUsername = async (username: string, uid: string) => {
-  const docRef = doc(firestore, 'usernames', username )
-  await setDoc(docRef, {uid: uid}, {merge: true}).then(() => {
-    return {status: 'done'}
-  })
-  await updateUserProfileInfo(uid, {username})
-}
+  const docRef = doc(firestore, "usernames", username);
+  await setDoc(docRef, { uid: uid }, { merge: true }).then(() => {
+    return { status: "done" };
+  });
+  await updateUserProfileInfo(uid, { username });
+};
 
-export const getUserInfo = async (userId: string) => {
+export const getUserInfo = async (userId?: string) => {
+  
   try {
-    const docRef = await getDoc(doc(firestore, "userProfiles", userId));
-    if (docRef.exists()) {
-      return docRef.data();
-    } else {
+    if(!userId){
       return undefined
+    }
+    const userInfo = await getDoc(doc(firestore, "userProfiles", userId));
+    if (userInfo.exists()) {
+      return userInfo.data();
+    } else {
+      return undefined;
     }
   } catch (e) {
     console.log(e);
@@ -201,12 +211,10 @@ export const getUserInfo = async (userId: string) => {
 };
 
 export const getUsernames = async () => {
-  const querySnapshot = await getDocs(
-    collection(firestore, "usernames")
-  );
-  const post = querySnapshot.docs
+  const querySnapshot = await getDocs(collection(firestore, "usernames"));
+  const post = querySnapshot.docs;
   return post;
-}
+};
 
 export const addNewReaction = async ({
   docId,
@@ -228,11 +236,16 @@ export const addNewReaction = async ({
 
 export const getReactions = async (docId: string) => {
   const queryDoc = await getDoc(doc(firestore, "reactions", docId));
-  if (!queryDoc.exists()) {
-    return {};
+  try {
+    if (!queryDoc.exists()) {
+      return {};
+    }
+    const reactions = queryDoc.data();
+    return reactions;
+  } catch (e){
+    console.log(e)
   }
-  const reactions = queryDoc.data();
-  return reactions;
+  
 };
 
 export const getImagePath = (imagePath: string) => {
@@ -245,39 +258,45 @@ export const getImagePath = (imagePath: string) => {
 };
 
 export const getPostByUsername = async (username: string) => {
-  if(!username){
-    return []
+  try {
+    if (!username) {
+      return [];
+    }
+    const querySnapshot = await getDocs(
+      collection(firestore, "content", username, "posts")
+    )
+    const post = querySnapshot.docs.map((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      const data = {
+        ...doc.data(),
+        postTime: doc.data().postTime?.toDate().getTime(),
+        postId: doc.id,
+      };
+      return data as PostFromDbProps;
+    });
+    return post;
+  } catch (e) {
+    console.log("eee", e);
+    return e;
   }
-  const querySnapshot = await getDocs(
-    collection(firestore, "content", username, "posts")
-  );
-  const post = querySnapshot.docs.map((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    const data = {
-      ...doc.data(),
-      postTime: doc.data().postTime?.toDate().getTime(),
-      postId: doc.id,
-    };
-    return data as PostFromDbProps
-  });
-  console.log("GET POST BY USERNAME", post)
-  return post;
 };
 
 const getMyFollowings = async (username: string) => {
   const querySnapshot = await getDocs(
     collection(firestore, "userProfiles", username, "following")
   );
-  return querySnapshot.docs.map((data) => data.id)
-}
+  return querySnapshot.docs.map((data) => data.id);
+};
 
-export const getPostsFromFollowings = async(username:string) => {
+// feed
+export const getPostsFromFollowings = async (username: string) => {
   const users = await getMyFollowings(username);
-  let posts: PostFromDbProps[] = [];
-  users.forEach(async(user) => {
-    getPostByUsername(user).then((post) => {
-      post.forEach((data) => posts.push(data))
-    })
-  })
-  return posts;
-}
+  const postsPerUser = await Promise.all(
+    users.map(async (user) => await getPostByUsername(user))
+  ).then((res) => {
+    return res
+  });
+  let res: PostFromDbProps[] = [];
+  postsPerUser.forEach((post) => {res = [...res, ...post as PostFromDbProps[]]})
+  return res.sort((a,b) => b.postTime-a.postTime)
+};

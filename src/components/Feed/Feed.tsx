@@ -1,8 +1,14 @@
-
 import { useAuth } from "@/context/AuthContext";
 import { useGetMyFeed } from "@/hooks/useGetMyFeed";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,18 +17,31 @@ import { TabPanel } from "../TabPanel/TabPanel";
 
 export const Feed: React.FC = () => {
   const auth = useAuth();
- 
+  const router = useRouter();
+  console.log(auth)
   const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
   const feedRes = useGetMyFeed(userInfoRes?.data?.username);
-  React.useEffect(() => {}, [auth?.isLoggedIn, feedRes.isLoading]);
   if (!userInfoRes.data && feedRes?.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }
-  if (!feedRes?.data) {
+  const hasNoContent =
+    !feedRes.isLoading && userInfoRes?.data?.followersCount === 0;
+  if (hasNoContent) {
     return (
-      <Card sx={{margin: 1, display: 'flex'}}>
+      <Card sx={{ margin: 1, display: "flex" }}>
         <CardContent>
-          <Typography>{"You're currently not following anyone"}</Typography>
+          <Typography variant="body2">
+            {"You're currently not following anyone"}
+          </Typography>
+          <CardActions>
+            <Button
+              sx={{ margin: 1 }}
+              onClick={() => router.push("/search")}
+              variant="contained"
+            >
+              Explore
+            </Button>
+          </CardActions>
         </CardContent>
       </Card>
     );
