@@ -11,7 +11,6 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
   const [path, setPath] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
   const toggleLoad = () => {
-    console.log("toggle!");
     setLoading(!isLoading);
   };
   if (!imagePath) {

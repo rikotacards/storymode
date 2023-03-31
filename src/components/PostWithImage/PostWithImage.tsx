@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
-import { LinearProgress } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 
@@ -23,7 +23,11 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   const router = useRouter();
   const usernameInPath = router.query.username;
   const postRes = useGetPostsByUid(usernameInPath);
- 
+  const dateObject = new Date(postTime)
+  const dateString = dateObject.toLocaleDateString('en-us', {month:'short',day: 'numeric' , year:'numeric'})
+  const date = dateObject.getDate()
+  const month = dateObject.getMonth();
+  const year = dateObject.getFullYear();
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
     captions.push(c.caption);
@@ -95,6 +99,9 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           })}
         </Swiper>
       )}
+      < Typography variant='caption' sx={{marginLeft: '14px'}}>
+        {dateString}
+      </Typography>
     </PostWrapper>
   );
 };

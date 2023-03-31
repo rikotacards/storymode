@@ -34,9 +34,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
     auth.signOut();
   };
   React.useEffect(() => {
-    console.log("useEffectRan");
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log(user)
      
         setLogIn(!!user);
         setUser(user);

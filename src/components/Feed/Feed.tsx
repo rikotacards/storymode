@@ -19,7 +19,6 @@ export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
   const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
-  console.log('brozki',  userInfoRes)
   const feedRes = useGetMyFeed(auth?.user?.uid || "");
   if (!userInfoRes.data && feedRes?.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;

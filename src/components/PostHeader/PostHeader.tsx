@@ -33,7 +33,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
       </div>
       <div className={styles.authorInfo}>
         <Typography sx={{ mr: 1 }}>{author || "Michael"}</Typography>
-        <Typography variant="caption">San Diego</Typography>
+        {/* <Typography variant="caption">San Diego</Typography> */}
       </div>
       <div className={styles["more-btn"]}>
         <IconButton onClick={onClick}>
