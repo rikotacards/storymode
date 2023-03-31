@@ -22,6 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { auth } from "@/firebase/clientApp";
 import { useRouter } from "next/router";
+import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
   { name: "Search", path: "/search", icon: <ExploreIcon /> },
@@ -68,23 +69,17 @@ const Drawer = styled(MuiDrawer, {
 export const SideMenu: React.FC = () => {
   const authHook = useAuth();
   const router = useRouter();
+  const menuItems = useGetMenuItems();
   const {data} = useGetUserInfo(authHook?.user?.uid as string);
   if (!authHook.isLoggedIn) {
     return null;
   }
-  const all = [
-    ...menuItems,
-    {
-      name: "Profile",
-      path: "/" + (data?.username || "signin"),
-      icon: <Avatar sx={{ height: 24, width: 24 }} />,
-    },
-  ];
+  
 
   return (
     <Paper>
       <Drawer anchor={"left"} open={true} variant="permanent">
-        {all.map((item) => (
+        {menuItems.map((item) => (
           <MenuItem
             icon={item.icon}
             key={item.name}

@@ -8,7 +8,7 @@ interface AuthContextWrapperProps {
 
 interface AuthContextState {
   isLoggedIn: boolean;
-  uid: string;
+  uid: string | null | undefined;
   user: User | null | undefined;
   isLoading: boolean;
   onLogout: () => void;
@@ -24,7 +24,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = React.useState<User | null | undefined>();
-  const [uid, setUid] = React.useState("");
+  const [uid, setUid] = React.useState<string | null | undefined>();
   const [isLoading, setLoading] = React.useState(true);
   const [isLoggedIn, setLogIn] = React.useState(false);
   const onLogout = () => {
@@ -40,7 +40,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
      
         setLogIn(!!user);
         setUser(user);
-        setUid(uid);
+        setUid(user?.uid);
         setLoading(false);
       
     });
@@ -57,7 +57,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
       user,
       onLogout,
     }),
-    [isLoggedIn, user, isLoading]
+    [isLoggedIn, user, isLoading, uid]
   );
 
   return (

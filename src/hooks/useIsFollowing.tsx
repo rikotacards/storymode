@@ -1,5 +1,4 @@
 import { useAuth } from '@/context/AuthContext';
-import { auth } from '@/firebase/clientApp';
 import { isFollowing } from '@/firebase/followerFunctions';
 import React from 'react';
 

@@ -4,9 +4,9 @@ import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { ProfileHeaderSmall } from "@/components/ProfileHeaderSmall/ProfileHeaderSmall";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
-import { PostFromDbProps } from "@/firebase/db";
-import { useFetchPostsByUser } from "@/hooks/useFetchPostsByUser";
-import { useGetUidFromUsername } from "@/hooks/useFetchUidFromUsername";
+import { getUidFromUsername, PostFromDbProps } from "@/firebase/db";
+import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
+import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import {
   Button,
   Card,
@@ -32,25 +32,24 @@ export const Profile: React.FC<ProfileProps> = () => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const router = useRouter();
-  const usernameInPath = router.query.username;
+  const usernameInPath = router.query.username || ""
+  const uidFromUsernameRes = useGetUidFromUsername(usernameInPath as string)
   const auth = useAuth();
-  const uid = auth?.user?.uid || "";
-
-  const usernameRes = useGetUidFromUsername(usernameInPath);
+  console.log('fjdlska', uidFromUsernameRes)
   const postRes: {
     posts: PostFromDbProps[];
     error: any;
     isLoading: boolean;
-} = useFetchPostsByUser(usernameInPath);
+} = useGetPostsByUid(uidFromUsernameRes?.data?.uid);
   if (postRes.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }
-  if (!postRes?.posts || usernameRes.isLoading || !auth) {
+  if (!postRes?.posts || uidFromUsernameRes.isLoading || !auth) {
     return (
         <LinearProgress style={{width: '100%'}} />
     );
   }
-  if ( usernameRes.error) {
+  if (uidFromUsernameRes.error) {
     return (
       <Card>
         <CardContent>
@@ -64,7 +63,7 @@ export const Profile: React.FC<ProfileProps> = () => {
     setValue(newValue);
   };
 
-  const hasNoPosts =  usernameInPath == uid;
+  const hasNoPosts = !postRes?.posts && uidFromUsernameRes?.data?.uid == auth?.user?.uid;
   const makePost = (
     <Card sx={{ margin: 2 }}>
       <CardContent>
