@@ -16,6 +16,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
   const router = useRouter();
+  const signIn = useSignInWithGooglePopUp();
 
   return (
     <div className={styles.main}>
@@ -32,7 +33,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             variant="contained"
             onClick={(e) => {
               e.preventDefault();
-              useSignInWithGooglePopUp();
+              signIn.signIn();
             }}
           >
             Sign Up

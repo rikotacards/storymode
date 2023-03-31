@@ -4,8 +4,10 @@ import styles from "../styles/AddPost.module.css";
 import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer";
 import { AddPostContextWrapper } from "@/context/AddPostContext";
 import { SignInNewUser } from "@/components/SignInNewUser/SignInNewUser";
+import { useAuth } from "@/context/AuthContext";
 
 const SignIn = () => {
+  const auth = useAuth();
   return (
     <>
       <Head>
