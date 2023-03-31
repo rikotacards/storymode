@@ -6,6 +6,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useRouter } from "next/router";
+import { addUserToDb } from "./db";
 
 const provider = new GoogleAuthProvider();
 
@@ -14,9 +15,12 @@ export const useSignInWithGooglePopUp =  ()=> {
   const signIn = () => setPersistence(auth, browserLocalPersistence).then((d) => {
     signInWithPopup(auth, provider)
       .then((result) => {
+        console.log('result', result)
+        addUserToDb(result.user.uid)
         if(result.user){
           if(router.pathname =='/signin')
           router.push('/')
+
         }
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);

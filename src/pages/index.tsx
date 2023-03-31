@@ -8,15 +8,14 @@ import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
-import { useRouter } from "next/router";
-import { publicRoutes } from "@/constants/routes";
+
 
 export default function Home() {
   const auth = useAuth();
-  console.log('INDEX RENDERD')
-  const { data, isLoading } = useGetUserInfo(auth?.uid as string);
   
-  if(!auth.isLoggedIn){
+  const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
+  const noUserName = !auth.isLoading && !isLoading && !data?.username
+  if(isLoading){
     return <LinearProgress sx={{width: '100%'}}/>
   }
 
@@ -37,9 +36,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ padding: "8px" }}>
-        {!data && <CreateUsername />}
-      </div>
+    
       <div
         style={{
           display: "flex",
@@ -47,6 +44,9 @@ export default function Home() {
           flexDirection: "column",
         }}
       >
+          <div style={{ padding: "8px" }}>
+        {(noUserName) && <CreateUsername />}
+      </div>
         <Feed />
       </div>
     </div>

@@ -22,8 +22,10 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
   React.useEffect(() => {
     getReactions(postId)
       .then((data) => {
-        setReactions(() => data);
-        setDisplayedReactions(() => data);
+        if(data){
+          setReactions(data);
+          setDisplayedReactions(data);
+        }
       })
       .catch((e) => {
         // todo

@@ -5,8 +5,6 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  IconButton,
-  Input,
   LinearProgress,
   TextField,
   Typography,
@@ -24,9 +22,7 @@ export const CreateUsername: React.FC = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsernameChange(e.target.value);
   };
-  if (!auth.uid) {
-    return <LinearProgress />;
-  }
+  
   const onSubmit = () => {
     console.log('clickc')
     setLoading(true);
@@ -37,7 +33,7 @@ export const CreateUsername: React.FC = () => {
         throw new Error("username exists")
       }
     }).then(() => {
-      setUsername(username, auth.uid || "").then(() => {
+      setUsername(username, auth?.user?.uid || "").then(() => {
         setLoading(false);
         setError(false);
       });
@@ -48,12 +44,17 @@ export const CreateUsername: React.FC = () => {
     <Card sx={{ margin: 1 }}>
       <CardContent>
         {isSuccess ? (
-          <Typography>Success</Typography>
+          <div>
+
+            <Typography color='success'>Success</Typography>
+            <Typography>{'you'}</Typography>
+          </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography sx={{ mb: 1 }}>Create a username</Typography>
-            <span>
+            <div style={{display: 'flex'}}>
               <TextField
+              fullWidth
                 onChange={onChange}
                 size="small"
                 placeholder="username"
@@ -72,7 +73,7 @@ export const CreateUsername: React.FC = () => {
                   create
                 </Button>
               )}
-            </span>
+            </div>
             {hasError && (
               <Typography variant="caption" color={"error"}>
                 Username already taken

@@ -20,7 +20,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className={styles.main}>
-      <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
+      <div className={styles.layoutMenuDesktop}>{auth?.isLoggedIn &&!md && <SideMenu />}</div>
       <main className={styles.mainColumn}>{children}</main>
       {auth?.isLoggedIn && md && <BottomMenuBar />}
       <Snackbar

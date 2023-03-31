@@ -1,7 +1,6 @@
 import React from "react";
 import { User } from "firebase/auth";
 import { auth } from "@/firebase/clientApp";
-import { useSignInWithGooglePopUp } from "@/firebase/useSignInWithGooglePop";
 import { useRouter } from "next/router";
 interface AuthContextWrapperProps {
   children: React.ReactNode;

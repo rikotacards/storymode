@@ -137,3 +137,6 @@ https://stackoverflow.com/questions/15167545/how-to-crop-a-rectangular-image-int
 https://shipsaas.com/blog/create-protected-route-nextjs
 * Routing middlewear
 https://danishshakeel.me/protected-routes-in-nextjs/
+
+# Adding first time user to db
+Users are init via addUserToDb

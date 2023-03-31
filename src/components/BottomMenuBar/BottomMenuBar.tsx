@@ -7,23 +7,71 @@ import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
+import { Badge } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 export const BottomMenuBar: React.FC = () => {
   const route = useRouter();
   const auth = useAuth();
+  const theme = useTheme();
   const menuItems = useGetMenuItems();
   if (!auth.isLoggedIn) {
     return null;
   }
- 
+
   let items = menuItems.map((item, i) => (
-    <IconButton disabled={route.query.username == item.name} key={item.path+i} onClick={() => route.push(item.path)}>
-      {item.icon}
-    </IconButton>
+    <div
+      key={item.path + i}
+      onClick={() => route.push(item.path)}
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <div
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <IconButton
+          sx={{
+            background:
+              route.pathname == item.path
+                ? theme.palette.primary.light
+                : undefined,
+          }}
+          key={item.path + i}
+        >
+          {item.icon}
+        </IconButton>
+        <Badge />
+      </div>
+    </div>
   ));
   return (
-    <AppBar position="fixed" color="primary" sx={{ display:'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between', top: "auto", bottom: 0 }}>
-      <Toolbar sx={{display: 'flex', width: '100%', justifyContent: 'space-between'}} >
+    <AppBar
+      position="fixed"
+      color="primary"
+      sx={{
+        display: "flex",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "space-between",
+        top: "auto",
+        bottom: 0,
+        flexDirection: "row",
+      }}
+    >
+      <Toolbar
+        sx={{
+          display: "flex",
+          height: "100%",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
         {items}
       </Toolbar>
     </AppBar>

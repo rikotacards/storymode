@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 interface SearchResultUserProps {
@@ -9,6 +9,7 @@ export const SearchResultUser: React.FC<SearchResultUserProps> = ({
 }) => {
   const router = useRouter();
   return (
+    <div>
     <div
       onClick={() => {
         router.push("/" + username);
@@ -22,8 +23,10 @@ export const SearchResultUser: React.FC<SearchResultUserProps> = ({
         alignItems: "center",
       }}
     >
-      <Avatar style={{ marginRight: "8px" }}>{username[0]}</Avatar>
-      <div>{username}</div>
+      <Avatar color='action' style={{ marginRight: "14px" }}>{username[0]}</Avatar>
+      <Typography fontWeight={600}>{username}</Typography>
     </div>
+      <Divider style={{width: '100%'}}/>
+      </div>
   );
 };

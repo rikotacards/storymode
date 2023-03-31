@@ -16,7 +16,6 @@ export const ProfileHeader: React.FC = () => {
   const router = useRouter();
   const uid = router.query.username as string;
   const {data, isLoading, error} = useGetUserInfo(uid)
-  console.log('profileheader', uid)
   if(isLoading){
     return <LinearProgress/>
   }
@@ -30,7 +29,7 @@ export const ProfileHeader: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.avatarContainer}>
-        <Avatar sx={{ width: px, height: px }}>{uid[0]}</Avatar>
+        <Avatar src={auth?.user?.photoURL || ""} sx={{ width: px, height: px }}>{uid[0]}</Avatar>
         {isLessThanMd && <ProfileActions/>}
       </div>
       <div className={styles.actionsLinksContainer}>
