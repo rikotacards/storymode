@@ -13,9 +13,11 @@ import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import { LinearProgress } from "@mui/material";
 import { useRouter } from "next/router";
+import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 
 export const Post: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
+  const username = useGetUsernameFromUid(author)
   const images: string[] = [];
   const captions: string[] = [];
   const router = useRouter();
@@ -37,7 +39,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     return <LinearProgress style={{ width: "100%" }} />;
   }
   return (
-    <PostWrapper author={author} postId={postId}>
+    <PostWrapper author={username?.data?.username ||""} postId={postId}>
       {hasImages && (
         <Swiper
           navigation={true}

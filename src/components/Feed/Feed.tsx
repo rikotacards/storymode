@@ -41,6 +41,7 @@ export const Feed: React.FC = () => {
             >
               Explore
             </Button>
+            
           </CardActions>
         </CardContent>
       </Card>

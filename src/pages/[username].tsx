@@ -34,9 +34,8 @@ export const Profile: React.FC<ProfileProps> = () => {
   const router = useRouter();
   const usernameInPath = router.query.username || ""
   const uidFromUsernameRes = useGetUidFromUsername(usernameInPath as string)
-  console.log('wowbro', uidFromUsernameRes)
   const auth = useAuth();
-
+  console.log('fjdlska', uidFromUsernameRes)
   const postRes: {
     posts: PostFromDbProps[];
     error: any;
@@ -64,7 +63,7 @@ export const Profile: React.FC<ProfileProps> = () => {
     setValue(newValue);
   };
 
-  const hasNoPosts =  usernameInPath == uidFromUsernameRes.data;
+  const hasNoPosts = !postRes?.posts && uidFromUsernameRes?.data?.uid == auth?.user?.uid;
   const makePost = (
     <Card sx={{ margin: 2 }}>
       <CardContent>

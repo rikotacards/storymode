@@ -73,7 +73,7 @@ export const addUserToDb = async (userId: string) => {
     firestore,
     "userProfiles",
     userId,
-    "followers",
+    "following",
     userId
   );
   setDoc(
@@ -332,8 +332,9 @@ const getMyFollowings = async (uid: string) => {
 // feed
 export const getPostsFromFollowings = async (uid: string) => {
   const users = await getMyFollowings(uid);
+  console.log('users', users)
   const postsPerUser = await Promise.all(
-    users.map(async (user) => await getPostsByUid(user))
+    users.map(async (uid) => await getPostsByUid(uid))
   ).then((res) => {
     return res;
   });
