@@ -15,10 +15,8 @@ export const useSignInWithGooglePopUp =  ()=> {
     signInWithPopup(auth, provider)
       .then((result) => {
         if(result.user){
-          console.log('lol', router.pathname)
           if(router.pathname =='/signin')
           router.push('/')
-          console.log('yay', result.user)
         }
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);

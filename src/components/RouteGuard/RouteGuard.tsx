@@ -14,9 +14,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   const router = useRouter();
   const isProtectedPath = protectedRoutes[router.pathname] !== undefined
   React.useEffect(() => {
-    console.log('in effect', isLoading, isLoggedIn)
     if(!isLoading && !isLoggedIn && isProtectedPath){
-      console.log('pushings')
       router.push('/signin')
     }
    
@@ -24,7 +22,6 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
 
   
   if((isLoading || !isLoggedIn) && isProtectedPath){
-    console.log('were here', isLoading, isLoggedIn)
     return (
       <LinearProgress sx={{width: '100%'}}/>
     )
