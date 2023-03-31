@@ -13,7 +13,6 @@ interface AuthContextState {
   user: User | null | undefined;
   isLoading: boolean;
   onLogout: () => void;
-  signIn: () => void;
 }
 
 export const AuthContext = React.createContext<AuthContextState>(
@@ -50,15 +49,7 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
     return unsubscribe;
   }, []);
 
-  const signIn = () => {
-    useSignInWithGooglePopUp().then(() => {
-      console.log('hi', router.pathname)
-      if(router.pathname === '/signin'){
-        router.push('/')
-      }
-    })
-  }
-
+ 
   const context: AuthContextState = React.useMemo(
     () => ({
       uid,
@@ -66,7 +57,6 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
       isLoading,
       user,
       onLogout,
-      signIn
     }),
     [isLoggedIn, user, isLoading]
   );
