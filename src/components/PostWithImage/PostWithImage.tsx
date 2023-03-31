@@ -99,7 +99,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           })}
         </Swiper>
       )}
-      < Typography variant='caption' sx={{marginLeft: '14px'}}>
+      < Typography variant='caption' sx={{marginLeft: '14px', fontWeight:'200'}}>
         {dateString}
       </Typography>
     </PostWrapper>

@@ -22,6 +22,8 @@ import {
   uploadString,
 } from "firebase/storage";
 import { PostType } from "@/context/AddPostContext";
+import { abort } from "process";
+import { doesUsernameExist } from "./usernameFunctions";
 const storage = getStorage();
 
 interface uploadPostProps {
@@ -225,6 +227,8 @@ export const updateUserProfileInfo = async (
 };
 
 export const updateUsernameToUid = async (uid: string, username: string) => {
+  
+  
   const docRef = doc(firestore, "usernames", username);
   await setDoc(docRef, { uid: uid }, { merge: true }).then(() => {
     return { status: "done" };
@@ -232,9 +236,19 @@ export const updateUsernameToUid = async (uid: string, username: string) => {
 };
 
 export const setUsername = async (username: string, uid: string) => {
-  await updateUidToUsername(uid, username);
-  await updateUsernameToUid(uid, username)
-  await updateUserProfileInfo(uid, { username });
+
+    const yeswehave = await doesUsernameExist(username);
+    console.log('whatever', username, uid)
+    if(yeswehave){
+      console.log('yes')
+      return;
+    }
+
+    await updateUidToUsername(uid, username);
+    await updateUsernameToUid(uid, username)
+    await updateUserProfileInfo(uid, { username });
+ 
+  
 };
 
 export const getUserInfo = async (userId?: string) => {
@@ -344,3 +358,4 @@ export const getPostsFromFollowings = async (uid: string) => {
   });
   return res.sort((a, b) => b.postTime - a.postTime);
 };
+

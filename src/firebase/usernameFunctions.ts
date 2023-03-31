@@ -3,7 +3,8 @@ import { firestore } from "./clientApp";
 
 export const doesUsernameExist = async(username: string) => {
   const queryDoc = await getDoc(doc(firestore, "usernames", username));
-  if (!queryDoc.exists()) {
+  if (queryDoc.exists()) {
+    console.log("WT")
     return true
   }
   return false
@@ -14,8 +15,10 @@ export const doesUserProfileExist = async(uid: string) => {
 }
 
 export const addUsername = async(username: string, uid: string) => {
+  console.log()
   try{
-    const exists = await doesUsernameExist(username)
+    const exists = await
+     doesUsernameExist(username)
     if(exists){
       console.log('exists')
     } else {

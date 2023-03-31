@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { MoreHoriz } from "@mui/icons-material";
 import { Avatar, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -10,6 +11,7 @@ export const ProfileHeaderSmall: React.FC = () => {
   const router = useRouter();
   const auth = useAuth();
   const username = router.query.username;
+  const {data} = useGetUserInfo(auth?.user?.uid)
   return (
     <div
       style={{
@@ -41,7 +43,7 @@ export const ProfileHeaderSmall: React.FC = () => {
       <div style={{ marginTop: "4px" }}>Max</div>
       <div style={{ margin: "0px 0px 8px 0" }}>
         <Typography>
-          Hello, week 1 of building this thing! Been a long week. Phew.
+          {data?.bio}
           </Typography>
       </div>
       <div>

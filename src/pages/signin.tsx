@@ -1,8 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import styles from "../styles/AddPost.module.css";
-import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer";
-import { AddPostContextWrapper } from "@/context/AddPostContext";
 import { SignInNewUser } from "@/components/SignInNewUser/SignInNewUser";
 import { useAuth } from "@/context/AuthContext";
 
@@ -16,10 +13,9 @@ const SignIn = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{display: 'flex', width: '100%', height: '100%'}}>
-        <SignInNewUser/>
+      <main style={{ display: "flex", width: "100%", height: "100%" }}>
+        <SignInNewUser />
       </main>
-       
     </>
   );
 };
