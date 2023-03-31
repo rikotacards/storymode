@@ -11,7 +11,7 @@ export const ProfileHeaderSmall: React.FC = () => {
   const router = useRouter();
   const auth = useAuth();
   const username = router.query.username;
-  const {data} = useGetUserInfo(auth?.user?.uid)
+  const {data} = useGetUserInfo(auth?.user?.uid || "")
   return (
     <div
       style={{
