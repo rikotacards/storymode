@@ -37,8 +37,11 @@ export const Profile: React.FC<ProfileProps> = () => {
   const uid = auth?.user?.uid || "";
 
   const usernameRes = useGetUidFromUsername(usernameInPath);
-  const postRes = useFetchPostsByUser(usernameInPath);
-  console.log('bob', postRes)
+  const postRes: {
+    posts: PostFromDbProps[];
+    error: any;
+    isLoading: boolean;
+} = useFetchPostsByUser(usernameInPath);
   if (postRes.isLoading) {
     return <LinearProgress style={{ width: "100%" }} />;
   }

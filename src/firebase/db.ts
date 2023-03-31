@@ -277,7 +277,6 @@ export const getPostByUsername = async (username: string) => {
     return post;
   } catch (e) {
     console.log("eee", e);
-    return e;
   }
 };
 
