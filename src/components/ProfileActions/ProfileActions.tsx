@@ -10,6 +10,7 @@ import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetIsFollowing } from "@/hooks/useGetIsFollowing";
 import { EditProfile } from "../EditProfile/EditProfile";
+import { copyToClipboard } from "@/utils/copyToClipboard";
 
 interface ProfileActionsProps {
   hideName?: boolean;
@@ -18,10 +19,18 @@ interface ProfileActionsProps {
 export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const router = useRouter();
   const { uid } = useAuth();
+  console.log(router)
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => {
     setOpen(true);
   };
+  const [copied, setCopied] = React.useState(false);
+
+  const copyClick = () => {
+    copyToClipboard()
+    setCopied(true);
+    setTimeout(() => setCopied(false),2000)
+  }
   const closeDrawer = React.useCallback(() => {
     setOpen(false);
   }, []);
@@ -36,6 +45,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   React.useEffect(() => {
     setDisplayedFollow(!!isFollowing);
   }, [uid, isFollowing]);
+  
   const onFollowClick = () => {
     if (!uid || !uidFromUsernameRes?.data?.uid) {
       return;
@@ -92,12 +102,12 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
               <Button
                             size='small'
 
-                onClick={onFollowClick}
+                onClick={copyClick}
                 sx={{ borderRadius: 1, margin: 0.5,  textTransform:'capitalize'}}
                 variant="contained"
                 fullWidth
               >
-                {"Share Profile"}
+               {copied ? "Copied to clipboard" : "Share Profile"}
               </Button>
             </div>
           )}

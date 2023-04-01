@@ -41,7 +41,7 @@ export const UploadProfileImage: React.FC<UploadProfileImageProps> = ({setImageB
   };
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} style={{paddingBottom: 10}}>
        <input
               type="file"
               style={{ display: "none" }}
@@ -50,7 +50,7 @@ export const UploadProfileImage: React.FC<UploadProfileImageProps> = ({setImageB
               onChange={onImageChange}
             />
       
-    <Avatar sx={{height: 40, width: 40}}  src={localImageUrls[0] || photoUrl}>
+    <Avatar sx={{height: '120px', width: '120px'}}  src={localImageUrls[0] || photoUrl}>
    
     </Avatar>
     </div>

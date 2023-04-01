@@ -133,8 +133,8 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(
               color={state["username"]?.length ? undefined : "gray"}
               id={"username"}
               onClick={() => {
-                onClickSetId("username");
-                setOpen(true);
+                // onClickSetId("username");
+                // setOpen(true);
               }}
             >
               {state["username"] || "Username (Can't update for now.)"}
