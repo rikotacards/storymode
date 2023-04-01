@@ -61,14 +61,13 @@ export const deletePost = async (uid: string, postId: string) => {
   await setDoc(docRef, { postCount: increment(-1) }, { merge: true });
 };
 
-const updateUidToUsername = async (uid: string, username: string) => {
+const updateUidToUsername = async (uid: string, username: string, merge?: boolean) => {
   const uidToUsernameRef = doc(firestore, "uidToUsername", uid);
-  await setDoc(uidToUsernameRef, { username: username || "" });
+  await setDoc(uidToUsernameRef, { username: username || "" }, {merge});
 };
 //init a user to db
-export const addUserToDb = async (userId: string) => {
+export const addUserToDb = async ({userId, photoUrl}: {userId: string, photoUrl: string}) => {
   // Create mapping between uid to username
-  updateUidToUsername(userId, "");
 
   // add self as follower
   const followersRef = doc(
@@ -86,7 +85,7 @@ export const addUserToDb = async (userId: string) => {
 
   // create a userProfile
   const userProfileRef = doc(firestore, "userProfiles", userId);
-  setDoc(userProfileRef, { userId: userId }, { merge: true });
+  setDoc(userProfileRef, { userId: userId, photoUrl }, { merge: true });
 };
 
 export const uploadPost = async (args: uploadPostProps) => {

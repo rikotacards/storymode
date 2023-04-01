@@ -7,10 +7,14 @@ import {
   Dialog,
   Button,
   Card,
+  Skeleton,
 } from "@mui/material";
 import styles from "./PostHeader.module.css";
 import { deletePost } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
+import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 
 interface PostHeaderProps {
   author: string;
@@ -20,6 +24,11 @@ interface PostHeaderProps {
 export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
   const [open, setOpen] = React.useState(false);
   const auth = useAuth();
+  const router = useRouter();
+  const username = router.query.username
+  const uid = useGetUidFromUsername(author);
+
+  const {data, isLoading} = useGetUserInfo(author || "")
   const onClick = () => {
     setOpen(true);
   };
@@ -29,10 +38,10 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
   return (
     <div className={styles["post-header"]}>
       <div className={styles.avatar}>
-        <Avatar src={auth?.user?.photoURL || ""} color='action' alt={author[0]}>{author[0]}</Avatar>
+       {(!data?.photoUrl|| isLoading) ? <Skeleton variant='circular'/> : <Avatar src={data.photoUrl || ""} color='action' alt={author[0]}>{author[0]}</Avatar>}
       </div>
       <div className={styles.authorInfo}>
-        <Typography sx={{ fontWeight: '600', mr: 1 }}>{author}</Typography>
+        <Typography sx={{ fontWeight: '600', mr: 1 }}>{data?.username}</Typography>
         {/* <Typography variant="caption">San Diego</Typography> */}
       </div>
       <div className={styles["more-btn"]}>

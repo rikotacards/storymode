@@ -1,10 +1,19 @@
 import React from "react";
+import dynamic from "next/dynamic";
+
 import styles from "./Reactions.module.css";
 import { EmojiCount } from "../EmojiCount/EmojiCount";
 import { AddReactionButton } from "../AddReactionButton/AddReactionButton";
 import { EmojiClickData } from "emoji-picker-react";
 import { addNewReaction, getReactions, updateReaction } from "@/firebase/db";
-
+import { Collapse, Dialog } from "@mui/material";
+import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect";
+const Picker = dynamic(
+  () => {
+    return import("emoji-picker-react");
+  },
+  { ssr: false }
+);
 interface ReactionsProps {
   postId: string;
 }
@@ -15,14 +24,25 @@ interface ReactionsStateType {
 
 export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
   const displayed = [];
+  const [openPicker, setOpenPicker] = React.useState(false);
+  const [openQuick, setOpenQuick] = React.useState(false);
   const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
+  const onClick = () => {
+    setOpenPicker(!openPicker);
+  };
+  const toggleOpenCol = () => {
+    setOpenQuick(!openQuick);
+  };
+  const handleClose = () => {
+    setOpenPicker(false);
+  };
   const [displayedReactions, setDisplayedReactions] =
     React.useState<ReactionsStateType>({});
 
   React.useEffect(() => {
     getReactions(postId)
       .then((data) => {
-        if(data){
+        if (data) {
           setReactions(data);
           setDisplayedReactions(data);
         }
@@ -34,19 +54,22 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
       .then(() => {});
   }, [postId]);
 
-  const updateDisplayedReactions = React.useCallback((
-    unified: EmojiClickData["unified"],
-    incrementValue: number,
-    emoji: string
-  ) => {
-    const newState = {
-      ...displayedReactions[unified],
-      count: (displayedReactions[unified]?.count || 0) + incrementValue,
-      hasLiked: incrementValue == 1,
-      emoji,
-    };
-    setDisplayedReactions((prev) => ({ ...prev, [unified]: newState }));
-  },[displayedReactions])
+  const updateDisplayedReactions = React.useCallback(
+    (
+      unified: EmojiClickData["unified"],
+      incrementValue: number,
+      emoji: string
+    ) => {
+      const newState = {
+        ...displayedReactions[unified],
+        count: (displayedReactions[unified]?.count || 0) + incrementValue,
+        hasLiked: incrementValue == 1,
+        emoji,
+      };
+      setDisplayedReactions((prev) => ({ ...prev, [unified]: newState }));
+    },
+    [displayedReactions]
+  );
 
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
@@ -55,9 +78,8 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
         // we have this so we don't need to 'get' the data after increment.
         updateDisplayedReactions(unified, 1, emoji);
       }
-    
     },
-    [ displayedReactions, postId, updateDisplayedReactions]
+    [displayedReactions, postId, updateDisplayedReactions]
   );
 
   for (let key in displayedReactions) {
@@ -80,9 +102,34 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
     );
   }
   return (
-    <div className={styles.reactions}>
-      <div className={styles.allEmojis}>{displayed}</div>
-      <AddReactionButton onEmojiClick={onAddEmojiClick} />
-    </div>
+    <>
+      <div className={styles.reactions}>
+        <div className={styles.allEmojis}>{displayed}</div>
+        <Collapse
+          sx={{ position: "absolute", zIndex: 100 }}
+          in={openQuick}
+          orientation="horizontal"
+        >
+          <ReactionQuickSelect
+            onEmojiClick={onAddEmojiClick}
+            callback={toggleOpenCol}
+            openPicker={onClick}
+          />
+        </Collapse>
+        <AddReactionButton onClick={toggleOpenCol} />
+      </div>
+      <Dialog onClose={handleClose} open={openPicker}>
+        <div style={{ display: "flex" }}>
+          <Picker
+            autoFocusSearch={false}
+            onEmojiClick={(d) => {
+              console.log(d);
+              onAddEmojiClick(d.unified, d.emoji);
+              handleClose();
+            }}
+          />
+        </div>
+      </Dialog>
+    </>
   );
 };

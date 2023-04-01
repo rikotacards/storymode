@@ -35,9 +35,9 @@ export const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
           <ShareButton />
         </div>
         {/* <PartCount/> */}
-        <div className={styles.bookmarkButton}>
+        {/* <div className={styles.bookmarkButton}>
           <BookmarkButton active={false} />
-        </div>
+        </div> */}
       </div>
       <Dialog open={open} onClose={onClose}>
         <SignInNewUser />

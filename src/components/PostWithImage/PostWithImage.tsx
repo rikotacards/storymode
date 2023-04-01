@@ -43,7 +43,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     return <Skeleton height={468} variant='rectangular' style={{ width: "100%", marginBottom: '8px' }} />;
   }
   return (
-    <PostWrapper author={username?.data?.username ||""} postId={postId}>
+    <PostWrapper author={author} postId={postId}>
       {hasImages && (
         <Swiper
           navigation={true}

@@ -7,12 +7,13 @@ import React from "react";
 import { ProfileActions } from "../ProfileActions/ProfileActions";
 import { ProfileStats } from "../ProfileStats/ProfileStats";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 
 export const ProfileHeaderSmall: React.FC = () => {
   const router = useRouter();
-  const auth = useAuth();
   const username = router.query.username;
-  const { data } = useGetUserInfo(auth?.user?.uid || "");
+  const uidRes = useGetUidFromUsername(username as string);
+  const { data } = useGetUserInfo(uidRes?.data?.uid || "");
   return (
     <div
       style={{
@@ -39,7 +40,7 @@ export const ProfileHeaderSmall: React.FC = () => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <div>
           <Avatar
-            src={auth?.user?.photoURL || ""}
+            src={data?.photoUrl || ""}
             style={{ marginRight: "8px", height: 90, width: 90 }}
           ></Avatar>
         </div>

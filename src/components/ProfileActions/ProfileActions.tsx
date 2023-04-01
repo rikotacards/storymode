@@ -83,7 +83,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
               <Button
               size='small'
                 onClick={openDrawer}
-                sx={{ textTransform:'capitalize', borderRadius: 1, margin: 0.5 }}
+                sx={{ fontWeight: "500", textTransform:'capitalize', borderRadius: 1, margin: 0.5 }}
                 variant="contained"
                 fullWidth
               >

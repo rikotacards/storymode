@@ -14,7 +14,9 @@ export default function Home() {
   const auth = useAuth();
   
   const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
-  const noUserName = !auth.isLoading && !isLoading && !data?.username
+  
+  console.log('username', data, isLoading)
+  const showCreateUserName = auth.isLoggedIn && !isLoading && !data?.username
   if(isLoading){
     return <LinearProgress sx={{width: '100%'}}/>
   }
@@ -45,7 +47,7 @@ export default function Home() {
         }}
       >
           <div style={{ padding: "8px" }}>
-        {(noUserName) && <CreateUsername />}
+        {showCreateUserName ? <CreateUsername /> : null}
       </div>
         <Feed />
       </div>

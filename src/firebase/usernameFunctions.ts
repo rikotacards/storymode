@@ -7,7 +7,7 @@ export const doesUsernameExist = async(username: string) => {
     console.log("WT")
     return true
   }
-  return false
+return false
 }
 export const doesUserProfileExist = async(uid: string) => {
   const queryDoc = await getDoc(doc(firestore, "userProfiles", uid));

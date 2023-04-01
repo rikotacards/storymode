@@ -8,6 +8,9 @@ interface UserInfoProps {
   postCount: number;
   userId: string;
   username: string;
+  photoUrl: string;
+  isVerified?: boolean;
+  name: boolean;
 }
 
 const fetcher = ([uid]: string[]) => {
@@ -19,7 +22,7 @@ const fetcher = ([uid]: string[]) => {
   })
 }
 export const useGetUserInfo = (uid: string | string[]) => {
-  const {data, error, isLoading} = useSWR([uid,'useGetUserInfo'], fetcher);
+  const {data, error, isLoading}: {data: UserInfoProps, error: any, isLoading: boolean} = useSWR([uid,'useGetUserInfo'], fetcher);
   return {
     data, 
     error, 

@@ -62,7 +62,7 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(({ onClose }) 
         }}
       >
         <Button onClick={onClose}>cancel</Button>
-        <Typography style={{fontWeight: 600}}>Edit Profile</Typography>
+        <Typography style={{fontWeight: '600'}}>Edit Profile</Typography>
         <Button onClick={() => {onSave(); onClose()}}>done</Button>
       </div>
       <div>
