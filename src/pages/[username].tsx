@@ -35,7 +35,6 @@ export const Profile: React.FC<ProfileProps> = () => {
   const usernameInPath = router.query.username || ""
   const uidFromUsernameRes = useGetUidFromUsername(usernameInPath as string)
   const auth = useAuth();
-  console.log('fjdlska', uidFromUsernameRes)
   const postRes: {
     posts: PostFromDbProps[];
     error: any;
