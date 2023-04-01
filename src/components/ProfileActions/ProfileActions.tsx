@@ -1,4 +1,4 @@
-import { Button, Drawer, IconButton, Paper, Typography } from "@mui/material";
+import { Button, Dialog, Drawer, IconButton, Paper, Typography } from "@mui/material";
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
@@ -11,6 +11,7 @@ import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetIsFollowing } from "@/hooks/useGetIsFollowing";
 import { EditProfile } from "../EditProfile/EditProfile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
+import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
 
 interface ProfileActionsProps {
   hideName?: boolean;
@@ -18,11 +19,12 @@ interface ProfileActionsProps {
 
 export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const router = useRouter();
-  const { uid } = useAuth();
+  const { uid, isLoggedIn } = useAuth();
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => {
     setOpen(true);
   };
+  const [openLogin, setOpenLogin] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 
   const copyClick = () => {
@@ -46,6 +48,10 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   }, [uid, isFollowing]);
   
   const onFollowClick = () => {
+    if(!isLoggedIn){
+      setOpenLogin(true)
+      return;
+    }
     if (!uid || !uidFromUsernameRes?.data?.uid) {
       return;
     }
@@ -58,6 +64,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const editProfile = <EditProfile onClose={closeDrawer} />;
 
   return (
+    <>
     <div className={styles.container}>
       <div className={styles.layout}>
         {!hideName && (
@@ -122,5 +129,10 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
         </Paper>
       </Drawer>
     </div>
+      <Dialog className={styles.dialog} open={openLogin} onClose={() => {setOpenLogin(false)}}>
+      <SignInNewUser />
+    </Dialog>
+    </>
+    
   );
 };

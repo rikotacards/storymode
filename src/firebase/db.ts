@@ -78,24 +78,27 @@ export const addUserToDb = async ({
   photoUrl: string;
 }) => {
   // Create mapping between uid to username
-
   // add self as follower
-  const followersRef = doc(
-    firestore,
-    "userProfiles",
-    userId,
-    "following",
-    userId
-  );
-  setDoc(
-    followersRef,
-    { followDate: Timestamp.fromDate(new Date()) },
-    { merge: true }
-  );
-
   // create a userProfile
   const userProfileRef = doc(firestore, "userProfiles", userId);
-  setDoc(userProfileRef, { userId: userId, photoUrl }, { merge: true });
+  const snap = await getDoc(userProfileRef)
+  if(snap.exists()){
+    return;
+  } else {
+    const followersRef = doc(
+      firestore,
+      "userProfiles",
+      userId,
+      "following",
+      userId
+    );
+    setDoc(
+      followersRef,
+      { followDate: Timestamp.fromDate(new Date()) },
+      { merge: true }
+    );
+    setDoc(userProfileRef, { userId: userId, photoUrl }, { merge: true });
+  }
 };
 
 export const updateProfileImage = async (uid: string, localImagePath: string) => {
@@ -330,6 +333,23 @@ export const getImagePath = (imagePath: string) => {
     });
 };
 
+export const getPostByPostId = async(uid: string, postId: string) => {
+  if(!uid || !postId){
+    return undefined;
+  }
+  const querySnapshot = await getDoc(doc(firestore, "content", uid, "posts", postId))
+  if(!querySnapshot.exists()){
+    return undefined
+  }
+  const data = {
+    ...querySnapshot.data(),
+    postTime: querySnapshot.data().postTime?.toDate().getTime(),
+    postId: querySnapshot.id,
+
+  }
+  return data
+}
+
 export const getPostsByUid = async (uid: string) => {
   try {
     if (!uid) {
@@ -347,7 +367,7 @@ export const getPostsByUid = async (uid: string) => {
       };
       return data as PostFromDbProps;
     });
-    return post;
+    return post.sort((a,b) => b.postTime-a.postTime )
   } catch (e) {
     console.log("eee", e);
   }

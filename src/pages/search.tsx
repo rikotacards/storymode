@@ -15,7 +15,7 @@ export default function Search() {
   const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid as string);
   const [text, setText] = React.useState("");
   const usernames = useGetAllUsernames();
-  const users = usernames?.data?.map((user) => <SearchResultUser isVerified={data?.isVerified} photoUrl={data?.photoUrl || ""} key={user.id} username={user.id}/>)
+  const users = usernames?.data?.map((user) => <SearchResultUser   key={user.id} username={user.id}/>)
   
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);

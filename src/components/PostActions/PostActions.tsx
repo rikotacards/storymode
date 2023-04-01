@@ -5,8 +5,10 @@ import { Reactions } from "../Reactions/Reactions";
 import { BookmarkButton } from "../BookmarkButton/BookmarkButton";
 import { ShareButton } from "../ShareButton/ShareButton";
 import { useAuth } from "@/context/AuthContext";
-import { Dialog } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { copyToClipboard } from "@/utils/copyToClipboard";
 
 interface PostActionsProps {
   postId: string;
@@ -30,16 +32,23 @@ export const PostActions: React.FC<PostActionsProps> = ({ postId }) => {
           return onOpen();
         }}
       >
-        <div style={{ pointerEvents: auth?.isLoggedIn ? undefined : "none", display: 'flex'}}>
+        <div
+          style={{
+            pointerEvents: auth?.isLoggedIn ? undefined : "none",
+            display: "flex",
+          }}
+        >
           <Reactions postId={postId} />
-          <ShareButton />
+          <IconButton onClick={() => copyToClipboard('/'+postId)}>
+            <SendRoundedIcon />
+          </IconButton>
         </div>
         {/* <PartCount/> */}
         {/* <div className={styles.bookmarkButton}>
           <BookmarkButton active={false} />
         </div> */}
       </div>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog className={styles.dialog} open={open} onClose={onClose}>
         <SignInNewUser />
       </Dialog>
     </>

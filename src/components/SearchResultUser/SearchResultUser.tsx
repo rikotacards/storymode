@@ -1,18 +1,18 @@
+import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Verified } from "@mui/icons-material";
 import { Avatar, Divider, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 interface SearchResultUserProps {
   username: string;
-  photoUrl: string;
-  isVerified: boolean;
 }
 export const SearchResultUser: React.FC<SearchResultUserProps> = ({
-  photoUrl,
   username,
-  isVerified
 }) => {
   const router = useRouter();
+  const data = useGetUidFromUsername(username);
+  const userInfoRes = useGetUserInfo(data?.data?.uid || "");
   return (
     <div>
       <div
@@ -28,11 +28,11 @@ export const SearchResultUser: React.FC<SearchResultUserProps> = ({
           alignItems: "center",
         }}
       >
-        <Avatar src={photoUrl} color="action" style={{ marginRight: "14px" }}>
+        <Avatar src={userInfoRes?.data?.photoUrl} color="action" style={{ marginRight: "14px" }}>
           {username[0]}
         </Avatar>
         <Typography fontWeight={600}>{username}</Typography>
-       {isVerified &&  <Verified fontSize="small" sx={{marginLeft: '4px'}} color='info'/>}
+       {userInfoRes?.data?.isVerified &&  <Verified fontSize="small" sx={{marginLeft: '4px'}} color='info'/>}
       </div>
       <Divider style={{ width: "100%" }} />
     </div>
