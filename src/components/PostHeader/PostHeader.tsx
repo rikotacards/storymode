@@ -32,7 +32,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
         <Avatar src={auth?.user?.photoURL || ""} color='action' alt={author[0]}>{author[0]}</Avatar>
       </div>
       <div className={styles.authorInfo}>
-        <Typography sx={{ mr: 1 }}>{author || "Michael"}</Typography>
+        <Typography sx={{ fontWeight: '600', mr: 1 }}>{author}</Typography>
         {/* <Typography variant="caption">San Diego</Typography> */}
       </div>
       <div className={styles["more-btn"]}>

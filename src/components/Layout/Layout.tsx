@@ -17,16 +17,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const auth = useAuth();
   const router = useRouter();
   const signIn = useSignInWithGooglePopUp();
-
+  const showLoginSnackbar = !auth?.isLoggedIn && router.pathname == "/[username]"
   return (
     <div className={styles.main}>
       <div className={styles.layoutMenuDesktop}>{auth?.isLoggedIn &&!md && <SideMenu />}</div>
-      <main className={styles.mainColumn}>{children}</main>
+      <main className={styles.mainColumn}>
+        {children}</main>
       {auth?.isLoggedIn && md && <BottomMenuBar />}
       <Snackbar
-        open={!auth?.isLoggedIn && router.pathname == "/[username]"}
+        open={showLoginSnackbar}
         autoHideDuration={6000}
-        onClose={() => {}}
         message="Welcome"
         action={
           <Button

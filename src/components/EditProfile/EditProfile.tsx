@@ -18,7 +18,7 @@ interface EditProfileProps {
   onClose: () => void;
 }
 
-export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
+export const EditProfile: React.FC<EditProfileProps> = React.memo(({ onClose }) => {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const auth = useAuth();
@@ -77,7 +77,10 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
           }}
         >
           <Typography style={{ width: "100px" }}>Name</Typography>
-          <Typography color={state["name"]?.length ? undefined : "gray"}>
+          <Typography onClick={() => {
+              onClickSetId("name");
+              setOpen(true);
+            }} color={state["name"]?.length ? undefined : "gray"}>
             {state["name"] || "Name"}
           </Typography>
         </div>
@@ -160,4 +163,4 @@ export const EditProfile: React.FC<EditProfileProps> = ({ onClose }) => {
       </Drawer>
     </div>
   );
-};
+})

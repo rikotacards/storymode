@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
-import { LinearProgress, Typography } from "@mui/material";
+import { LinearProgress, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 
@@ -40,7 +40,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   const next = React.useCallback(() => myswiper.slideNext(), [myswiper]);
   const prev = React.useCallback(() => myswiper.slidePrev(), [myswiper]);
   if (postRes.isLoading) {
-    return <LinearProgress style={{ width: "100%" }} />;
+    return <Skeleton height={468} variant='rectangular' style={{ width: "100%", marginBottom: '8px' }} />;
   }
   return (
     <PostWrapper author={username?.data?.username ||""} postId={postId}>
@@ -99,7 +99,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           })}
         </Swiper>
       )}
-      < Typography variant='caption' sx={{marginLeft: '14px', fontWeight:'200'}}>
+      < Typography variant='caption' sx={{paddingLeft: '16px', fontWeight:'200'}}>
         {dateString}
       </Typography>
     </PostWrapper>

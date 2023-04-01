@@ -1,6 +1,5 @@
 import { updateReaction } from '@/firebase/db';
 import { IconButton, Typography } from '@mui/material';
-import { EmojiClickData } from 'emoji-picker-react';
 import React from 'react';
 import { Emoji, EmojiProps } from '../Emoji/Emoji';
 import styles from './EmojiCount.module.css'

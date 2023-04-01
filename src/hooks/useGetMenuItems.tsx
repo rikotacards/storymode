@@ -7,7 +7,7 @@ import { useGetUsernameFromUid } from "./useGetUsernameFromUid";
 export const useGetMenuItems = () => {
   const auth = useAuth();
   const {data, isLoading} = useGetUsernameFromUid(auth?.user?.uid || '')
-  
+  console.log(data)
   
   return [...menuItems, {
     name: "Profile",

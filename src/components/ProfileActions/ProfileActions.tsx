@@ -20,11 +20,11 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const { uid } = useAuth();
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => {
-    setOpen(true)
-  }
-  const closeDrawer = () => {
+    setOpen(true);
+  };
+  const closeDrawer = React.useCallback(() => {
     setOpen(false);
-  }
+  }, []);
   const usernameInPath = router.query.username as string;
   const uidFromUsernameRes = useGetUidFromUsername(usernameInPath);
   const { data: isFollowing } = useGetIsFollowing(
@@ -46,41 +46,54 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
     updateFollowers(uid, uidFromUsernameRes?.data?.uid, !displayedFollow);
     setDisplayedFollow(!displayedFollow);
   };
+  const editProfile = <EditProfile onClose={closeDrawer} />;
 
   return (
     <div className={styles.container}>
       <div className={styles.layout}>
         {!hideName && (
           <div style={{ marginRight: "8px" }}>
-            <Typography style={{ fontWeight: "400", fontSize: 20 }}>
+            <Typography style={{ fontWeight: "600", fontSize: 20 }}>
               {usernameInPath}
             </Typography>
           </div>
         )}
-        <div style={{display: 'flex', width: '100%', justifyContent:'space-around'}}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-around",
+          }}
+        >
           {!isMyProfile && (
             <Button
               onClick={onFollowClick}
-              sx={{ borderRadius: 1, margin: 0.5 }}
+              sx={{ fontWeight: '400', borderRadius: 1, margin: '0px' }}
               variant="contained"
               fullWidth
+              size='small'
             >
-              {displayedFollow ? "Unfollow" : "Follow"}
+              <Typography variant='caption' sx={{fontWeight: '600',textTransform:'capitalize' }}>
+                {displayedFollow ? "Unfollow" : "Follow"}
+                </Typography>
             </Button>
           )}
           {isMyProfile && (
-            <div style={{display: 'flex', width: '100%'}}>
+            <div style={{  display: "flex", width: "100%" }}>
               <Button
+              size='small'
                 onClick={openDrawer}
-                sx={{ borderRadius: 1, margin: 0.5 }}
+                sx={{ textTransform:'capitalize', borderRadius: 1, margin: 0.5 }}
                 variant="contained"
                 fullWidth
               >
                 {"Edit Profile"}
               </Button>
               <Button
+                            size='small'
+
                 onClick={onFollowClick}
-                sx={{ borderRadius: 1, margin: 0.5 }}
+                sx={{ borderRadius: 1, margin: 0.5,  textTransform:'capitalize'}}
                 variant="contained"
                 fullWidth
               >
@@ -90,9 +103,13 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
           )}
         </div>
       </div>
-      <Drawer sx={{display: 'flex', height: '100%'}} anchor={'bottom'} open={open}>
-        <Paper style={{display: 'flex', height: '100vh'}}>
-        <EditProfile onClose={closeDrawer}/>
+      <Drawer
+        sx={{ display: "flex", height: "100%" }}
+        anchor={"bottom"}
+        open={open}
+      >
+        <Paper style={{ display: "flex", height: "100vh" }}>
+          {editProfile}
         </Paper>
       </Drawer>
     </div>
