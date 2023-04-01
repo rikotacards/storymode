@@ -13,12 +13,14 @@ import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import {  Paper, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 
 export const Post: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
   const images: string[] = [];
   const captions: string[] = [];
   const router = useRouter();
+  const usernameFromAuthor = useGetUsernameFromUid(author);
   const usernameInPath = router.query.username;
   const postRes = useGetPostsByUid(usernameInPath);
   const dateObject = new Date(postTime)
@@ -84,7 +86,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
       )}
       <div className={styles.reactionsContainer}>
 
-      <PostActions postId={postId} />
+      <PostActions username={usernameFromAuthor?.data?.username} postId={postId} />
       </div>
       {hasImages && (
         <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>

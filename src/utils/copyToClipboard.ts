@@ -1,7 +1,7 @@
 
 export const copyToClipboard = (additionalText?: string) =>{
   var dummy = document.createElement('input'),
-  text = window.location.href+(additionalText||"");
+  text = additionalText ? additionalText : window.location.href
   document.body.appendChild(dummy);
   dummy.value = text;
   dummy.select();
