@@ -38,7 +38,6 @@ export const UploadImageThumbnail: React.FC<UploadImageThumbnailProps> = ({
   }, [images, addPostContext, index]);
 
   const onImageChange = (e: any) => {
-    addPostContext
     setImages([...e.target.files]);
   };
   const handleClick = () => {

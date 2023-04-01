@@ -24,7 +24,6 @@ export const CreateUsername: React.FC = () => {
   };
   
   const onSubmit = () => {
-    console.log('clickc')
     setError(false);
     setLoading(true);
     getUsername(username).then((res) => {

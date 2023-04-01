@@ -6,3 +6,9 @@
 .bookmarkButton {
   margin-left: auto
 }
+.dialog {
+  backdrop-filter: blur(10px);
+        justify-content: flex-end;
+        z-index: 1000;
+        -webkit-backdrop-filter: blur(10px);
+}

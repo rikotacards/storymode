@@ -1,31 +1,25 @@
 import {
-  Avatar,
-  Button,
-  Card,
   CSSObject,
-  MenuList,
   Paper,
   styled,
-  SwipeableDrawer,
   Theme,
 } from "@mui/material";
-import React from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import React from 'react';
+
 import MuiDrawer from "@mui/material/Drawer";
 
 import { MenuItem } from "../MenuItem/MenuItem";
 import HomeIcon from "@mui/icons-material/Home";
-import ExploreIcon from "@mui/icons-material/Explore";
 import AddIcon from "@mui/icons-material/Add";
 import { useAuth } from "@/context/AuthContext";
 export const sideMenuWidth = 240;
 import MenuIcon from "@mui/icons-material/Menu";
-import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { auth } from "@/firebase/clientApp";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
-  { name: "Search", path: "/search", icon: <ExploreIcon /> },
+  { name: "Search", path: "/search", icon: <SearchIcon /> },
   { name: "Add Post", path: "/add-post", icon: <AddIcon /> },
 ];
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -70,7 +64,6 @@ export const SideMenu: React.FC = () => {
   const authHook = useAuth();
   const router = useRouter();
   const menuItems = useGetMenuItems();
-  const {data} = useGetUserInfo(authHook?.user?.uid as string);
   if (!authHook.isLoggedIn) {
     return null;
   }

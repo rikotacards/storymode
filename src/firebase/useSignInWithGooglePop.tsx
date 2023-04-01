@@ -16,7 +16,7 @@ export const useSignInWithGooglePopUp =  ()=> {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log('result', result)
-        addUserToDb(result.user.uid)
+        addUserToDb({userId: result.user.uid, photoUrl: result.user.photoURL || ""})
         if(result.user){
           if(router.pathname =='/signin')
           router.push('/')

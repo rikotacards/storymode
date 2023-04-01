@@ -11,7 +11,7 @@ export const ProfilePersonalInfo: React.FC<ProfilePersonalInfoProps> = (props) =
   return (
     <div className={styles.container}>
       <div className={styles.firstNameLastName}>
-        <Typography sx={{fontWeight: 'bold'}}>{displayedName}</Typography>
+        <Typography sx={{fontWeight: 600}}>{displayedName}</Typography>
       </div>
       <div>{bio}</div>
     </div>

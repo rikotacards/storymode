@@ -36,10 +36,10 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
   }
 
   return (
-    <a href="" className={styles.post}>
+    <div  className={styles.post}>
         <figure className={styles.textPostContainer}>
             {post.caption}
           </figure>
-    </a>
+    </div>
   );
 };

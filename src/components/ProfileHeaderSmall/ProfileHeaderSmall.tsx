@@ -6,17 +6,20 @@ import { useRouter } from "next/router";
 import React from "react";
 import { ProfileActions } from "../ProfileActions/ProfileActions";
 import { ProfileStats } from "../ProfileStats/ProfileStats";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 
 export const ProfileHeaderSmall: React.FC = () => {
   const router = useRouter();
-  const auth = useAuth();
   const username = router.query.username;
-  const {data} = useGetUserInfo(auth?.user?.uid || "")
+  const uidRes = useGetUidFromUsername(username as string);
+  const { data } = useGetUserInfo(uidRes?.data?.uid || "");
   return (
     <div
       style={{
         width: "100%",
         padding: "16px",
+        paddingTop: '0px',
         display: "flex",
         flexDirection: "column",
       }}
@@ -29,26 +32,26 @@ export const ProfileHeaderSmall: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <Typography sx={{ fontWeight: 800 }}>{username}</Typography>
+        {/* <Typography sx={{ fontWeight: 800 }}>{username}</Typography>
+        {data?.isVerified && <VerifiedIcon
+          sx={{ marginLeft: "4px", fontSize: "large" }}
+          color="info"
+        />} */}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div>
           <Avatar
-          src={auth?.user?.photoURL || ""}
+            src={data?.photoUrl || ""}
             style={{ marginRight: "8px", height: 90, width: 90 }}
           ></Avatar>
         </div>
         <ProfileStats />
       </div>
-      <div style={{ marginTop: "4px" }}>Max</div>
+      <div style={{ fontWeight: "600", marginTop: "4px" }}>{data?.name}</div>
       <div style={{ margin: "0px 0px 8px 0" }}>
-        <Typography>
-          {data?.bio}
-          </Typography>
+        <Typography variant="body2">{data?.bio}</Typography>
       </div>
-      <div>
-        <ProfileActions hideName />
-      </div>
+      <ProfileActions hideName />
     </div>
   );
 };

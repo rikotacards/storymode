@@ -9,10 +9,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
   imagePath,
 }) => {
   const [path, setPath] = React.useState();
-  const [isLoading, setLoading] = React.useState(true);
-  const toggleLoad = () => {
-    setLoading(!isLoading);
-  };
+ 
   if (!imagePath) {
     return <></>;
   }
@@ -32,6 +29,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
         alignItems: "center",
         overflow: "hidden",
         position: "relative",
+        borderRadius:'10px'
       }}
     >
       {(!path) && (
@@ -47,7 +45,6 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
         style={{ objectFit: "cover" }}
         alt={imagePath}
         src={path}
-        onLoad={toggleLoad}
         // fill={true}
         // originally 468
         width={path ? 468: 0}
