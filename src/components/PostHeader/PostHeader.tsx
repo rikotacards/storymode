@@ -35,12 +35,15 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
   const onClose = () => {
     setOpen(false);
   };
+  const onProfileHeaderClick = () => {
+    router.push('/'+data?.username)
+  }
   return (
     <div className={styles["post-header"]}>
-      <div className={styles.avatar}>
+      <div className={styles.avatar} onClick={onProfileHeaderClick}>
        {(!data?.photoUrl|| isLoading) ? <Skeleton variant='circular'/> : <Avatar src={data.photoUrl || ""} color='action' alt={author[0]}>{author[0]}</Avatar>}
       </div>
-      <div className={styles.authorInfo}>
+      <div className={styles.authorInfo} onClick={onProfileHeaderClick}>
         <Typography sx={{ fontWeight: '600', mr: 1 }}>{data?.username}</Typography>
         {/* <Typography variant="caption">San Diego</Typography> */}
       </div>

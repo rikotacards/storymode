@@ -6,15 +6,13 @@ interface UploadProfileImageProps {
   uid: string;
   images: string[];
   onImageChange: (e: any) => void
-  setImageBlobs: (blob: string[]) => void
+  setImagePaths: (blob: string[]) => void
 }
-export const UploadProfileImage: React.FC<UploadProfileImageProps> = ({setImageBlobs,images, onImageChange, photoUrl, uid}) => {
+export const UploadProfileImage: React.FC<UploadProfileImageProps> = ({setImagePaths,images, onImageChange, photoUrl, uid}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-  console.log('images', images)
   React.useEffect(() => {
     if (images.length < 1) return;
     const newlocalImageUrls: any = [];
-    const blobs: string[] = [];
     images.forEach(async(image: any) =>{
 
       newlocalImageUrls.push(URL.createObjectURL(image))
@@ -24,11 +22,11 @@ export const UploadProfileImage: React.FC<UploadProfileImageProps> = ({setImageB
           // todo
           let b = e as any
           return (b.target?.result)});
-      setImageBlobs([dataUrl])
+      setImagePaths([dataUrl])
     }
     )
     setlocalImageUrls(newlocalImageUrls);
-    // setImageBlobs(blobs)
+    // setImagePaths(blobs)
 
   }, [images, updateProfileImage, ]);
   const [localImageUrls, setlocalImageUrls] = React.useState([]);

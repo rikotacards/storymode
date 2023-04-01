@@ -3,16 +3,16 @@ import { menuItems } from "@/components/SideMenu/SideMenu";
 import { useAuth } from "@/context/AuthContext";
 import { Avatar, CircularProgress } from "@mui/material";
 import { useGetUsernameFromUid } from "./useGetUsernameFromUid";
+import { useGetUserInfo } from './useGetUserInfo';
 export const useGetMenuItems = () => {
   const auth = useAuth();
-  console.log(auth)
   const {data, isLoading} = useGetUsernameFromUid(auth?.user?.uid || '')
-  console.log('usegetmenu', data, isLoading)
+  const userInfo = useGetUserInfo(auth?.uid || "")
   const items = React.useMemo(() =>
     [...menuItems, {
       name: "Profile",
       path: "/" + (data?.username as string),
-      icon: isLoading ? <CircularProgress size={24}/> : <Avatar color='active' sx={{ height: 24, width: 24 }} />,
+      icon: isLoading ? <CircularProgress size={24}/> : <Avatar src={userInfo?.data?.photoUrl} color='active' sx={{ height: '100%', width: '100%' }} />,
     }]
   ,[isLoading, data?.username])
   return items

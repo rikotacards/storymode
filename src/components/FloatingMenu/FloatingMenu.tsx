@@ -1,13 +1,11 @@
-import { Collapse, Fab, Fade, IconButton, Zoom } from "@mui/material";
+import {  Collapse, Fab } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import ExploreIcon from "@mui/icons-material/Explore";
-import AddIcon from "@mui/icons-material/Add";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { useRouter } from "next/router";
 import styles from './FloatingMenu.module.css';
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useAuth } from "@/context/AuthContext";
 export const FloatingMenu: React.FC = () => {
 
   const menuItems = useGetMenuItems();
@@ -35,7 +33,7 @@ export const FloatingMenu: React.FC = () => {
           }}
         >
           {menu}
-        </div>
+          </div>
       </Collapse>
       <Fab
         onClick={toggleOpen}
@@ -51,3 +49,7 @@ export const FloatingMenu: React.FC = () => {
     </div>
   );
 };
+function useGetUserInfoFromUid() {
+  throw new Error("Function not implemented.");
+}
+

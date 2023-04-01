@@ -98,12 +98,12 @@ export const addUserToDb = async ({
   setDoc(userProfileRef, { userId: userId, photoUrl }, { merge: true });
 };
 
-export const updateProfileImage = async (uid: string, imageBlob: string) => {
-  if (!imageBlob) {
+export const updateProfileImage = async (uid: string, localImagePath: string) => {
+  if (!localImagePath) {
     return;
   }
   const storageRef = ref(storage, `${uid}/profieImage/profileImage.jpg`);
-  const snapshot = await uploadString(storageRef, imageBlob, "data_url");
+  const snapshot = await uploadString(storageRef, localImagePath, "data_url");
   const url = await getImagePath(snapshot.ref.fullPath);
   await setDoc(
     doc(firestore, "userProfiles", uid),

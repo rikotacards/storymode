@@ -3,30 +3,23 @@ import React from "react";
 
 import { useAuth } from "@/context/AuthContext";
 import {
-  Avatar,
-  Card,
-  CardContent,
   LinearProgress,
   TextField,
-  Typography,
 } from "@mui/material";
-import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { SearchContainer } from "@/components/SearchContainer/SearchContainer";
 import { useGetAllUsernames } from "@/hooks/useGetAllUsernames";
 import { SearchResultUser } from "@/components/SearchResultUser/SearchResultUser";
 
 export default function Search() {
   const auth = useAuth();
+  const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid as string);
   const [text, setText] = React.useState("");
   const usernames = useGetAllUsernames();
-  const users = usernames?.data?.map((user) => <SearchResultUser key={user.id} username={user.id}/>)
+  const users = usernames?.data?.map((user) => <SearchResultUser isVerified={data?.isVerified} photoUrl={data?.photoUrl || ""} key={user.id} username={user.id}/>)
   
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid as string);
-  console.log(data);
   if (isLoading) {
     return <LinearProgress />;
   }

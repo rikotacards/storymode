@@ -19,7 +19,6 @@ interface ProfileActionsProps {
 export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const router = useRouter();
   const { uid } = useAuth();
-  console.log(router)
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => {
     setOpen(true);

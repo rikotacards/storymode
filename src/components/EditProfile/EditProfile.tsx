@@ -26,11 +26,10 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(
     const auth = useAuth();
     const username = router.query.username;
     const [images, setImages] = React.useState([] as any);
-    const [imageblobs, setImageblobs] = React.useState<string[]>([])
+    const [localImagePaths, setLocalImagePaths] = React.useState<string[]>([])
     
-    const setBlob = (blob: string[]) => {
-      console.log('set', blob)
-      setImageblobs((p) => [...p, ...blob])
+    const setImagePaths = (localImagePaths: string[]) => {
+      setLocalImagePaths((p) => [...p, ...localImagePaths])
     }
     const onImageChange = (e: any) => {
       setImages([...e.target.files]);
@@ -41,7 +40,7 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(
     const [id, setId] = React.useState("");
     const onSave = () => {
       updateUserProfileInfo(auth?.user?.uid || "", state);
-      updateProfileImage(auth?.user?.uid || "", imageblobs[0])
+      updateProfileImage(auth?.user?.uid || "", localImagePaths[0])
 
     };
     const onClickSetId = (inputId: string) => {
@@ -92,7 +91,7 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(
               uid={data?.data?.userId}
               photoUrl={data?.data?.photoUrl}
               onImageChange={onImageChange}
-              setImageBlobs={setBlob}
+              setImagePaths={setImagePaths}
               images={images}
              
             />
