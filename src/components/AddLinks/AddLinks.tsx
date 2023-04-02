@@ -100,6 +100,7 @@ export const AddLinks: React.FC = () => {
       url={state?.[`urlLink${i}`]}
       name={state?.[`urlName${i}`]}
       index={i}
+      key={i+`urlLink`+`urlName`}
       onChange={onChange}
       onClear={onClear}
     />
