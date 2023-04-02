@@ -1,0 +1,5 @@
+.dialog {
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+   -webkit-backdrop-filter: blur(10px);
+}

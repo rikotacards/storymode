@@ -1,7 +1,6 @@
 import { getUserInfo } from '@/firebase/db';
-import React from 'react';
 import useSWR from 'swr'
-interface UserInfoProps {
+export interface UserInfoProps {
   bio: string;
   followersCount: number; 
   followingCount: number;
@@ -11,6 +10,17 @@ interface UserInfoProps {
   photoUrl: string;
   isVerified?: boolean;
   name: boolean;
+  urlName0?: string;
+  urlLink0?: string;
+  urlName1?: string;
+  urlLink1?: string;
+  urlName2?: string;
+  urlLink2?: string;
+  urlName3?: string;
+  urlLink3?: string;
+  urlName4?: string;
+  urlLink4?: string;
+
 }
 
 const fetcher = ([uid]: string[]) => {

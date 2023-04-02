@@ -24,9 +24,10 @@ interface PostHeaderProps {
 export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
-
+  const auth = useAuth();
   const {data, isLoading} = useGetUserInfo(author || "")
   const onClick = () => {
+    if(auth?.user?.uid === author)
     setOpen(true);
   };
   const onClose = () => {

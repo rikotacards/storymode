@@ -1,4 +1,5 @@
 import { Gallery } from "@/components/Gallery/Gallery";
+import { Links } from "@/components/Links/Links";
 import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
 import { ProfileHeaderSmall } from "@/components/ProfileHeaderSmall/ProfileHeaderSmall";
@@ -106,6 +107,9 @@ export const Profile: React.FC<ProfileProps> = () => {
               mode="grid"
               posts={postRes.posts}
             />
+          </TabPanel>
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <Links username={usernameInPath as string}/>
           </TabPanel>
         </>
       )}

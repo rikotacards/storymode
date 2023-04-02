@@ -19,7 +19,7 @@ interface EditProfileProps {
   onClose: () => void;
 }
 
-export const EditProfile: React.FC<EditProfileProps> = React.memo(
+export const EditProfile: React.FC<EditProfileProps> =
   ({ onClose }) => {
     const [open, setOpen] = React.useState(false);
     const router = useRouter();
@@ -196,4 +196,3 @@ export const EditProfile: React.FC<EditProfileProps> = React.memo(
       </div>
     );
   }
-);

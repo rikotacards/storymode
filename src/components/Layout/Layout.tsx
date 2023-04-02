@@ -80,13 +80,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Typography>
             {userInfo?.data?.isVerified && (
               <VerifiedIcon
-                sx={{zIndex: "1000", marginLeft: "4px", fontSize: "large" }}
+                sx={{ zIndex: "1000", marginLeft: "4px", fontSize: "large" }}
                 color="info"
               />
             )}
           </div>
         )}
-       {showPostBar && <Toolbar />}
+        {showPostBar && <Toolbar />}
         {children}
       </main>
       {/* {auth?.isLoggedIn && md && <BottomMenuBar />} */}

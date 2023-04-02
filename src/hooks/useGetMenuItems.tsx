@@ -8,7 +8,6 @@ export const useGetMenuItems = () => {
   const auth = useAuth();
   const {data, isLoading} = useGetUsernameFromUid(auth?.user?.uid || '')
   const userInfo = useGetUserInfo(auth.user?.uid || "")
-  console.log(userInfo)
   const items =  [...menuItems, {
     name: "Profile",
     path: "/" + (data?.username as string),
