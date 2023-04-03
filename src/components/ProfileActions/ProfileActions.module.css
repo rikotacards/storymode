@@ -11,20 +11,24 @@
 }
 .dialog {
   backdrop-filter: blur(10px);
-        justify-content: flex-end;
-        z-index: 1000;
-        -webkit-backdrop-filter: blur(10px);
+  justify-content: flex-end;
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(10px);
+}
+.button {
+  font-weight: 600;
+  text-transform: capitalize;
+  border-radius: 1;
 }
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px) {
   .container {
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-    width: 100%
+    width: 100%;
   }
   .layout {
     flex-direction: column;
   }
 }
-

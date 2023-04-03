@@ -1,5 +1,4 @@
 import { Typography, MenuItem as M, ListItemText } from "@mui/material";
-import Link from "next/link";
 import React from "react";
 import { usePathname } from 'next/navigation';
 import { useRouter } from "next/router";
@@ -26,7 +25,6 @@ export const MenuItem: React.FC<MenuItemProps> = (props) => {
       >
         <div style={{ marginRight: "16px" }}>{icon}</div>
         <ListItemText>
-          
             <Typography>{name}</Typography>
         </ListItemText>
       </div>

@@ -5,7 +5,6 @@ import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { useRouter } from "next/router";
 import styles from './FloatingMenu.module.css';
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useAuth } from "@/context/AuthContext";
 export const FloatingMenu: React.FC = () => {
 
   const menuItems = useGetMenuItems({isWide: false});

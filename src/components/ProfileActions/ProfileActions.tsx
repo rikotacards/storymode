@@ -24,6 +24,11 @@ interface ProfileActionsProps {
   hideName?: boolean;
 }
 
+const actionButtonTypographyStyle = {
+  fontWeight: "600",
+  textTransform: "capitalize",
+};
+
 export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const router = useRouter();
   const { uid, isLoggedIn } = useAuth();
@@ -91,42 +96,43 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
             {!isMyProfile && (
               <Button
                 onClick={onFollowClick}
-                sx={{ borderRadius: 1, margin: '4px 8px 4px 0px' }}
+                className={styles.button}
                 variant="contained"
                 fullWidth
                 size="small"
               >
-                <Typography
-                  variant="caption"
-                  sx={{ fontWeight: "600", textTransform: "capitalize" }}
-                >
+                <Typography variant="caption" sx={actionButtonTypographyStyle}>
                   {displayedFollow ? "Unfollow" : "Follow"}
                 </Typography>
               </Button>
             )}
             {isMyProfile && (
-                <Button
-                  size="small"
-                  onClick={openDrawer}
-                  sx={{
-                    fontWeight: "600",
-                    textTransform: "capitalize",
-                    borderRadius: 1,
-                    margin: '4px 8px 4px 0px'                  }}
-                  variant="contained"
-                  fullWidth
-                >
+              <Button
+                size="small"
+                onClick={openDrawer}
+                className={styles.button}
+                variant="contained"
+                fullWidth
+              >
+                <Typography variant="caption" sx={actionButtonTypographyStyle}>
                   {"Edit Profile"}
-                </Button>
+                </Typography>
+              </Button>
             )}
             <Button
               size="small"
               onClick={copyClick}
-              sx={{ borderRadius: 1, margin: '4px 0px 4px 0px', textTransform: "capitalize" }}
+              className={styles.button}
+              sx={{marginLeft: 1}}
               variant="contained"
               fullWidth
             >
-              {copied ? "Copied to clipboard" : "Share Profile"}
+              <Typography
+                variant="caption"
+                sx={actionButtonTypographyStyle}
+              >
+                {copied ? "Copied to clipboard" : "Share Profile"}
+              </Typography>
             </Button>
           </div>
         </div>
