@@ -63,7 +63,7 @@ const Drawer = styled(MuiDrawer, {
 export const SideMenu: React.FC = () => {
   const authHook = useAuth();
   const router = useRouter();
-  const menuItems = useGetMenuItems();
+  const menuItems = useGetMenuItems({isWide:true});
   if (!authHook.isLoggedIn) {
     return null;
   }

@@ -50,9 +50,9 @@ export const AuthContextWrapper: React.FC<AuthContextWrapperProps> = ({
   const context: AuthContextState = React.useMemo(
     () => ({
       uid,
-      isLoggedIn,
-      isLoading,
-      user,
+      isLoggedIn: true,
+      isLoading: false,
+      user: {},
       onLogout,
     }),
     [isLoggedIn, user, isLoading, uid]

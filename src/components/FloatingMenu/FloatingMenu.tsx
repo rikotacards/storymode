@@ -8,7 +8,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useAuth } from "@/context/AuthContext";
 export const FloatingMenu: React.FC = () => {
 
-  const menuItems = useGetMenuItems();
+  const menuItems = useGetMenuItems({isWide: false});
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
