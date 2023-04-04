@@ -13,7 +13,6 @@ import styles from "./PostHeader.module.css";
 import { deletePost } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
-import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 
 interface PostHeaderProps {
@@ -39,7 +38,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
   return (
     <div className={styles["post-header"]}>
       <div className={styles.avatar} onClick={onProfileHeaderClick}>
-       {(!data?.photoUrl|| isLoading) ? <Skeleton variant='circular'/> : <Avatar src={data.photoUrl || ""} color='action' alt={author[0]}>{author[0]}</Avatar>}
+       {(!data?.photoUrl|| isLoading) ? <Skeleton variant='circular'/> : <Avatar src={data.photoUrl || ""} color='action' alt={author[0]}>{data?.username[0]||""}</Avatar>}
       </div>
       <div className={styles.authorInfo} onClick={onProfileHeaderClick}>
         <Typography sx={{ fontWeight: '600', mr: 1 }}>{data?.username}</Typography>

@@ -7,6 +7,7 @@ import { Button, IconButton, TextField, Typography } from "@mui/material";
 import React from "react";
 import styles from "./AddLinks.module.css";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useCreateLocalImageUrls } from "@/hooks/useCreateImageUrl";
 interface LinkFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   index: number;
@@ -15,33 +16,52 @@ interface LinkFormProps {
   onClear: (index: number) => void;
 }
 
-const LinkForm: React.FC<LinkFormProps> = ({ onClear, name, url, onChange, index }) => {
+const LinkForm: React.FC<LinkFormProps> = ({
+  onClear,
+  name,
+  url,
+  onChange,
+  index,
+}) => {
+  console.log("addlink");
+
+  const imageUrls = useCreateLocalImageUrls();
+  console.log(imageUrls)
   return (
     <div className={styles.linkGroupContainer}>
       <div className={styles.linkGroup}>
-          <TextField
-            value={name}
-            sx={{ marginBottom: "4px" }}
-            id={"urlName" + index}
-            onChange={onChange}
-            placeholder="Name, e.g. Instagram"
-            size="small"
-            fullWidth
-          />
-          <TextField
-            value={url}
-            id={"urlLink" + index}
-            onChange={onChange}
-            placeholder="Url"
-            size="small"
-            fullWidth
-          />
+        <TextField
+          value={name}
+          sx={{ marginBottom: "4px" }}
+          id={"urlName" + index}
+          onChange={onChange}
+          placeholder="Name, e.g. Instagram"
+          size="small"
+          fullWidth
+        />
+        <TextField
+          value={url}
+          id={"urlLink" + index}
+          onChange={onChange}
+          placeholder="Url"
+          size="small"
+          fullWidth
+        />
       </div>
-      <div style={{borderRadius: '20px', flexShrink: 1, display: 'flex', justifyContent: 'center'}}>
+      <div
+        style={{
+          borderRadius: "20px",
+          flexShrink: 1,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <IconButton color="error" onClick={() => onClear(index)}>
           <HighlightOffIcon />
         </IconButton>
       </div>
+      <input accept="image/*" type="file" onChange={imageUrls.onChange} />
+      <input style={{maxHeight: 50, maxWidth: 50}} type='image' src={imageUrls.imageDataUrls[0]}/>
     </div>
   );
 };
@@ -52,6 +72,8 @@ export const AddLinks: React.FC = () => {
   const uid = auth?.user?.uid;
   const userInfoRes = useGetUserInfo(uid as string);
   const [state, setState] = React.useState({} as any);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev: any) => ({ ...prev, [e.target.id]: e.target.value }));
   React.useEffect(() => {
     setState(userInfoRes?.data);
   }, [
@@ -83,24 +105,26 @@ export const AddLinks: React.FC = () => {
       url: userInfoRes?.data?.urlLink4,
     },
   ];
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev: any) => ({ ...prev, [e.target.id]: e.target.value }));
+  
   };
 
   const onSave = () => {
     updateUserProfileInfo(uid || "", state);
   };
-  const onClear = (index:number) => {
-    setState((prev: any) => ({ ...prev, ["urlName"+index]: "", ["urlLink"+index]:"" }));
-
-  }
+  const onClear = (index: number) => {
+    setState((prev: any) => ({
+      ...prev,
+      ["urlName" + index]: "",
+      ["urlLink" + index]: "",
+    }));
+  };
 
   const linksDisplayed = links.map((link, i) => (
     <LinkForm
       url={state?.[`urlLink${i}`]}
       name={state?.[`urlName${i}`]}
       index={i}
-      key={i+`urlLink`+`urlName`}
+      key={i + `urlLink` + `urlName`}
       onChange={onChange}
       onClear={onClear}
     />

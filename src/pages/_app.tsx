@@ -11,6 +11,7 @@ import { AuthContextWrapper } from "@/context/AuthContext";
 import { RouteGuard } from "@/components/RouteGuard/RouteGuard";
 import { PageWrapper } from "@/components/PageWrapper/PageWrapper";
 import { DrawerProvider } from "@/context/DrawerContext";
+import { AddLinksContext, AddLinksProvider } from "@/context/AddLinksContext";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -31,11 +32,13 @@ export default function MyApp(props: MyAppProps) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <RouteGuard>
-            <DrawerProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-            </DrawerProvider>
+            <AddLinksProvider>
+              <DrawerProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </DrawerProvider>
+            </AddLinksProvider>
           </RouteGuard>
         </ThemeProvider>
       </CacheProvider>

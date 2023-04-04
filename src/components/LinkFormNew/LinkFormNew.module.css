@@ -1,0 +1,19 @@
+.thumbnail {
+  height: 50px;
+  width: 50px;
+  display: flex;
+}
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.linkForm {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+

@@ -81,8 +81,8 @@ export const addUserToDb = async ({
   // add self as follower
   // create a userProfile
   const userProfileRef = doc(firestore, "userProfiles", userId);
-  const snap = await getDoc(userProfileRef)
-  if(snap.exists()){
+  const snap = await getDoc(userProfileRef);
+  if (snap.exists()) {
     return;
   } else {
     const followersRef = doc(
@@ -101,7 +101,10 @@ export const addUserToDb = async ({
   }
 };
 
-export const updateProfileImage = async (uid: string, localImagePath: string) => {
+export const updateProfileImage = async (
+  uid: string,
+  localImagePath: string
+) => {
   if (!localImagePath) {
     return;
   }
@@ -333,22 +336,23 @@ export const getImagePath = (imagePath: string) => {
     });
 };
 
-export const getPostByPostId = async(uid: string, postId: string) => {
-  if(!uid || !postId){
+export const getPostByPostId = async (uid: string, postId: string) => {
+  if (!uid || !postId) {
     return undefined;
   }
-  const querySnapshot = await getDoc(doc(firestore, "content", uid, "posts", postId))
-  if(!querySnapshot.exists()){
-    return undefined
+  const querySnapshot = await getDoc(
+    doc(firestore, "content", uid, "posts", postId)
+  );
+  if (!querySnapshot.exists()) {
+    return undefined;
   }
   const data = {
     ...querySnapshot.data(),
     postTime: querySnapshot.data().postTime?.toDate().getTime(),
     postId: querySnapshot.id,
-
-  }
-  return data
-}
+  };
+  return data;
+};
 
 export const getPostsByUid = async (uid: string) => {
   try {
@@ -367,7 +371,7 @@ export const getPostsByUid = async (uid: string) => {
       };
       return data as PostFromDbProps;
     });
-    return post.sort((a,b) => b.postTime-a.postTime )
+    return post.sort((a, b) => b.postTime - a.postTime);
   } catch (e) {
     console.log("eee", e);
   }
@@ -394,4 +398,22 @@ export const getPostsFromFollowings = async (uid: string) => {
     res = [...res, ...(post as PostFromDbProps[])];
   });
   return res.sort((a, b) => b.postTime - a.postTime);
+};
+
+export const updatePersonalLinks = async (
+  uid: string,
+  personalLinks: { link: string; name: string; imagePath?: string }[]
+) => {
+  personalLinks.forEach(async (link) => {
+    const collectionRef = collection(firestore, "userProfiles", uid, "links");
+    const docRef = doc(collectionRef);
+    if (!link?.name || link?.link) {
+      return;
+    }
+    await setDoc(
+      doc(firestore, "userProfiles", uid),
+      {link: personalLinks},
+      { merge: true }
+    );
+  });
 };
