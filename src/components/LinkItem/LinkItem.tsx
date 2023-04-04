@@ -1,8 +1,6 @@
 import { Avatar, Card, IconButton, Paper, Typography } from "@mui/material";
 import React from "react";
 
-import { ClearOutlined, MoreVert } from "@mui/icons-material";
-import { LinkEdit } from "../LinkEdit/LinkEdit";
 import Link from "next/link";
 interface LinkItemProps {
   url: string;

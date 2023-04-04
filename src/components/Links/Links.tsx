@@ -4,15 +4,9 @@ import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { AddLinks } from "../AddLinks/AddLinks";
-import { LinkEdit } from "../LinkEdit/LinkEdit";
 import { LinkItem } from "../LinkItem/LinkItem";
 
 interface LinksProps {
@@ -28,13 +22,7 @@ export const Links: React.FC<LinksProps> = ({ username }) => {
   const uid = useGetUidFromUsername(username || "");
   const isMyProfile = auth?.user?.uid == uid?.data?.uid;
   const userInfoRes = useGetUserInfo(data?.uid);
-  const links = [
-    { url: userInfoRes?.data?.urlLink0, name: userInfoRes?.data?.urlName0 },
-    { url: userInfoRes?.data?.urlLink1, name: userInfoRes?.data?.urlName1 },
-    { url: userInfoRes?.data?.urlLink2, name: userInfoRes?.data?.urlName2 },
-    { url: userInfoRes?.data?.urlLink3, name: userInfoRes?.data?.urlName3 },
-    { url: userInfoRes?.data?.urlLink4, name: userInfoRes?.data?.urlName4 },
-  ];
+  const links = userInfoRes?.data.link
   React.useEffect(() => {
     drawerContext.setComponent("linkEditForm");
   }, [userInfoRes?.data?.urlLink0]);
@@ -74,12 +62,6 @@ export const Links: React.FC<LinksProps> = ({ username }) => {
             Add / Edit Link
             </Typography> 
           </Button>
-          <LinkEdit
-            index={indexKey}
-            open={open}
-            setClose={setClose}
-            toggle={toggle}
-          />
         </>
       )}
     </div>

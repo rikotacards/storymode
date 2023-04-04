@@ -36,8 +36,11 @@ interface AddLinksProviderProps {
 export const AddLinksProvider: React.FC<AddLinksProviderProps> = ({children}) => {
   const [personalLinks, setPersonalLinks] = React.useState<PersonalLink[]>([{name:'', url: '', imagePath: ''}])
   const auth = useAuth();
-  const route = useRouter();
-  const {data} = useGetUserInfo(auth?.user?.uid as string)
+  const {data, isLoading} = useGetUserInfo(auth?.user?.uid as string)
+
+  React.useEffect(() => {
+    setPersonalLinks(data?.link)
+  },[data,isLoading])
   
   const onSave = async() => {
     if(!auth?.user?.uid){

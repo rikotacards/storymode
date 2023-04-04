@@ -20,6 +20,7 @@ export interface UserInfoProps {
   urlLink3?: string;
   urlName4?: string;
   urlLink4?: string;
+  link: {url: string, name: string, imagePath: string}[]
 
 }
 

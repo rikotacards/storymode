@@ -52,11 +52,11 @@ export const CreateUsername: React.FC = () => {
         {isSuccess ? (
           <div>
             <Typography fontWeight={600} mb={1} variant="body2">
-              Welcome to the party {username} 🎉
+              {`Welcome to the party ${username} 🎉`}
             </Typography>
             <Typography variant="body2">
-              On the bottom right side, that's where your menu is. Have fun
-              exploring!
+              {`On the bottom right side, that's where your menu is. Have fun
+              exploring!`}
             </Typography>
           </div>
         ) : (

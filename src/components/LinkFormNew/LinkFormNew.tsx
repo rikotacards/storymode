@@ -1,10 +1,10 @@
 import { useAddLinksContext } from "@/context/AddLinksContext";
 import { useCreateLocalImageUrls } from "@/hooks/useCreateImageUrl";
-import { Avatar, Button, Card, CardActionArea, TextField } from "@mui/material";
+import { Avatar, Button, Card, CardActionArea, IconButton, TextField } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import styles from "./LinkFormNew.module.css";
 import React from "react";
-
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 interface LinkFormProps {
   index: number;
   name: string;
@@ -84,8 +84,8 @@ export const LinkFormNew: React.FC<LinkFormProps> = (props) => {
           }}
         />
       </div>
-      <div>
-        <Button>Clear</Button>
+      <div style={{display: 'flex' , justifyContent: 'center'}}>
+        <IconButton><HighlightOffIcon/></IconButton>
       </div>
     </div>
   );

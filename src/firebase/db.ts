@@ -402,18 +402,11 @@ export const getPostsFromFollowings = async (uid: string) => {
 
 export const updatePersonalLinks = async (
   uid: string,
-  personalLinks: { link: string; name: string; imagePath?: string }[]
+  personalLinks: { url: string; name: string; imagePath: string }[]
 ) => {
-  personalLinks.forEach(async (link) => {
-    const collectionRef = collection(firestore, "userProfiles", uid, "links");
-    const docRef = doc(collectionRef);
-    if (!link?.name || link?.link) {
-      return;
-    }
-    await setDoc(
-      doc(firestore, "userProfiles", uid),
-      {link: personalLinks},
-      { merge: true }
-    );
-  });
+  await setDoc(
+    doc(firestore, "userProfiles", uid),
+    {link: personalLinks},
+    { merge: true }
+  );
 };
