@@ -45,7 +45,7 @@ const router = useRouter();
             {notificationMessage[payloadId]}
           </Typography>
           {unified && <Emoji size={18} unified={unified} />}
-          <Typography sx={{ marginLeft: 1 }} variant="body2">
+          <Typography sx={{ marginLeft: 0.5}} variant="body2">
             {"on your post"}
           </Typography>
         </div>

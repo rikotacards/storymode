@@ -9,7 +9,13 @@ const Notifications: React.FC = () => {
     const data = useGetNotifications(auth?.user?.uid || "")
     const notifications = data?.data?.map((data,i) => <NotificationItem postId={data?.postId} key={i} senderUid={data?.senderUid} payloadId={data?.payloadId} receiverUid={data?.receiverUid} unified={data?.unified}/>)
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+    }}>
       <AppBar className={styles.appbar}>
         <Paper>
 
