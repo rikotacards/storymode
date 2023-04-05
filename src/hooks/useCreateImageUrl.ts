@@ -39,6 +39,7 @@ export const useCreateLocalImageUrls = () => {
     // if (e.target.files === null) {
     //   return;
     // }
+    //@ts-ignore
     setImageBlobs([e.target.files[0]]);
   };
   return {

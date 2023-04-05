@@ -30,9 +30,7 @@ export const Links: React.FC<LinksProps> = ({ username }) => {
   const toggle = () => {
     setOpen(!open);
   };
-  const setClose = () => {
-    setOpen(false);
-  };
+ 
   const setIndexKeyOnClick = (i: number) => {
     setIndexKey(i);
     toggle();

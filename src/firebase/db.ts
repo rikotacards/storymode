@@ -404,9 +404,14 @@ export const updatePersonalLinks = async (
   uid: string,
   personalLinks: { url: string; name: string; imagePath: string }[]
 ) => {
+  const filteredLinks = personalLinks.map((link) => {
+    if(link.name.length >0 && link.url.length > 0){
+      return link
+    }
+  })
   await setDoc(
     doc(firestore, "userProfiles", uid),
-    {link: personalLinks},
+    {link: filteredLinks},
     { merge: true }
   );
 };

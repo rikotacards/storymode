@@ -1,27 +1,32 @@
-import {  Collapse, Fab } from "@mui/material";
+import { Collapse, Fab } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { useRouter } from "next/router";
-import styles from './FloatingMenu.module.css';
+import styles from "./FloatingMenu.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 export const FloatingMenu: React.FC = () => {
-
-  const menuItems = useGetMenuItems({isWide: false});
+  const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
     setOpen(!open);
   };
   const menu = menuItems.map((item) => (
-    <Fab key={item.path} sx={{ margin: 1 }} onClick={() => {router.push(item.path) ;toggleOpen()}} size="small">
+    <Fab
+      key={item.path}
+      sx={{ margin: 1 }}
+      onClick={() => {
+        router.push(item.path);
+        toggleOpen();
+      }}
+      size="small"
+    >
       {item.icon}
     </Fab>
   ));
   return (
-    <div
-      className={styles.container}
-    >
+    <div className={styles.container }>
       <Collapse orientation="horizontal" in={open}>
         <div
           style={{
@@ -32,7 +37,7 @@ export const FloatingMenu: React.FC = () => {
           }}
         >
           {menu}
-          </div>
+        </div>
       </Collapse>
       <Fab
         onClick={toggleOpen}
@@ -40,7 +45,7 @@ export const FloatingMenu: React.FC = () => {
           position: "relative",
           right: "0px",
           display: "flex",
-          opacity: '0.7'
+          opacity: "0.7",
         }}
       >
         {!open ? <MenuIcon /> : <ChevronRightIcon />}
@@ -51,4 +56,3 @@ export const FloatingMenu: React.FC = () => {
 function useGetUserInfoFromUid() {
   throw new Error("Function not implemented.");
 }
-

@@ -1,0 +1,27 @@
+.progressBar {
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    #29bbca,
+    #22a7d6,
+    #1e90ff,
+    #2471a3,
+    #1f618d,
+    #f9d423,
+    #fd1d1d,
+    #f44336,
+    #8bc34a
+  );
+
+  background-size: 1800% 100%;
+  animation: progressBar 5s ease infinite;
+}
+
+@keyframes progressBar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}

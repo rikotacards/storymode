@@ -4,14 +4,20 @@
   display: flex;
 }
 .container {
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   display: flex;
   width: 100%;
   align-items: center;
+  flex-direction: column;
 }
 .linkForm {
   display: flex;
   flex-direction: column;
+  width: 100%
+}
+.linkFormButtonContainer {
+  display: flex;
+  flex-direction: row;
   width: 100%
 }
 

@@ -1,4 +1,5 @@
 import { Gallery } from "@/components/Gallery/Gallery";
+import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
 import { Links } from "@/components/Links/Links";
 import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
@@ -41,8 +42,8 @@ export const Profile: React.FC<ProfileProps> = () => {
     error: any;
     isLoading: boolean;
 } = useGetPostsByUid(uidFromUsernameRes?.data?.uid);
-  if (postRes.isLoading) {
-    return <LinearProgress style={{ width: "100%" }} />;
+if (postRes.isLoading) {
+  return <LinearProgressCustom />;
   }
   if (!postRes?.posts || uidFromUsernameRes.isLoading || !auth) {
     return (

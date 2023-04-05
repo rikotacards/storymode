@@ -24,6 +24,7 @@ interface AddLinksContextProps {
   addImage: (imageUrl: string, index: number, blobData:string) => void;
   removeLink: (index:number) => void;
   onSave: () => void;
+  onRemove: (index: number) => void;
 }
 
 export const AddLinksContext = React.createContext({} as AddLinksContextProps)
@@ -54,6 +55,16 @@ export const AddLinksProvider: React.FC<AddLinksProviderProps> = ({children}) =>
    }
   }
   
+  const onRemove = (index:number) => {
+    const newState = [];
+    for(let i = 0; i < personalLinks.length; i++){
+      if(i == index){
+        continue
+      } 
+      newState.push(personalLinks[i])
+    }
+    setPersonalLinks(newState);
+  }
 
   const addLink = () => {
     setPersonalLinks((prev) => [...prev, { url: '', name: '', imagePath: ''}])
@@ -106,8 +117,8 @@ export const AddLinksProvider: React.FC<AddLinksProviderProps> = ({children}) =>
     onTextChange,
     addImage,
     removeLink,
-    onSave
-    
+    onSave,
+    onRemove,
   }
 
   return (

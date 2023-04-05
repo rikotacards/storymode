@@ -1,12 +1,48 @@
 .container {
   display: flex;
-position: fixed;
-bottom: 16px;
-      right: 20px;
-        border-radius: 83px;
-        backdrop-filter: blur(3px);
-        justify-content: flex-end;
-        z-index: 1000;
-        -webkit-backdrop-filter: blur(3px);
-        border: 0.5px solid white
+  position: fixed;
+  bottom: 16px;
+  right: 20px;
+  border-radius: 83px;
+  backdrop-filter: blur(3px);
+  justify-content: flex-end;
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid transparent;
+  animation: container 30s ease-in-out infinite;
+}
+
+.loadingBlock {
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(90deg, #006994 0%, #0284c7 25%, #00a9e0 50%, #32c5ff 75%, #78dcff 100%);
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.sunsetborder {
+  border: 5px solid transparent;
+  animation: sunsetborder 60s ease-in-out infinite;
+}
+
+@keyframes container {
+  0% {
+    border-color: #FDD835;
+  }
+  25% {
+    border-color: #FF5722;
+  }
+  50% {
+    border-color: #E91E63;
+  }
+  75% {
+    border-color: #9C27B0;
+  }
+  100% {
+    border-color: #3F51B5;
+  }
 }

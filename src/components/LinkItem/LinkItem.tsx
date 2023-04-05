@@ -1,7 +1,11 @@
-import { Avatar, Card, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
-import Link from "next/link";
 interface LinkItemProps {
   url: string;
   name: string;
@@ -9,50 +13,51 @@ interface LinkItemProps {
   index: number;
   set: (i: number) => void;
 }
+const showLink = false;
 export const LinkItem: React.FC<LinkItemProps> = ({ url, name }) => {
   return (
     <div>
       <Card
         sx={{
-          alignItems: "center",
           margin: "8px 8px 4px 8px",
           display: name.length === 0 ? "none" : "flex",
         }}
       >
         <Paper
           sx={{
+            justifyContent: "center",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "flex-start",
-            padding: 1,
             width: "100%",
           }}
         >
-          <Link
-            href={url}
-            target="_blank"
-            style={{
-              display: "flex",
-              width: "100%",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            <IconButton sx={{ mr: 1 }}>
-              <Avatar>{name[0]}</Avatar>
-            </IconButton>
-            <div
+          <CardActionArea>
+            <a
+              href={url}
+              target="_blank"
               style={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                width: "100%",
+                textDecoration: "none",
+                color: "inherit",
               }}
             >
-              <Typography sx={{ fontWeight: "600" }}>{name}</Typography>
-              <Typography variant="caption">{url}</Typography>
-            </div>
-          </Link>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100%",
+                  textAlign: 'center',
+                  padding: 8
+                }}
+              >
+                <Typography sx={{ fontWeight: "600" }}>{name}</Typography>
+                {showLink && <Typography variant="caption">{url}</Typography>}
+              </div>
+            </a>
+          </CardActionArea>
         </Paper>
       </Card>
     </div>
