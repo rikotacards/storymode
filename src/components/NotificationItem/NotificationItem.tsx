@@ -3,7 +3,9 @@ import React from "react";
 import styles from "./NotificationItem.module.css";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Emoji } from "emoji-picker-react";
-import { userInfo } from "os";
+import { useGetPostByPostId } from "@/hooks/useGetPostByPostId";
+import { getImagePath } from "@/firebase/db";
+import { useRouter } from "next/router";
 
 export const notificationMessage: { [key: string]: string } = {
   0: "reacted with",
@@ -15,14 +17,22 @@ interface NotificationItemProps {
   receiverUid: string;
   payloadId: string;
   unified?: string;
+  postId: string;
 }
 export const NotificationItem: React.FC<NotificationItemProps> = (props) => {
-  const { senderUid, receiverUid, payloadId, unified } = props;
+  const { senderUid, receiverUid, payloadId, unified, postId } = props;
+const router = useRouter();
+  const data = useGetPostByPostId(receiverUid, postId)
+  const receiverUsername = useGetUserInfo(receiverUid);
 
+  console.log(receiverUid, postId)
   const userInfoData = useGetUserInfo(senderUid);
   const senderUsername = userInfoData?.data?.username;
+  const redirectToPost = () => {
+    router.push('/'+receiverUsername?.data?.username +'/'+ postId)
+  }
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={redirectToPost}>
       <div>
         <Avatar src={userInfoData?.data?.photoUrl}>m</Avatar>
       </div>
@@ -40,14 +50,15 @@ export const NotificationItem: React.FC<NotificationItemProps> = (props) => {
           </Typography>
         </div>
       </div>
-      <div
+      <img
         style={{
+          display: 'none',
           marginLeft: "auto",
           height: 50,
           width: 50,
           border: "1px solid white",
         }}
-      ></div>
+      ></img>
     </div>
   );
 };

@@ -31,7 +31,7 @@ export const EmojiCount: React.FC<EmojiCountProps> = ({author, unified, postId,l
     } else {
       setDisplayedCount(displayedCount+1)
       updateReaction({ docId: postId, unified, direction: "increment" });
-      uid && addNotification({unified, receiverUid: author, senderUid: uid, payloadId: 0})
+      uid && addNotification({unified, receiverUid: author, senderUid: uid, payloadId: 0, postId})
     }
     toggleReacted()
   }

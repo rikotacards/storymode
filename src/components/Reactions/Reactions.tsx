@@ -22,7 +22,7 @@ interface ReactionsProps {
 }
 
 interface ReactionsStateType {
-  [key: string]: { count: number; hasLiked: boolean; emoji: string };
+  [key: string]: { count: number; hasLiked: boolean; emoji: string;  };
 }
 
 export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
@@ -83,7 +83,7 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
         // we have this so we don't need to 'get' the data after increment.
         updateDisplayedReactions(unified, 1, emoji);
         uid && addNotification(
-          {senderUid: uid, receiverUid: author, payloadId: 0, unified}
+          {senderUid: uid, receiverUid: author, payloadId: 0, unified, postId}
         )
       }
     },

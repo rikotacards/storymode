@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 const Notifications: React.FC = () => {
     const auth = useAuth();
     const data = useGetNotifications(auth?.user?.uid || "")
-    const notifications = data?.data?.map((data,i) => <NotificationItem key={i} {...data}/>)
+    const notifications = data?.data?.map((data,i) => <NotificationItem postId={data?.postId} key={i} senderUid={data?.senderUid} payloadId={data?.payloadId} receiverUid={data?.receiverUid} unified={data?.unified}/>)
   return (
     <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <AppBar className={styles.appbar}>

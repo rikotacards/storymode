@@ -1,22 +1,15 @@
 import { Gallery } from "@/components/Gallery/Gallery";
-import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
-import { ProfileHeader } from "@/components/ProfileHeader/ProfileHeader";
-import { ProfileHeaderSmall } from "@/components/ProfileHeaderSmall/ProfileHeaderSmall";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
 import {
   getPostByPostId,
-  getUidFromUsername,
   PostFromDbProps,
 } from "@/firebase/db";
 import { useGetPostByPostId } from "@/hooks/useGetPostByPostId";
-import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import {
-  Button,
   Card,
   CardContent,
-  Divider,
   LinearProgress,
   Typography,
   useTheme,

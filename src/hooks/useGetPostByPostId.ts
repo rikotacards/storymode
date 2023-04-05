@@ -11,7 +11,6 @@ const fetcher = ([uid, postId]: string[]) => {
 }
 export const  useGetPostByPostId = (uid: string | string[], postId: string | string[]) => {
   const {data, error, isLoading} = useSWR([uid,postId, 'useGetPostByPostId'], fetcher);
-  console.log(data)
   return {
     post: [data] || [], 
     error, 

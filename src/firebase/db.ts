@@ -422,6 +422,7 @@ interface addNotificationArgs {
   receiverUid: string;
   payloadId: number;
   unified?: string;
+  postId: string;
 }
 export const addNotification = async (args: addNotificationArgs) => {
   const { receiverUid } = args;
