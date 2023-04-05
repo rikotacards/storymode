@@ -23,7 +23,7 @@ export const MenuItem: React.FC<MenuItemProps> = (props) => {
         }}
         onClick={onClick ? onClick : () => {router.push(path)}}
       >
-        <div style={{ marginRight: "16px" }}>{icon}</div>
+        <div style={{ marginRight: "16px", display: 'flex', alignItems: 'center' }}>{icon}</div>
         <ListItemText>
             <Typography>{name}</Typography>
         </ListItemText>

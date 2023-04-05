@@ -13,9 +13,11 @@ import { copyToClipboard } from "@/utils/copyToClipboard";
 interface PostActionsProps {
   postId: string;
   username: string;
+  // used for recevingUid
+  author: string;
 }
 
-export const PostActions: React.FC<PostActionsProps> = ({ username, postId }) => {
+export const PostActions: React.FC<PostActionsProps> = ({author, username, postId }) => {
   const auth = useAuth();
   const baseUrl = window.location.origin
   const [open, setOpen] = React.useState(false);
@@ -40,7 +42,7 @@ export const PostActions: React.FC<PostActionsProps> = ({ username, postId }) =>
             display: "flex",
           }}
         >
-          <Reactions postId={postId} />
+          <Reactions author={author} postId={postId} />
         <IconButton onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)}>
             <SendRoundedIcon />
           </IconButton>

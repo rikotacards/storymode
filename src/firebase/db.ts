@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -405,13 +406,51 @@ export const updatePersonalLinks = async (
   personalLinks: { url: string; name: string; imagePath: string }[]
 ) => {
   const filteredLinks = personalLinks.map((link) => {
-    if(link.name.length >0 && link.url.length > 0){
-      return link
+    if (link.name.length > 0 && link.url.length > 0) {
+      return link;
     }
-  })
+  });
   await setDoc(
     doc(firestore, "userProfiles", uid),
-    {link: filteredLinks},
+    { link: filteredLinks },
     { merge: true }
   );
 };
+
+interface addNotificationArgs {
+  senderUid: string;
+  receiverUid: string;
+  payloadId: number;
+  unified?: string;
+}
+export const addNotification = async (args: addNotificationArgs) => {
+  const { receiverUid } = args;
+  const collRef = collection(
+    firestore,
+    "notifications",
+    receiverUid,
+    "allNotifications"
+  );
+  await addDoc(collRef, args);
+};
+
+export const getAllNotifications = async (uid: string) => {
+  const collRef = collection(
+    firestore,
+    "notifications",
+    uid,
+    "allNotifications"
+  );
+  const nots = await getDocs(collRef);
+  if (nots.size > 0) {
+    return nots.docs.map((data) => data.data())
+  }
+  return [];
+};
+export const toggleNotificationStatus = async (uid: string, isRead: boolean) => {
+  setDoc(doc(firestore, "notifications", uid),  {isRead })
+}
+export const getNotificationIsReadStatus = async(uid: string) => {
+  const docRef = await getDoc(doc(firestore, "notifications", uid))
+  return docRef.data()
+}

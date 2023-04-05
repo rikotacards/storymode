@@ -1,4 +1,4 @@
-import { Collapse, Fab } from "@mui/material";
+import { Badge, Collapse, Fab } from "@mui/material";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
@@ -13,6 +13,7 @@ export const FloatingMenu: React.FC = () => {
     setOpen(!open);
   };
   const menu = menuItems.map((item) => (
+    <Badge invisible color='primary' variant='dot'>
     <Fab
       key={item.path}
       sx={{ margin: 1 }}
@@ -24,6 +25,7 @@ export const FloatingMenu: React.FC = () => {
     >
       {item.icon}
     </Fab>
+    </Badge>
   ));
   return (
     <div className={styles.container }>
@@ -39,6 +41,7 @@ export const FloatingMenu: React.FC = () => {
           {menu}
         </div>
       </Collapse>
+      <Badge color='warning' invisible badgeContent={1} variant='dot'>
       <Fab
         onClick={toggleOpen}
         style={{
@@ -48,11 +51,10 @@ export const FloatingMenu: React.FC = () => {
           opacity: "0.7",
         }}
       >
+
         {!open ? <MenuIcon /> : <ChevronRightIcon />}
       </Fab>
+        </Badge>
     </div>
   );
 };
-function useGetUserInfoFromUid() {
-  throw new Error("Function not implemented.");
-}

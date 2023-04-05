@@ -12,7 +12,6 @@ export const useGetMenuItems = (args: useGetMenuItemProps) => {
   const auth = useAuth();
   const { data, isLoading } = useGetUsernameFromUid(auth?.user?.uid || "");
   const userInfo = useGetUserInfo(auth.user?.uid || "");
-  console.log(userInfo)
   const items = [
     ...menuItems,
     {

@@ -54,3 +54,10 @@
 ``/content/[userid]/posts/[postId]/`
 - Shorter, and we nest all information into postId. The post document would include the list of images / text
 - Reactions would be a key, mapped to a map `reactions: {happy: 0, sad: 1}`
+
+# Notifcations
+notifcations table
+userId
+msg: liked, followed, tagged, mentioned
+payloadId: 
+{s: me (uid), r: you (uid), payloadId: {postId}}
