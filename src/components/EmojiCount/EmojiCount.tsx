@@ -38,7 +38,7 @@ export const EmojiCount: React.FC<EmojiCountProps> = ({author, unified, postId,l
   return <div className={styles.emojicount}>
     <IconButton onClick={onEmojiClick} size='small'>
     <Emoji label={label} symbol={symbol}/>
-    <Typography sx={{ marginLeft: '4px', fontWeight:600}}>
+    <Typography sx={{ marginLeft: '4px', fontWeight:600, fontSize:'small'}}>
       {displayedCount}
     </Typography>
     </IconButton>

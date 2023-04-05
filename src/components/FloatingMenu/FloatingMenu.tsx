@@ -13,11 +13,11 @@ export const FloatingMenu: React.FC = () => {
   const toggleOpen = () => {
     setOpen(!open);
   };
-  const menu = menuItems.map((item) => (
+  const menu = menuItems.map((item, i) => (
 
     <Badge invisible={item.name!=='notifications'} color='error' variant='dot'>
     <Fab
-      key={item.path}
+      key={item.path +i}
       sx={{ margin: '0px 0px 0px 16px' }}
       onClick={() => {
         router.push(item.path);
