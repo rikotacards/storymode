@@ -5,7 +5,6 @@ import styles from "./AddPostContainer.module.css";
 import { Button, Typography } from "@mui/material";
 import { AddPostWidget } from "../AddPostWidget/AddPostWidget";
 import { AddPostContext } from "@/context/AddPostContext";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 export const AddPostContainer: React.FC = () => {
   const collectionRef = collection(firestore, "/content");
   const addPostContext = React.useContext(AddPostContext);

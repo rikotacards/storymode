@@ -14,14 +14,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import { Gallery } from "../Gallery/Gallery";
 import { TabPanel } from "../TabPanel/TabPanel";
-
+import styles from './Feed.module.css'
 export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
   const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
   const feedRes = useGetMyFeed(auth?.user?.uid || "");
   if (!userInfoRes.data && feedRes?.isLoading) {
-    return <LinearProgress style={{ width: "100%" }} />;
+    return <LinearProgress className={styles.progressBar} style={{ width: "100%" }} />;
   }
   const hasNoContent =
     !feedRes.isLoading && userInfoRes?.data?.followersCount === 0;

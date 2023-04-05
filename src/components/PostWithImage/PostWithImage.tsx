@@ -35,7 +35,10 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     {} as { slideNext: () => void; slidePrev: () => void }
   );
   const hasImages = images.length > 0;
-  images.reverse()
+  // todo
+  // when grabbing info, all is ba
+  images.reverse();
+  captions.reverse();
   const next = React.useCallback(() => myswiper.slideNext(), [myswiper]);
   const prev = React.useCallback(() => myswiper.slidePrev(), [myswiper]);
   if (postRes.isLoading) {

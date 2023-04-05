@@ -1,20 +1,20 @@
 import { useAuth } from "@/context/AuthContext";
 import { getUsername, setUsername } from "@/firebase/db";
+import { ErrorOutline, Home } from "@mui/icons-material";
 import {
   Button,
   Card,
   CardContent,
   CircularProgress,
-  LinearProgress,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
-
+import styles from "./CreateUsername.module.css";
 export const CreateUsername: React.FC = () => {
   const auth = useAuth();
-  
-  
+
   const [isLoading, setLoading] = React.useState(false);
   const [hasError, setError] = React.useState(false);
   const [username, setUsernameChange] = React.useState("");
@@ -22,48 +22,61 @@ export const CreateUsername: React.FC = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsernameChange(e.target.value);
   };
-  
+
   const onSubmit = () => {
     setError(false);
     setLoading(true);
-    getUsername(username).then((res) => {
-      if (res) {
-        setError(true);
-        setLoading(false);
-        throw new Error("username exists")
-      }
-    }).then(() => {
-      setUsername(username, auth?.user?.uid || "").then(() => {
-        setLoading(false);
-        setError(false);
+    getUsername(username)
+      .then((res) => {
+        if (res) {
+          setError(true);
+          setLoading(false);
+          throw new Error("username exists");
+        }
+      })
+      .then(() => {
+        setUsername(username, auth?.user?.uid || "").then(() => {
+          setLoading(false);
+          setError(false);
+        });
+      })
+      .catch((e) => {
+        // todo
+        console.log(e);
       });
-    }).catch((e) => {console.log(e)})
   };
 
   return (
-    <Card sx={{ margin: 1 }}>
+    <Card className={styles.container}>
       <CardContent>
         {isSuccess ? (
           <div>
-
-            <Typography color='success'>Success</Typography>
-            <Typography>{'you'}</Typography>
+            <Typography fontWeight={600} mb={1} variant="body2">
+              {`Welcome to the party ${username} 🎉`}
+            </Typography>
+            <Typography variant="body2">
+              {`On the bottom right side, that's where your menu is. Have fun
+              exploring!`}
+            </Typography>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Typography sx={{ mb: 1 }}>Create a username</Typography>
-            <div style={{display: 'flex'}}>
+          <div style={{ display: "flex", flexDirection: 'column' }}>
+            <div style={{ display: "flex", alignItems: 'center' }}>
               <TextField
-              fullWidth
+                fullWidth
                 onChange={onChange}
                 size="small"
-                placeholder="username"
+                placeholder="Create your username"
                 variant="outlined"
                 type="text"
                 disabled={isSuccess}
               />
+
               {isLoading ? (
+                <IconButton size='small'>
+
                 <CircularProgress sx={{ marginLeft: 1 }} />
+                </IconButton>
               ) : (
                 <Button
                   onClick={onSubmit}
@@ -74,9 +87,11 @@ export const CreateUsername: React.FC = () => {
                 </Button>
               )}
             </div>
+           
             {hasError && (
-              <Typography variant="caption" color={"error"}>
-                Username already taken
+
+              <Typography sx={{display: 'flex', alignItems: 'center'}} variant="body2" m={1} color={"error"}>
+               <ErrorOutline sx={{mr:1}}/> Username already taken
               </Typography>
             )}
           </div>

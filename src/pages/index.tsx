@@ -4,10 +4,10 @@ import Head from "next/head";
 import React from "react";
 
 import { useAuth } from "@/context/AuthContext";
-import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
 import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
+import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
 
 
 export default function Home() {
@@ -15,10 +15,9 @@ export default function Home() {
   
   const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
   
-  console.log('username', data, isLoading)
   const showCreateUserName = auth.isLoggedIn && !isLoading && !data?.username
   if(isLoading){
-    return <LinearProgress sx={{width: '100%'}}/>
+    return <LinearProgressCustom/>
   }
 
  

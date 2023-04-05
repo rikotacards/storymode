@@ -14,7 +14,7 @@ export const BottomMenuBar: React.FC = () => {
   const route = useRouter();
   const auth = useAuth();
   const theme = useTheme();
-  const menuItems = useGetMenuItems();
+  const menuItems = useGetMenuItems({isWide: false});
 
   let items = menuItems.map((item, i) => (
     <div

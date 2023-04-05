@@ -18,8 +18,7 @@ export const ProfileHeaderSmall: React.FC = () => {
     <div
       style={{
         width: "100%",
-        padding: "16px",
-        paddingTop: '0px',
+        padding: "0px 16px 4px 16px",
         display: "flex",
         flexDirection: "column",
       }}
@@ -32,11 +31,7 @@ export const ProfileHeaderSmall: React.FC = () => {
           alignItems: "center",
         }}
       >
-        {/* <Typography sx={{ fontWeight: 800 }}>{username}</Typography>
-        {data?.isVerified && <VerifiedIcon
-          sx={{ marginLeft: "4px", fontSize: "large" }}
-          color="info"
-        />} */}
+      
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div>

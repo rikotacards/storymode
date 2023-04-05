@@ -3,5 +3,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom: 16px;
+    width: 100%;
+}
+.tabs {
+    width: 100%
 }
