@@ -3,10 +3,10 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { useRouter } from "next/router";
-import styles from "./FloatingMenu.module.css";
+import styles from "./FloatingMenuNotAbs.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BadgeCustom } from "../BadgeCustom/BadgeCustom";
-export const FloatingMenu: React.FC = () => {
+export const FloatingMenuNotAbs: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -35,9 +35,7 @@ export const FloatingMenu: React.FC = () => {
         
       <div
           style={{
-            left: "0px",
             display: "flex",
-            justifyContent: "flex-end",
             alignItems: "center",
           }}
         >

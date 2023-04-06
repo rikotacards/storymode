@@ -28,6 +28,8 @@ import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Box, useTheme } from "@mui/system";
 import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsReadStatus";
 import { useLongPress } from "@/hooks/useLongPress";
+import { useGetMenuItems } from "@/hooks/useGetMenuItems";
+import { FloatingMenuNotAbs } from "../FloatingMenuNotAbs/FloatingMenuNotAbs";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -35,6 +37,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
   const router = useRouter();
+  const menuItems = useGetMenuItems({ isWide: false });
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
@@ -55,9 +58,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className={styles.layoutMenuDesktop}>
         {auth?.isLoggedIn && !md && <SideMenu />}
       </div>
-      <main className={styles.mainColumn}
-      onTouchStart={(e) => longPress.handlePressStart(e)}
-      onTouchEnd={longPress.handlePressEnd}
+      <main
+        className={styles.mainColumn}
+        //@ts-ignore
+        onTouchStart={(e) => longPress.handlePressStart(e)}
+        onTouchEnd={longPress.handlePressEnd}
       >
         {showPostBar && (
           <div
@@ -124,20 +129,51 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <FloatingMenu />
         </Badge>
       )}
-      {
-        longPress.isOpen && 
-        <div style={{
-          backgroundColor: 'blue',
-          position: 'fixed',
-          left: longPress.position.x - 80,
-          top: longPress.position.y - 80,
-          zIndex: 1000
-        }}>
-        <IconButton>
-          <HomeIcon/>
-        </IconButton>
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x - 120,
+            top: longPress.position.y - 100,
+          }}
+          className={styles.container}
+        >
+          {menuItems.map((item,i) => 
+            { if(i!==0)return (<IconButton
+              onClick={() => router.push(item.path)}
+              className={styles.buttons}
+              key={item.name}
+            >
+              {item.icon}
+            </IconButton>)}
+          )}
         </div>
-      }
+      )}
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x - 120,
+            top: longPress.position.y - 20,
+          }}
+          className={styles.container}
+        >
+          <IconButton onClick={() => router.push('/')}>
+            <HomeIcon />
+          </IconButton>
+        </div>
+      )}
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x + 60,
+            top: longPress.position.y - 20,
+          }}
+          className={styles.container}
+        >
+          <IconButton onClick={() => router.push('/')}>
+            <HomeIcon />
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 };

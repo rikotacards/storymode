@@ -31,7 +31,7 @@ export const useLongPress = () => {
           //@ts-ignore
           y: e?.pageY || e?.touches?.[0]?.clientY,
         });
-      }, 300)
+      }, 280)
     
    ;
   };
