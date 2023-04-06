@@ -2,6 +2,7 @@ import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {
   AppBar,
   Avatar,
+  Badge,
   Button,
   CssBaseline,
   Fab,
@@ -22,6 +23,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Box, useTheme } from "@mui/system";
+import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsReadStatus";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -32,6 +34,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
+  const notificationStatus = useGetNotificationIsReadStatus(
+    (auth?.user?.uid as string) || ""
+  );
+  const hasUnreadNotifications = notificationStatus.data?.isRead;
   const showPostBar =
     router.pathname == "/[username]/[postId]" ||
     router.pathname == "/[username]";
@@ -105,7 +111,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Button>
         }
       />
-      {auth?.isLoggedIn && <FloatingMenu />}
+      {auth?.isLoggedIn && (
+        <Badge badgeContent={1} variant="dot">
+          <FloatingMenu />
+        </Badge>
+      )}
     </div>
   );
 };

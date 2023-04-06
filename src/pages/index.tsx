@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Head from "next/head";
 import React from "react";
@@ -8,19 +8,18 @@ import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
 import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
-
+import { AppBar, Toolbar } from "@mui/material";
 
 export default function Home() {
   const auth = useAuth();
-  
+
   const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
-  
-  const showCreateUserName = auth.isLoggedIn && !isLoading && !data?.username
-  if(isLoading){
-    return <LinearProgressCustom/>
+
+  const showCreateUserName = auth.isLoggedIn && !isLoading && !data?.username;
+  if (isLoading) {
+    return <LinearProgressCustom />;
   }
 
- 
   return (
     <div
       style={{
@@ -28,7 +27,7 @@ export default function Home() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        width: '100%'
+        width: "100%",
       }}
     >
       <Head>
@@ -37,7 +36,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-    
+
       <div
         style={{
           display: "flex",
@@ -45,9 +44,9 @@ export default function Home() {
           flexDirection: "column",
         }}
       >
-          <div style={{ padding: "8px" }}>
-        {showCreateUserName ? <CreateUsername /> : null}
-      </div>
+        <div style={{ padding: "8px" }}>
+          {showCreateUserName ? <CreateUsername /> : null}
+        </div>
         <Feed />
       </div>
     </div>

@@ -89,7 +89,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
       )}
       <div className={styles.reactionsContainer}>
 
-      <PostActions username={usernameFromAuthor?.data?.username} postId={postId} />
+      <PostActions author={author} username={usernameFromAuthor?.data?.username} postId={postId} />
       </div>
       {hasImages && (
         <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>

@@ -5,9 +5,10 @@ import styles from "./Reactions.module.css";
 import { EmojiCount } from "../EmojiCount/EmojiCount";
 import { AddReactionButton } from "../AddReactionButton/AddReactionButton";
 import { EmojiClickData } from "emoji-picker-react";
-import { addNewReaction, getReactions, updateReaction } from "@/firebase/db";
+import { addNewReaction, addNotification, getReactions } from "@/firebase/db";
 import { Collapse, Dialog } from "@mui/material";
 import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect";
+import { useAuth } from "@/context/AuthContext";
 const Picker = dynamic(
   () => {
     return import("emoji-picker-react");
@@ -16,17 +17,21 @@ const Picker = dynamic(
 );
 interface ReactionsProps {
   postId: string;
+  // used for receiving uid
+  author: string;
 }
 
 interface ReactionsStateType {
-  [key: string]: { count: number; hasLiked: boolean; emoji: string };
+  [key: string]: { count: number; hasLiked: boolean; emoji: string;  };
 }
 
-export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
+export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
   const displayed = [];
   const [openPicker, setOpenPicker] = React.useState(false);
   const [openQuick, setOpenQuick] = React.useState(false);
   const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
+  const auth = useAuth();
+  const uid = auth?.user?.uid;
   const onClick = () => {
     setOpenPicker(!openPicker);
   };
@@ -77,6 +82,9 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
         addNewReaction({ docId: postId, unified, emoji });
         // we have this so we don't need to 'get' the data after increment.
         updateDisplayedReactions(unified, 1, emoji);
+        uid && addNotification(
+          {senderUid: uid, receiverUid: author, payloadId: 0, unified, postId}
+        )
       }
     },
     [displayedReactions, postId, updateDisplayedReactions]
@@ -96,6 +104,7 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId }) => {
         symbol={displayedReactions[key].emoji}
         label={key}
         unified={key}
+        author={author}
         count={displayedReactions[key].count}
         hasLiked={displayedReactions[key].hasLiked}
       />

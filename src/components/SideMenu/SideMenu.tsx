@@ -1,4 +1,5 @@
 import {
+  Badge,
   CSSObject,
   Paper,
   styled,
@@ -17,10 +18,12 @@ export const sideMenuWidth = 240;
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
   { name: "Search", path: "/search", icon: <SearchIcon /> },
   { name: "Add Post", path: "/add-post", icon: <AddIcon /> },
+  {name: 'notifications', path:'/notifications', icon: <FavoriteRoundedIcon/> }
 ];
 const openedMixin = (theme: Theme): CSSObject => ({
   width: sideMenuWidth,

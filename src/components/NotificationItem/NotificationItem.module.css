@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 16px 8px 16px;
+}
