@@ -28,7 +28,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     month: "short",
     day: "numeric",
     year: "numeric",
-  });
+  })
 
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
@@ -108,22 +108,20 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           {captions.map((caption, i) => {
             return (
               <SwiperSlide key={caption + i}>
-                <div className={styles.belowImage} key={caption + i}>
                   <PostTextContent fontWeight={500} caption={caption} />
-                </div>
               </SwiperSlide>
             );
           })}
         </Swiper>
       )}
-      {/* <div className={styles.date}>
         <Typography
           variant="caption"
-          sx={{ paddingLeft: "16px", fontWeight: "200" }}
+          className={styles.date}
+          
         >
-          {dateString}
+        <div onTouchStart={e => e.preventDefault()}>
+          </div>  {dateString}
         </Typography>
-      </div> */}
     </PostWrapper>
   );
 };

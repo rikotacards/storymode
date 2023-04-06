@@ -42,7 +42,7 @@ export const useLongPress = () => {
       setTimeout(() => {
         setIsOpen(false);
         clearTimeout(timeoutId);
-      }, 1000);
+      }, 800);
       return;
     }
     clearTimeout(timeoutId);

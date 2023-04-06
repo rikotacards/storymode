@@ -129,8 +129,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div style={{
           backgroundColor: 'blue',
           position: 'fixed',
-          left: longPress.position.x - 50,
-          top: longPress.position.y - 50,
+          left: longPress.position.x - 80,
+          top: longPress.position.y - 80,
           zIndex: 1000
         }}>
         <IconButton>
