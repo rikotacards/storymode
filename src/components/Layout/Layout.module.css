@@ -1,8 +1,8 @@
 .main {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
   position: relative;
+  border: 1px solid red;
 }
 .mainColumn {
   flex-grow: 1;
@@ -11,6 +11,7 @@
   width: 100%;
   align-items: center;
   justify-content: flex-start;
+  touch-action: pan-y;
 }
 .layoutMenuDesktop {
   height: 100%;

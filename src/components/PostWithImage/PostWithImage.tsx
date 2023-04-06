@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
-import {  Paper, Skeleton, Typography } from "@mui/material";
+import { Paper, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 
@@ -23,8 +23,12 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   const usernameFromAuthor = useGetUsernameFromUid(author);
   const usernameInPath = router.query.username;
   const postRes = useGetPostsByUid(usernameInPath);
-  const dateObject = new Date(postTime)
-  const dateString = dateObject.toLocaleDateString('en-us', {month:'short',day: 'numeric' , year:'numeric'})
+  const dateObject = new Date(postTime);
+  const dateString = dateObject.toLocaleDateString("en-us", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
@@ -42,7 +46,13 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   const next = React.useCallback(() => myswiper.slideNext(), [myswiper]);
   const prev = React.useCallback(() => myswiper.slidePrev(), [myswiper]);
   if (postRes.isLoading) {
-    return <Skeleton height={468} variant='rectangular' style={{ width: "100%", marginBottom: '8px' }} />;
+    return (
+      <Skeleton
+        height={468}
+        variant="rectangular"
+        style={{ width: "100%", marginBottom: "8px" }}
+      />
+    );
   }
   return (
     <PostWrapper author={author} postId={postId}>
@@ -69,7 +79,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           {captions.map((caption, i) => (
             <SwiperSlide key={caption + i}>
               <Paper
-              elevation={1}
+                elevation={1}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -77,10 +87,9 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
                   minHeight: "300px",
                   paddingLeft: "10%",
                   paddingRight: "10%",
-                  borderRadius: '10px'
+                  borderRadius: "10px",
                 }}
               >
-
                 <PostTextContent bold key={caption + i} caption={caption} />
               </Paper>
             </SwiperSlide>
@@ -88,8 +97,11 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
         </Swiper>
       )}
       <div className={styles.reactionsContainer}>
-
-      <PostActions author={author} username={usernameFromAuthor?.data?.username} postId={postId} />
+        <PostActions
+          author={author}
+          username={usernameFromAuthor?.data?.username}
+          postId={postId}
+        />
       </div>
       {hasImages && (
         <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>
@@ -104,9 +116,14 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           })}
         </Swiper>
       )}
-      < Typography variant='caption' sx={{paddingLeft: '16px', fontWeight:'200'}}>
-        {dateString}
-      </Typography>
+      {/* <div className={styles.date}>
+        <Typography
+          variant="caption"
+          sx={{ paddingLeft: "16px", fontWeight: "200" }}
+        >
+          {dateString}
+        </Typography>
+      </div> */}
     </PostWrapper>
   );
 };

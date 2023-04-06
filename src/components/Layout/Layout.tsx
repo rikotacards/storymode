@@ -6,11 +6,14 @@ import {
   Button,
   CssBaseline,
   Fab,
+  IconButton,
   Paper,
   Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+
 import React from "react";
 import { SideMenu } from "../SideMenu/SideMenu";
 import styles from "./Layout.module.css";
@@ -24,6 +27,7 @@ import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Box, useTheme } from "@mui/system";
 import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsReadStatus";
+import { useLongPress } from "@/hooks/useLongPress";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -43,6 +47,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     router.pathname == "/[username]";
   const theme = useTheme();
   const signIn = useSignInWithGooglePopUp();
+  const longPress = useLongPress();
   const showLoginSnackbar =
     !auth?.isLoading && !auth?.isLoggedIn && router.pathname == "/[username]";
   return (
@@ -50,7 +55,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className={styles.layoutMenuDesktop}>
         {auth?.isLoggedIn && !md && <SideMenu />}
       </div>
-      <main className={styles.mainColumn}>
+      <main className={styles.mainColumn}
+      onTouchStart={(e) => longPress.handlePressStart(e)}
+      onTouchEnd={longPress.handlePressEnd}
+      >
         {showPostBar && (
           <div
             className={styles.topbar}
@@ -116,6 +124,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <FloatingMenu />
         </Badge>
       )}
+      {
+        longPress.isOpen && 
+        <div style={{
+          backgroundColor: 'blue',
+          position: 'fixed',
+          left: longPress.position.x - 50,
+          top: longPress.position.y - 50,
+          zIndex: 1000
+        }}>
+        <IconButton>
+          <HomeIcon/>
+        </IconButton>
+        </div>
+      }
     </div>
   );
 };
