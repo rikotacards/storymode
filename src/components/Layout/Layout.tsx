@@ -1,16 +1,16 @@
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {
-  AppBar,
-  Avatar,
   Badge,
   Button,
-  CssBaseline,
-  Fab,
+  IconButton,
   Paper,
   Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { featureFlags } from "../..//featureFlags";
+import HomeIcon from "@mui/icons-material/Home";
+
 import React from "react";
 import { SideMenu } from "../SideMenu/SideMenu";
 import styles from "./Layout.module.css";
@@ -22,15 +22,20 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { Box, useTheme } from "@mui/system";
 import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsReadStatus";
+import { useLongPress } from "@/hooks/useLongPress";
+import { useGetMenuItems } from "@/hooks/useGetMenuItems";
+import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
+  const {visible} = useScrollDirection();
   const router = useRouter();
+  const menuItems = useGetMenuItems({ isWide: false });
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
@@ -41,8 +46,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const showPostBar =
     router.pathname == "/[username]/[postId]" ||
     router.pathname == "/[username]";
-  const theme = useTheme();
   const signIn = useSignInWithGooglePopUp();
+  const longPress = useLongPress();
+
   const showLoginSnackbar =
     !auth?.isLoading && !auth?.isLoggedIn && router.pathname == "/[username]";
   return (
@@ -50,7 +56,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className={styles.layoutMenuDesktop}>
         {auth?.isLoggedIn && !md && <SideMenu />}
       </div>
-      <main className={styles.mainColumn}>
+      <main
+        className={styles.mainColumn}
+        //@ts-ignore
+        onTouchStart={(e) => longPress.handlePressStart(e)}
+        onTouchEnd={longPress.handlePressEnd}
+      >
         {showPostBar && (
           <div
             className={styles.topbar}
@@ -95,7 +106,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {showPostBar && <Toolbar />}
         {children}
       </main>
-      {/* {auth?.isLoggedIn && md && <BottomMenuBar />} */}
+      { featureFlags.enableBottomMenuBar && md && <BottomMenuBar hide={!visible} />}
       <Snackbar
         open={showLoginSnackbar}
         message="Welcome to Stomo.io"
@@ -111,10 +122,58 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Button>
         }
       />
-      {auth?.isLoggedIn && (
+      {!featureFlags.enableBottomMenuBar && auth?.isLoggedIn && (
         <Badge badgeContent={1} variant="dot">
           <FloatingMenu />
         </Badge>
+      )}
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x - 120,
+            top: longPress.position.y - 100,
+          }}
+          className={styles.container}
+        >
+          {menuItems.map((item, i) => {
+            if (i !== 0)
+              return (
+                <IconButton
+                  onClick={() => router.push(item.path)}
+                  className={styles.buttons}
+                  key={item.name}
+                >
+                  {item.icon}
+                </IconButton>
+              );
+          })}
+        </div>
+      )}
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x - 120,
+            top: longPress.position.y - 20,
+          }}
+          className={styles.container}
+        >
+          <IconButton onClick={() => router.push("/")}>
+            <HomeIcon />
+          </IconButton>
+        </div>
+      )}
+      {longPress.isOpen && (
+        <div
+          style={{
+            left: longPress.position.x + 60,
+            top: longPress.position.y - 20,
+          }}
+          className={styles.container}
+        >
+          <IconButton onClick={() => router.push("/")}>
+            <HomeIcon />
+          </IconButton>
+        </div>
       )}
     </div>
   );

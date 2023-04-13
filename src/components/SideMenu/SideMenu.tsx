@@ -20,10 +20,10 @@ import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 export const menuItems = [
-  { name: "Home", path: "/", icon: <HomeIcon /> },
-  { name: "Search", path: "/search", icon: <SearchIcon /> },
-  { name: "Add Post", path: "/add-post", icon: <AddIcon /> },
-  {name: 'notifications', path:'/notifications', icon: <FavoriteRoundedIcon/> }
+  { name: "Home", path: "/", icon: <HomeIcon  fontSize="medium" /> },
+  { name: "Search", path: "/search", icon: <SearchIcon fontSize="medium" /> },
+  { name: "Add Post", path: "/add-post", icon: <AddIcon fontSize="medium" /> },
+  {name: 'notifications', path:'/notifications', icon: <FavoriteRoundedIcon fontSize="medium"/> }
 ];
 const openedMixin = (theme: Theme): CSSObject => ({
   width: sideMenuWidth,

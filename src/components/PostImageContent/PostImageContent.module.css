@@ -1,0 +1,17 @@
+.image {
+  -webkit-touch-callout: none;
+  object-fit: cover;
+  touch-action: manipulation;
+  user-select: none;
+  
+}
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  -webkit-touch-callout: none;
+
+}

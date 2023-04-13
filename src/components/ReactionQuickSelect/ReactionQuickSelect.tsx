@@ -53,7 +53,7 @@ export const ReactionQuickSelect: React.FC<ReactionQuickSelectProps> = ({
     </IconButton>
   ));
   return (
-    <Paper sx={{ borderRadius: "20px", display: "flex", alignItems: "center", flexDirection: 'row' }}>
+    <Paper sx={{ borderRadius: "20px", display: "flex", alignItems: "center", flexDirection: 'row', width: '100%' }}>
       {emojis}
       <IconButton onClick={() => {openPicker && openPicker(); callback && callback()}}>
         <AddCircleIcon />

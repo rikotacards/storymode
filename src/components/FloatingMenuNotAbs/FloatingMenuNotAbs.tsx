@@ -3,11 +3,11 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { useRouter } from "next/router";
-import styles from "./FloatingMenu.module.css";
+import styles from "./FloatingMenuNotAbs.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BadgeCustom } from "../BadgeCustom/BadgeCustom";
-const isPermanent = false
-export const FloatingMenu: React.FC = () => {
+const isPermanent = false;
+export const FloatingMenuNotAbs: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -32,14 +32,13 @@ export const FloatingMenu: React.FC = () => {
   ));
   return (
     <div className={styles.container }>
-      <Collapse orientation="horizontal" in={(isPermanent || open)}>
+      <Collapse orientation="horizontal" in={true}>
         
       <div
           style={{
-            left: "0px",
             display: "flex",
-            justifyContent: "flex-end",
             alignItems: "center",
+            width: '100%'
           }}
         >
           {menu}
@@ -58,7 +57,7 @@ export const FloatingMenu: React.FC = () => {
         }}
       >
 
-        {!open ? <MenuIcon /> : <ChevronRightIcon />}
+        { !open ? <MenuIcon /> : <ChevronRightIcon />}
       </Fab>
         </BadgeCustom>}
     </div>

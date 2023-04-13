@@ -1,15 +1,9 @@
 
-.belowImage {
-  padding: 0 16px;
-}
 .swiper {
   width: 100%;
   height: 100%;
 }
-.reactionsContainer {
-    padding: 4px 8px 0px 14px;
 
-}
 
 .swiper-slide {
   text-align: center;
@@ -27,4 +21,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.date {
+  touch-action: pan-y;
+  /* used to disabled add to chome */
+  user-select: none;
+  -webkit-touch-callout:none;
+  width: 100%;
+  display: flex;
+  padding-left: 16px;
+  font-weight: 200;
 }
