@@ -32,3 +32,10 @@
   padding-left: 16px;
   font-weight: 200;
 }
+.reactionsContainer {
+  position: absolute;
+  top: 540px;
+  display: flex;
+  width: 100%;
+  z-index: 100
+}
