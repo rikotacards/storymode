@@ -9,5 +9,6 @@
   /* overflow:auto; */
   margin-bottom: 36px;
   align-items: center;
+  position: relative;
   justify-content: center;
 }

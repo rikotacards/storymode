@@ -32,7 +32,8 @@ export const AddReactionButton: React.FC<AddReactionButtonProps> = ({onClick}) =
     <>
 
     <Chip
-      variant="outlined"
+      variant="filled"
+      size="small"
       onClick={onClick }
       label={
         <div style={{ display: "flex" }}>

@@ -35,16 +35,12 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     captions.push(c.caption);
   });
 
-  const [myswiper, setswiper] = React.useState(
-    {} as { slideNext: () => void; slidePrev: () => void }
-  );
+
   const hasImages = images.length > 0;
   // todo
   // when grabbing info, all is ba
   images.reverse();
   captions.reverse();
-  const next = React.useCallback(() => myswiper.slideNext(), [myswiper]);
-  const prev = React.useCallback(() => myswiper.slidePrev(), [myswiper]);
   if (postRes.isLoading) {
     return (
       <Skeleton
@@ -60,15 +56,13 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
         <Swiper
           navigation={true}
           modules={[Navigation]}
-          onSlideNextTransitionEnd={next}
-          onSlidePrevTransitionEnd={prev}
-          onNavigationNext={next}
-          onNavigationPrev={prev}
         >
-          {images?.map((image, i) => {
+          {content?.map((contentItem, i) => {
             return (
-              <SwiperSlide key={image + i}>
-                <PostImageContent imagePath={image} />
+              <SwiperSlide key={contentItem.imagePath + i}>
+                <PostImageContent imagePath={contentItem.imagePath} />
+                <div style={{height: '35px'}}/>
+                <PostTextContent key={contentItem.caption + i} fontWeight={500} caption={contentItem.caption} />
               </SwiperSlide>
             );
           })}
@@ -87,7 +81,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
                   minHeight: "300px",
                   paddingLeft: "10%",
                   paddingRight: "10%",
-                  borderRadius: "10px",
+                  // borderRadius: "10px",
                 }}
               >
                 <PostTextContent bold key={caption + i} caption={caption} />
@@ -96,28 +90,16 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           ))}
         </Swiper>
       )}
-      <div className={styles.reactionsContainer}>
+      <div className={hasImages ? styles.reactionsContainer : undefined}>
         <PostActions
           author={author}
           username={usernameFromAuthor?.data?.username}
           postId={postId}
         />
       </div>
-      {hasImages && (
-        <Swiper effect={"fade"} onInit={(ev) => setswiper(ev)}>
-          {captions.map((caption, i) => {
-            return (
-              <SwiperSlide key={caption + i}>
-                  <PostTextContent fontWeight={500} caption={caption} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      )}
         <Typography
           variant="caption"
           className={styles.date}
-          
         >
         <div onTouchStart={e => e.preventDefault()}>
           </div>  {dateString}
