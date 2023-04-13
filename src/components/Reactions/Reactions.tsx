@@ -22,7 +22,7 @@ interface ReactionsProps {
 }
 
 interface ReactionsStateType {
-  [key: string]: { count: number; hasLiked: boolean; emoji: string;  };
+  [key: string]: { count: number; hasLiked: boolean; emoji: string };
 }
 
 export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
@@ -82,9 +82,14 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
         addNewReaction({ docId: postId, unified, emoji });
         // we have this so we don't need to 'get' the data after increment.
         updateDisplayedReactions(unified, 1, emoji);
-        uid && addNotification(
-          {senderUid: uid, receiverUid: author, payloadId: 0, unified, postId}
-        )
+        uid &&
+          addNotification({
+            senderUid: uid,
+            receiverUid: author,
+            payloadId: 0,
+            unified,
+            postId,
+          });
       }
     },
     [displayedReactions, postId, updateDisplayedReactions]
@@ -125,7 +130,9 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
             openPicker={onClick}
           />
         </Collapse>
-        <AddReactionButton onClick={toggleOpenCol} />
+        <div className={styles.addReactionButtonContainer}>
+          <AddReactionButton onClick={toggleOpenCol} />
+        </div>
       </div>
       <Dialog onClose={handleClose} open={openPicker}>
         <div style={{ display: "flex" }}>

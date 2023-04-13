@@ -12,6 +12,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import {featureFlags} from '../..//featureFlags'
 import HomeIcon from "@mui/icons-material/Home";
 
 import React from "react";
@@ -30,6 +31,7 @@ import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsRead
 import { useLongPress } from "@/hooks/useLongPress";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { FloatingMenuNotAbs } from "../FloatingMenuNotAbs/FloatingMenuNotAbs";
+import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -37,6 +39,26 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
   const router = useRouter();
+  const [prevScrollPos, setPrevScrollPos] = React.useState(0);
+const [visible, setVisible] = React.useState(true)
+
+const handleScroll = () => {
+    const currentScrollPos = window.scrollY
+    const bottomMenu = document.getElementById("bottomMenuBar")
+  if(!bottomMenu){
+    return;
+  }  
+  if(currentScrollPos > prevScrollPos){
+        // setVisible(false)
+        bottomMenu.style.bottom= "-55px"
+    }else{
+        // setVisible(true)
+        bottomMenu.style.bottom= "0px"
+
+    }
+
+    setPrevScrollPos(currentScrollPos)
+}
   const menuItems = useGetMenuItems({ isWide: false });
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
@@ -51,6 +73,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const theme = useTheme();
   const signIn = useSignInWithGooglePopUp();
   const longPress = useLongPress();
+    const ref = React.useRef<HTMLDivElement>({} as HTMLDivElement)
+    
+    React.useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => window.removeEventListener('scroll', handleScroll)
+  })
   const showLoginSnackbar =
     !auth?.isLoading && !auth?.isLoggedIn && router.pathname == "/[username]";
   return (
@@ -106,9 +135,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         )}
         {showPostBar && <Toolbar />}
+        <div       ref={ref} onScroll={(e) => {console.log(e)}}
+/>
         {children}
       </main>
-      {/* {auth?.isLoggedIn && md && <BottomMenuBar />} */}
+      {visible && featureFlags.enableBottomMenuBar  && md && <BottomMenuBar />}
       <Snackbar
         open={showLoginSnackbar}
         message="Welcome to Stomo.io"
@@ -124,7 +155,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Button>
         }
       />
-      {auth?.isLoggedIn && (
+      {!featureFlags.enableBottomMenuBar && auth?.isLoggedIn && (
         <Badge badgeContent={1} variant="dot">
           <FloatingMenu />
         </Badge>

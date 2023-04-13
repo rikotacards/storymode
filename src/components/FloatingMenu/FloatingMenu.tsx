@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import styles from "./FloatingMenu.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BadgeCustom } from "../BadgeCustom/BadgeCustom";
+const isPermanent = false
 export const FloatingMenu: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
@@ -31,7 +32,7 @@ export const FloatingMenu: React.FC = () => {
   ));
   return (
     <div className={styles.container }>
-      <Collapse orientation="horizontal" in={true}>
+      <Collapse orientation="horizontal" in={(isPermanent || open)}>
         
       <div
           style={{
@@ -44,7 +45,7 @@ export const FloatingMenu: React.FC = () => {
           {menu}
         </div>
       </Collapse>
-      <BadgeCustom color='error' invisible={open} badgeContent={1} variant='dot'>
+      {!isPermanent && <BadgeCustom color='error' invisible={open} badgeContent={1} variant='dot'>
       <Fab
         onClick={toggleOpen}
         style={{
@@ -59,7 +60,7 @@ export const FloatingMenu: React.FC = () => {
 
         {!open ? <MenuIcon /> : <ChevronRightIcon />}
       </Fab>
-        </BadgeCustom>
+        </BadgeCustom>}
     </div>
   );
 };

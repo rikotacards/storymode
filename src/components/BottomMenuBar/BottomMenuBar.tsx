@@ -51,14 +51,18 @@ export const BottomMenuBar: React.FC = () => {
     <AppBar
       position="fixed"
       color="primary"
+      id={"bottomMenuBar"}
       sx={{
         display: "flex",
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        bottom: 0,
+        bottom: 0,        
+        backgroundColor: 'transparent',
+        backdropFilter: 'blur(5px)',
         flexDirection: "row",
+        transition: "bottom 0.3s"
       }}
     >
       <Toolbar

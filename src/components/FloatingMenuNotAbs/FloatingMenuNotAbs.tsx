@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import styles from "./FloatingMenuNotAbs.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BadgeCustom } from "../BadgeCustom/BadgeCustom";
+const isPermanent = false;
 export const FloatingMenuNotAbs: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
@@ -37,12 +38,13 @@ export const FloatingMenuNotAbs: React.FC = () => {
           style={{
             display: "flex",
             alignItems: "center",
+            width: '100%'
           }}
         >
           {menu}
         </div>
       </Collapse>
-      <BadgeCustom color='error' invisible={open} badgeContent={1} variant='dot'>
+      {!isPermanent && <BadgeCustom color='error' invisible={open} badgeContent={1} variant='dot'>
       <Fab
         onClick={toggleOpen}
         style={{
@@ -55,9 +57,9 @@ export const FloatingMenuNotAbs: React.FC = () => {
         }}
       >
 
-        {!open ? <MenuIcon /> : <ChevronRightIcon />}
+        { !open ? <MenuIcon /> : <ChevronRightIcon />}
       </Fab>
-        </BadgeCustom>
+        </BadgeCustom>}
     </div>
   );
 };

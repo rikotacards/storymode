@@ -1,3 +1,4 @@
+import { featureFlags } from "@/featureFlags";
 import React from "react";
 import { MouseEvent, MouseEventHandler } from "react";
 
@@ -49,8 +50,8 @@ export const useLongPress = () => {
     setIsOpen(false);
   };
   return {
-    handlePressEnd,
-    handlePressStart,
+    handlePressEnd: featureFlags.enableLongPressMenu ? handlePressEnd : () => {},
+    handlePressStart: featureFlags.enableLongPressMenu ? handlePressStart : (e: MouseEvent) => {},
     position,
     isOpen,
     setIsOpen,

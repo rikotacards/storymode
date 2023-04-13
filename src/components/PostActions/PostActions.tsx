@@ -7,7 +7,7 @@ import { ShareButton } from "../ShareButton/ShareButton";
 import { useAuth } from "@/context/AuthContext";
 import { Dialog, IconButton } from "@mui/material";
 import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 
 interface PostActionsProps {
@@ -17,9 +17,13 @@ interface PostActionsProps {
   author: string;
 }
 
-export const PostActions: React.FC<PostActionsProps> = ({author, username, postId }) => {
+export const PostActions: React.FC<PostActionsProps> = ({
+  author,
+  username,
+  postId,
+}) => {
   const auth = useAuth();
-  const baseUrl = window.location.origin
+  const baseUrl = window.location.origin;
   const [open, setOpen] = React.useState(false);
   const onClose = () => {
     setOpen(false);
@@ -40,10 +44,13 @@ export const PostActions: React.FC<PostActionsProps> = ({author, username, postI
           style={{
             pointerEvents: auth?.isLoggedIn ? undefined : "none",
             display: "flex",
+            width: '100%'
           }}
         >
           <Reactions author={author} postId={postId} />
-        <IconButton onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)}>
+          <IconButton
+            onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)}
+          >
             <SendRoundedIcon />
           </IconButton>
         </div>
