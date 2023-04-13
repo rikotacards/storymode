@@ -81,7 +81,7 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
                   minHeight: "300px",
                   paddingLeft: "10%",
                   paddingRight: "10%",
-                  // borderRadius: "10px",
+                  borderRadius: "10px",
                 }}
               >
                 <PostTextContent bold key={caption + i} caption={caption} />
