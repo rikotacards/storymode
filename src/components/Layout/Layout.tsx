@@ -1,18 +1,14 @@
 import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {
-  AppBar,
-  Avatar,
   Badge,
   Button,
-  CssBaseline,
-  Fab,
   IconButton,
   Paper,
   Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
-import {featureFlags} from '../..//featureFlags'
+import { featureFlags } from "../..//featureFlags";
 import HomeIcon from "@mui/icons-material/Home";
 
 import React from "react";
@@ -26,39 +22,19 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
-import { Box, useTheme } from "@mui/system";
 import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsReadStatus";
 import { useLongPress } from "@/hooks/useLongPress";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
-import { FloatingMenuNotAbs } from "../FloatingMenuNotAbs/FloatingMenuNotAbs";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
+  const {visible} = useScrollDirection();
   const router = useRouter();
-  const [prevScrollPos, setPrevScrollPos] = React.useState(0);
-const [visible, setVisible] = React.useState(true)
-
-const handleScroll = () => {
-    const currentScrollPos = window.scrollY
-    const bottomMenu = document.getElementById("bottomMenuBar")
-  if(!bottomMenu){
-    return;
-  }  
-  if(currentScrollPos > prevScrollPos){
-        // setVisible(false)
-        bottomMenu.style.bottom= "-55px"
-    }else{
-        // setVisible(true)
-        bottomMenu.style.bottom= "0px"
-
-    }
-
-    setPrevScrollPos(currentScrollPos)
-}
   const menuItems = useGetMenuItems({ isWide: false });
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
@@ -70,16 +46,9 @@ const handleScroll = () => {
   const showPostBar =
     router.pathname == "/[username]/[postId]" ||
     router.pathname == "/[username]";
-  const theme = useTheme();
   const signIn = useSignInWithGooglePopUp();
   const longPress = useLongPress();
-    const ref = React.useRef<HTMLDivElement>({} as HTMLDivElement)
-    
-    React.useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => window.removeEventListener('scroll', handleScroll)
-  })
+
   const showLoginSnackbar =
     !auth?.isLoading && !auth?.isLoggedIn && router.pathname == "/[username]";
   return (
@@ -135,11 +104,9 @@ const handleScroll = () => {
           </div>
         )}
         {showPostBar && <Toolbar />}
-        <div       ref={ref} onScroll={(e) => {console.log(e)}}
-/>
         {children}
       </main>
-      {visible && featureFlags.enableBottomMenuBar  && md && <BottomMenuBar />}
+      { featureFlags.enableBottomMenuBar && md && <BottomMenuBar hide={!visible} />}
       <Snackbar
         open={showLoginSnackbar}
         message="Welcome to Stomo.io"
@@ -168,15 +135,18 @@ const handleScroll = () => {
           }}
           className={styles.container}
         >
-          {menuItems.map((item,i) => 
-            { if(i!==0)return (<IconButton
-              onClick={() => router.push(item.path)}
-              className={styles.buttons}
-              key={item.name}
-            >
-              {item.icon}
-            </IconButton>)}
-          )}
+          {menuItems.map((item, i) => {
+            if (i !== 0)
+              return (
+                <IconButton
+                  onClick={() => router.push(item.path)}
+                  className={styles.buttons}
+                  key={item.name}
+                >
+                  {item.icon}
+                </IconButton>
+              );
+          })}
         </div>
       )}
       {longPress.isOpen && (
@@ -187,7 +157,7 @@ const handleScroll = () => {
           }}
           className={styles.container}
         >
-          <IconButton onClick={() => router.push('/')}>
+          <IconButton onClick={() => router.push("/")}>
             <HomeIcon />
           </IconButton>
         </div>
@@ -200,7 +170,7 @@ const handleScroll = () => {
           }}
           className={styles.container}
         >
-          <IconButton onClick={() => router.push('/')}>
+          <IconButton onClick={() => router.push("/")}>
             <HomeIcon />
           </IconButton>
         </div>

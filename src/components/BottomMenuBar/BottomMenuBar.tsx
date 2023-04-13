@@ -1,20 +1,21 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-
+import clx from "clsx";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
-import { Badge } from "@mui/material";
+import { Badge, Paper } from "@mui/material";
 import { useTheme } from "@mui/system";
-
-export const BottomMenuBar: React.FC = () => {
+interface BottomMenuBarProps {
+  hide?: boolean;
+}
+export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   const route = useRouter();
-  const auth = useAuth();
   const theme = useTheme();
-  const menuItems = useGetMenuItems({isWide: false});
+  console.log('hide', hide)
+  const menuItems = useGetMenuItems({ isWide: false });
 
   let items = menuItems.map((item, i) => (
     <div
@@ -51,30 +52,38 @@ export const BottomMenuBar: React.FC = () => {
     <AppBar
       position="fixed"
       color="primary"
-      id={"bottomMenuBar"}
       sx={{
         display: "flex",
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        bottom: 0,        
-        backgroundColor: 'transparent',
-        backdropFilter: 'blur(5px)',
+        bottom: hide ? "-55px" : 0,
+        backgroundColor: "transparent",
+        backdropFilter: "blur(5px)",
         flexDirection: "row",
-        transition: "bottom 0.3s"
+        transition: "bottom 0.3s",
       }}
     >
-      <Toolbar
-        sx={{
-          display: "flex",
-          height: "100%",
-          width: "100%",
-          justifyContent: "space-between",
+      <Paper
+        style={{
+          opacity: 0.8,
+          display: 'flex',
+          width: '100%',
+          borderRadius: 0
         }}
+        elevation={0}
       >
-        {items}
-      </Toolbar>
+        <Toolbar
+          sx={{
+            display: "flex",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {items}
+        </Toolbar>
+      </Paper>
     </AppBar>
   );
 };
