@@ -3,7 +3,6 @@ import useSWR from 'swr';
 
 const fetcher = ([username]: string[]) => {
   return getUidFromUsername(username).then((res) => {
-    console.log(res)
     if(res){
       return res
     } 
