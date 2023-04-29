@@ -14,6 +14,7 @@ import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
 import { Paper, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
+import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
 
 export const Post: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
@@ -28,13 +29,12 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
     month: "short",
     day: "numeric",
     year: "numeric",
-  })
+  });
 
   content?.forEach((c) => {
     c.imagePath.length > 0 && images.push(c.imagePath);
     captions.push(c.caption);
   });
-
 
   const hasImages = images.length > 0;
   // todo
@@ -53,20 +53,23 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
   return (
     <PostWrapper author={author} postId={postId}>
       {hasImages && (
-        <Swiper
-          navigation={true}
-          modules={[Navigation]}
-        >
-          {content?.map((contentItem, i) => {
-            return (
-              <SwiperSlide key={contentItem.imagePath + i}>
-                <PostImageContent imagePath={contentItem.imagePath} />
-                <div style={{height: '35px'}}/>
-                <PostTextContent key={contentItem.caption + i} fontWeight={500} caption={contentItem.caption} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
+        <DoubleClickReactionWrapper author={author} postId={postId}>
+          <Swiper onDoubleClick={ () => console.log('do')} navigation={true} modules={[Navigation]}>
+            {content?.map((contentItem, i) => {
+              return (
+                <SwiperSlide key={contentItem.imagePath + i}>
+                  <PostImageContent imagePath={contentItem.imagePath} />
+                  <div style={{ height: "35px" }} />
+                  <PostTextContent
+                    key={contentItem.caption + i}
+                    fontWeight={500}
+                    caption={contentItem.caption}
+                  />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </DoubleClickReactionWrapper>
       )}
       {!hasImages && (
         <Swiper navigation={true} modules={[Navigation]}>
@@ -97,13 +100,9 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           postId={postId}
         />
       </div>
-        <Typography
-          variant="caption"
-          className={styles.date}
-        >
-        <div onTouchStart={e => e.preventDefault()}>
-          </div>  {dateString}
-        </Typography>
+      <Typography variant="caption" className={styles.date}>
+        <div onTouchStart={(e) => e.preventDefault()}></div> {dateString}
+      </Typography>
     </PostWrapper>
   );
 };

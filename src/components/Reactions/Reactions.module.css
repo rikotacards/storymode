@@ -25,5 +25,6 @@
 .addReactionButtonContainer {
   margin-left: auto;
   display: flex;
+  z-index: 1000;
   /* flex-grow: 2; */
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import dynamic from "next/dynamic";
 
 import styles from "./Reactions.module.css";
 import { EmojiCount } from "../EmojiCount/EmojiCount";
@@ -9,12 +8,8 @@ import { addNewReaction, addNotification, getReactions } from "@/firebase/db";
 import { Collapse, Dialog } from "@mui/material";
 import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect";
 import { useAuth } from "@/context/AuthContext";
-const Picker = dynamic(
-  () => {
-    return import("emoji-picker-react");
-  },
-  { ssr: false }
-);
+import { Picker } from "../Picker/Picker";
+
 interface ReactionsProps {
   postId: string;
   // used for receiving uid
@@ -27,15 +22,15 @@ interface ReactionsStateType {
 
 export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
   const displayed = [];
-  const [openPicker, setOpenPicker] = React.useState(false);
+  const [openEmojiPicker, setOpenPicker] = React.useState(false);
   const [openQuick, setOpenQuick] = React.useState(false);
   const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
   const auth = useAuth();
   const uid = auth?.user?.uid;
   const onClick = () => {
-    setOpenPicker(!openPicker);
+    setOpenPicker(!openEmojiPicker);
   };
-  const toggleOpenCol = () => {
+  const toggleOpenQuickSelect = () => {
     setOpenQuick(!openQuick);
   };
   const handleClose = () => {
@@ -120,21 +115,24 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
       <div className={styles.reactions}>
         <div className={styles.allEmojis}>{displayed}</div>
         <Collapse
-          sx={{ position: "absolute", zIndex: 100 }}
+          sx={{ position: "absolute", zIndex: 1000 }}
           in={openQuick}
           orientation="horizontal"
         >
           <ReactionQuickSelect
-            onEmojiClick={onAddEmojiClick}
-            callback={toggleOpenCol}
-            openPicker={onClick}
+            onEmojiClick={(unified, emoji) => {
+              onAddEmojiClick(unified, emoji);
+              toggleOpenQuickSelect();
+            }}
+            openEmojiPicker={() => {onClick(); toggleOpenQuickSelect()}}
+            onClose={toggleOpenQuickSelect}
           />
         </Collapse>
         <div className={styles.addReactionButtonContainer}>
-          <AddReactionButton onClick={toggleOpenCol} />
+          <AddReactionButton onClick={toggleOpenQuickSelect} />
         </div>
       </div>
-      <Dialog onClose={handleClose} open={openPicker}>
+      <Dialog onClose={handleClose} open={openEmojiPicker}>
         <div style={{ display: "flex" }}>
           <Picker
             autoFocusSearch={false}

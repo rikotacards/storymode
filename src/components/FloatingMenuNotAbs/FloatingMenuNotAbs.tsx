@@ -16,7 +16,7 @@ export const FloatingMenuNotAbs: React.FC = () => {
   };
   const menu = menuItems.map((item, i) => (
 
-    <Badge invisible={item.name!=='notifications'} color='error' variant='dot'>
+    <Badge key={item.name + i} invisible={item.name!=='notifications'} color='error' variant='dot'>
     <Fab
       key={item.path +i}
       sx={{ margin: '0px 0px 0px 16px' }}

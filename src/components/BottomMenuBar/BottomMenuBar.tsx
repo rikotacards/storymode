@@ -14,7 +14,6 @@ interface BottomMenuBarProps {
 export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   const route = useRouter();
   const theme = useTheme();
-  console.log('hide', hide)
   const menuItems = useGetMenuItems({ isWide: false });
 
   let items = menuItems.map((item, i) => (

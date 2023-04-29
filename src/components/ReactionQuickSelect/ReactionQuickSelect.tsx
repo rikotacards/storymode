@@ -4,61 +4,30 @@ import React from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Emoji } from "../Emoji/Emoji";
-const quickSelectEmojis = [
-  {
-    label: "fire",
-    symbol: "🔥",
-    unified: "1f525",
-  },
-  {
-    symbol: "😥",
-    label: "cry",
-    unified: "1f625",
-  },
-  {
-    symbol: "🤣",
-    label: "laugh",
-    unified: "1f923",
-  },
-  {
-    symbol: '😍',
-    label: 'loveeyes',
-    unified: "1f60d",
-  },
-  {
-    symbol: "🚩",
-    label: 'redflag',
-    unified: '1f6a9'
-  },
-  {
-    symbol: "👏",
-    label: 'clap', 
-    unified: "1f44f"
-  }
-];
+import { quickSelectEmojis } from "@/constants/quickSelectEmojis";
+
 interface ReactionQuickSelectProps {
   onEmojiClick: (unfied: EmojiClickData["unified"], emoji: string) => void;
-  callback?: () => void;
-  openPicker?: () => void;
+  openEmojiPicker?: () => void;
   onClose?: () => void
 }
 export const ReactionQuickSelect: React.FC<ReactionQuickSelectProps> = ({
-  callback,
   onEmojiClick,
-  openPicker
+  openEmojiPicker,
+  onClose
 }) => {
   const emojis = quickSelectEmojis.map((emoji) => (
-    <IconButton key={emoji.unified} onClick={() => {onEmojiClick(emoji.unified, emoji.symbol); callback && callback()}}>
+    <IconButton key={emoji.unified} onClick={() => {onEmojiClick(emoji.unified, emoji.symbol)}}>
       <Emoji label={emoji.label} symbol={emoji.symbol} />
     </IconButton>
   ));
   return (
     <Paper sx={{ borderRadius: "20px", display: "flex", alignItems: "center", flexDirection: 'row', width: '100%' }}>
       {emojis}
-      <IconButton onClick={() => {openPicker && openPicker(); callback && callback()}}>
+      <IconButton onClick={() => {openEmojiPicker && openEmojiPicker()}}>
         <AddCircleIcon />
       </IconButton>
-      <IconButton onClick={() => { callback && callback()}}>
+      <IconButton onClick={() => { onClose && onClose()}}>
         <CancelIcon />
       </IconButton>
     </Paper>

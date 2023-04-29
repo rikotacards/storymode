@@ -1,15 +1,16 @@
 import React from "react";
 import { getImagePath } from "@/firebase/db";
-import { Skeleton } from "@mui/material";
+import {  Skeleton } from "@mui/material";
 import styles from "./PostImageContent.module.css";
 interface PostImageContentProps {
   imagePath: string;
+  ref?: any;
 }
 export const PostImageContent: React.FC<PostImageContentProps> = ({
   imagePath,
 }) => {
-  const [path, setPath] = React.useState();
 
+  const [path, setPath] = React.useState();
   if (!imagePath) {
     return <></>;
   }
@@ -22,9 +23,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
     });
 
   return (
-    <div
-      className={styles.imageContainer}
-    >
+    <div className={styles.imageContainer}>
       {!path && (
         <Skeleton
           height={484}

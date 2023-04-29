@@ -1,29 +1,15 @@
-.image {
-  -webkit-touch-callout: none;
-  object-fit: cover;
-  touch-action: manipulation;
-  user-select: none;
-  
-}
-.imageContainer {
+.container {
+  position: absolute;
+  /* top: 40%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  position: relative;
-  border-radius: 10px;
-  position: relative;
-  -webkit-touch-callout: none;
-}
-.post .icon {
-  position: absolute;
-  display: inline-block;
-  width: 128px;
-  opacity: 0;
-  fill: red;
+  height: 100%;
+  width: 100%;
 }
 .popupAnimation {
   transform: scale(10);
+  z-index: 1000;
   animation: 2s like-heart-animation ease-in-out forwards;
 }
 
@@ -35,7 +21,7 @@
     transform: scale(0);
   }
   15% {
-    opacity: 0.9;
+    opacity: 1;
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
   }
@@ -45,9 +31,8 @@
   }
   45%,
   80% {
-    opacity: 0.9;
+    opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
-
   }
 }
