@@ -1,3 +1,10 @@
+# Key features
+* React with multiple emojis
+* Swipe photo and caption
+* Link in bio
+* Clickable link in caption
+* Text only post
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
