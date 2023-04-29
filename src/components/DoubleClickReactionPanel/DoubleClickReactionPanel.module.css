@@ -6,7 +6,6 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  border: 4px solid greenyellow;
 }
 .popupAnimation {
   transform: scale(10);

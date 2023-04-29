@@ -1,5 +1,4 @@
 import { DoubleClickReactionPanel } from "@/components/DoubleClickReactionPanel/DoubleClickReactionPanel";
-import { Typography } from "@mui/material";
 import React from "react";
 interface DoubleClickReactionWrapperProps {
   children: React.ReactNode;
@@ -12,7 +11,6 @@ export const DoubleClickReactionWrapper: React.FC<
   const [open, setOpen] = React.useState(false);
   const [timerId, setTimerId] = React.useState<NodeJS.Timeout>();
   const handleDoubleClick = () => {
-    console.log('hi')
     setOpen(true);
     const timer = setTimeout(() => {
       setOpen(false);
@@ -26,7 +24,7 @@ export const DoubleClickReactionWrapper: React.FC<
     setOpen(false);
   };
   return (
-    <div style={{position: 'relative', border: '2px solid red'}} onDoubleClick={handleDoubleClick}>
+    <div style={{position: 'relative'}} onDoubleClick={handleDoubleClick}>
       <DoubleClickReactionPanel
       author={author}
       postId={postId}
