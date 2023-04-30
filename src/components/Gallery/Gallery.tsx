@@ -2,7 +2,7 @@ import { PostFromDbProps } from "@/firebase/db";
 import React from "react";
 import styles from "./Gallery.module.css";
 import { PostPreview } from "../PostPreview/PostPreview";
-import { Post } from "../PostWithImage/PostWithImage";
+import { Post } from "../Post/Post";
 
 interface GalleryProps {
   // posts: PostFromDbProps[];

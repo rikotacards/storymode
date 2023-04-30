@@ -123,8 +123,9 @@ export const DoubleClickReactionPanel: React.FC<
           height: "100%",
           width: "100%",
           background: "black",
-          opacity: "0.5",
+          opacity: "0.3",
           position: "absolute",
+          zIndex:500,
           visibility: visible ? "visible" : "hidden",
         }}
       /> */}
