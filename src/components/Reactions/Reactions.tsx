@@ -9,6 +9,7 @@ import { Collapse, Dialog } from "@mui/material";
 import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect";
 import { useAuth } from "@/context/AuthContext";
 import { Picker } from "../Picker/Picker";
+import { useReactionsContext } from "@/context/ReactionsContext";
 
 interface ReactionsProps {
   postId: string;
@@ -22,9 +23,9 @@ interface ReactionsStateType {
 
 export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
   const displayed = [];
+  const reactionsContext = useReactionsContext();
   const [openEmojiPicker, setOpenPicker] = React.useState(false);
   const [openQuick, setOpenQuick] = React.useState(false);
-  const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
   const auth = useAuth();
   const uid = auth?.user?.uid;
   const onClick = () => {
@@ -36,15 +37,12 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
   const handleClose = () => {
     setOpenPicker(false);
   };
-  const [displayedReactions, setDisplayedReactions] =
-    React.useState<ReactionsStateType>({});
 
   React.useEffect(() => {
     getReactions(postId)
       .then((data) => {
         if (data) {
-          setReactions(data);
-          setDisplayedReactions(data);
+          reactionsContext.setDisplayedReactions(data);
         }
       })
       .catch((e) => {
@@ -54,29 +52,14 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
       .then(() => {});
   }, [postId]);
 
-  const updateDisplayedReactions = React.useCallback(
-    (
-      unified: EmojiClickData["unified"],
-      incrementValue: number,
-      emoji: string
-    ) => {
-      const newState = {
-        ...displayedReactions[unified],
-        count: (displayedReactions[unified]?.count || 0) + incrementValue,
-        hasLiked: incrementValue == 1,
-        emoji,
-      };
-      setDisplayedReactions((prev) => ({ ...prev, [unified]: newState }));
-    },
-    [displayedReactions]
-  );
+
 
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
-      if (displayedReactions[unified] == undefined) {
+      if (reactionsContext.displayedReactions[unified] == undefined) {
         addNewReaction({ docId: postId, unified, emoji });
         // we have this so we don't need to 'get' the data after increment.
-        updateDisplayedReactions(unified, 1, emoji);
+        reactionsContext.updateDisplayedReactions(unified, 1, emoji);
         uid &&
           addNotification({
             senderUid: uid,
@@ -87,13 +70,13 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
           });
       }
     },
-    [displayedReactions, postId, updateDisplayedReactions]
+    [reactionsContext.displayedReactions, postId, reactionsContext.updateDisplayedReactions]
   );
 
-  for (let key in displayedReactions) {
+  for (let key in reactionsContext.displayedReactions) {
     if (
       key !== "2764-fe0f" &&
-      (displayedReactions[key].count === 0 || !displayedReactions[key].emoji)
+      (reactionsContext.displayedReactions[key].count === 0 || !reactionsContext.displayedReactions[key].emoji)
     ) {
       continue;
     }
@@ -101,12 +84,12 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
       <EmojiCount
         key={key}
         postId={postId}
-        symbol={displayedReactions[key].emoji}
+        symbol={reactionsContext.displayedReactions[key].emoji}
         label={key}
         unified={key}
         author={author}
-        count={displayedReactions[key].count}
-        hasLiked={displayedReactions[key].hasLiked}
+        count={reactionsContext.displayedReactions[key].count}
+        hasLiked={reactionsContext.displayedReactions[key].hasLiked}
       />
     );
   }

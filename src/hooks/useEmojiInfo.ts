@@ -2,25 +2,20 @@ import React from 'react';
 import { addNewReaction, addNotification, getReactions } from "@/firebase/db";
 import { EmojiClickData } from 'emoji-picker-react';
 import { useAuth } from '@/context/AuthContext';
+import { useReactionsContext } from '@/context/ReactionsContext';
 
 interface UseEmojiInfoProps {
   postId: string;
   author: string;
 }
-interface ReactionsStateType {
-  [key: string]: { count: number; hasLiked: boolean; emoji: string };
-}
-
 export const useEmojiInfo = ({ postId, author}:UseEmojiInfoProps ) => {
-  const [postReactions, setReactions] = React.useState<ReactionsStateType>({});
-  const [displayedReactions, setDisplayedReactions] = React.useState<ReactionsStateType>({});
   const auth = useAuth();
+  const {updateDisplayedReactions, displayedReactions, setDisplayedReactions} = useReactionsContext();
   const uid = auth?.user?.uid
   React.useEffect(() => {
     getReactions(postId)
       .then((data) => {
         if (data) {
-          setReactions(data);
           setDisplayedReactions(data);
         }
       })
@@ -30,24 +25,11 @@ export const useEmojiInfo = ({ postId, author}:UseEmojiInfoProps ) => {
       })
       .then(() => {});
   }, [postId]);
-  const updateDisplayedReactions = React.useCallback(
-    (
-      unified: EmojiClickData["unified"],
-      incrementValue: number,
-      emoji: string
-    ) => {
-      const newState = {
-        ...displayedReactions[unified],
-        count: (displayedReactions[unified]?.count || 0) + incrementValue,
-        hasLiked: incrementValue == 1,
-        emoji,
-      };
-      setDisplayedReactions((prev) => ({ ...prev, [unified]: newState }));
-    },
-    [displayedReactions]
-  );
+
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
+      console.log('clicker', displayedReactions, unified)
+
       if (displayedReactions[unified] == undefined) {
         addNewReaction({ docId: postId, unified, emoji });
         // we have this so we don't need to 'get' the data after increment.
@@ -65,8 +47,6 @@ export const useEmojiInfo = ({ postId, author}:UseEmojiInfoProps ) => {
     [displayedReactions, postId, updateDisplayedReactions]
   );
   return {
-    displayedReactions, 
     onAddEmojiClick,
-    updateDisplayedReactions
   }
 }

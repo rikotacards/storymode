@@ -5,6 +5,7 @@ import { AddReactionButton } from "../AddReactionButton/AddReactionButton";
 import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect";
 import { Picker } from "../Picker/Picker";
 import { useEmojiInfo } from "@/hooks/useEmojiInfo";
+import { useReactionsContext } from "@/context/ReactionsContext";
 interface DoubleClickReactionPanelProps {
   visible: boolean;
   cancelTimeout: () => void;
@@ -22,7 +23,7 @@ export const DoubleClickReactionPanel: React.FC<
   const [displayedEmoji, setDisplayedEmoji] = React.useState<string | null>(
     null
   );
-  console.log(showEmoji, visible)
+  const {updateDisplayedReactions} = useReactionsContext();
   const { onAddEmojiClick } = useEmojiInfo({ author, postId });
   const openQuickSelect = () => {
     setOpen(true);
@@ -96,6 +97,7 @@ export const DoubleClickReactionPanel: React.FC<
                 close();
                 setRerender(!rerender)
                 setShowEmoji(true);
+                
                 setTimeout(() => setShowEmoji(false), 2000);
               }}
             />
@@ -107,6 +109,7 @@ export const DoubleClickReactionPanel: React.FC<
             <Picker
               autoFocusSearch={false}
               onEmojiClick={(d) => {
+              
                 onAddEmojiClick(d.unified, d.emoji);
                 setDisplayedEmoji(d.emoji);
                 setShowEmoji(true);
