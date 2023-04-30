@@ -4,7 +4,7 @@ import { PostActions } from "../PostActions/PostActions";
 import { PostImageContent } from "../PostImageContent/PostImageContent";
 import { PostTextContent } from "../PostTextContent/PostTextContent";
 import { PostWrapper } from "../PostWrapper/PostWrapper";
-import styles from "./PostWithImage.module.css";
+import styles from "./Post.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css";
@@ -78,7 +78,9 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           </DoubleClickReactionWrapper>
         )}
         {!hasImages && (
+            <DoubleClickReactionWrapper author={author} postId={postId}>
           <Swiper navigation={true} modules={[Navigation]}>
+
             {captions.map((caption, i) => (
               <SwiperSlide key={caption + i}>
                 <Paper
@@ -92,12 +94,13 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
                     paddingRight: "10%",
                     borderRadius: "10px",
                   }}
-                >
+                  >
                   <PostTextContent bold key={caption + i} caption={caption} />
                 </Paper>
               </SwiperSlide>
             ))}
           </Swiper>
+            </DoubleClickReactionWrapper>
         )}
         <div className={hasImages ? styles.reactionsContainer : undefined}>
           <PostActions
