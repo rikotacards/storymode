@@ -46,12 +46,12 @@ export const DoubleClickReactionPanel: React.FC<
           }}
         >
           {
-            <IconButton
+            ((showEmoji || visible) && <IconButton
               key={rerender + (displayedEmoji ||"") }
-              className={showEmoji || visible ? styles.popupAnimation : ""}
+              className={ styles.popupAnimation}
             >
-              {displayedEmoji || "❤️"}
-            </IconButton>
+            {displayedEmoji || "❤️"}
+            </IconButton>)
           }
           <Collapse
             style={{
@@ -90,7 +90,6 @@ export const DoubleClickReactionPanel: React.FC<
               }}
               onEmojiClick={(unified, emoji) => {
                 onAddEmojiClick(unified, emoji);
-                console.log("emoji", emoji, visible);
                 setDisplayedEmoji(emoji);
                 closeQuickSelect();
                 close();
@@ -107,6 +106,7 @@ export const DoubleClickReactionPanel: React.FC<
             <Picker
               autoFocusSearch={false}
               onEmojiClick={(d) => {
+              
                 onAddEmojiClick(d.unified, d.emoji);
                 setDisplayedEmoji(d.emoji);
                 setShowEmoji(true);
@@ -117,7 +117,7 @@ export const DoubleClickReactionPanel: React.FC<
           </div>
         </Dialog>
       </div>
-      <div
+      {/* <div
         style={{
           display: "flex",
           height: "100%",
@@ -127,7 +127,7 @@ export const DoubleClickReactionPanel: React.FC<
           position: "absolute",
           visibility: visible ? "visible" : "hidden",
         }}
-      />
+      /> */}
     </>
   );
 };

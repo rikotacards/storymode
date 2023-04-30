@@ -10,13 +10,14 @@
 .popupAnimation {
   transform: scale(10);
   z-index: 1000;
+  opacity: 1;
   animation: 2s like-heart-animation ease-in-out forwards;
 }
 
 @keyframes like-heart-animation {
   0%,
   to {
-    opacity: 0;
+    opacity: 1;
     -webkit-transform: scale(0);
     transform: scale(0);
   }
