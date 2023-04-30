@@ -2,7 +2,7 @@ import React from "react";
 import { collection, doc } from "firebase/firestore";
 import { firestore } from "@/firebase/clientApp";
 import styles from "./AddPostContainer.module.css";
-import { Button, Typography } from "@mui/material";
+import { Button, Switch, Typography } from "@mui/material";
 import { AddPostWidget } from "../AddPostWidget/AddPostWidget";
 import { AddPostContext } from "@/context/AddPostContext";
 export const AddPostContainer: React.FC = () => {
@@ -18,15 +18,15 @@ export const AddPostContainer: React.FC = () => {
       <div style={{ marginTop: "8px" }}>
         <Button variant="outlined" fullWidth onClick={addPostContext.addPost}>
           {/* <AddCircleIcon fontSize="medium" /> */}
-          <Typography variant="body2" sx={{textTransform:'capitalize'}}>
+          <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
             Add Part
-            </Typography>
+          </Typography>
         </Button>
       </div>
       <div>
         <Button
           onClick={addPostContext.onPostClick}
-          style={{ marginTop: "8px", textTransform: 'capitalize' }}
+          style={{ marginTop: "8px", textTransform: "capitalize" }}
           variant="contained"
           fullWidth
         >
