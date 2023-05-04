@@ -9,6 +9,7 @@ import { ProfileLinks } from "../ProfileLinks/ProfileLinks";
 import { ProfilePersonalInfo } from "../ProfilePersonalInfo/ProfilePersonalInfo";
 import { ProfileStats } from "../ProfileStats/ProfileStats";
 import styles from "./ProfileHeader.module.css";
+import { LinearProgressCustom } from "../LinearProgressCustom/LinearProgressCustom";
 export const ProfileHeader: React.FC = () => {
   const auth = useAuth();
   const isLessThanMd = useGetBreakpoints("sm");
@@ -17,7 +18,7 @@ export const ProfileHeader: React.FC = () => {
   const uid = router.query.username as string;
   const {data, isLoading, error} = useGetUserInfo(uid)
   if(isLoading){
-    return <LinearProgress/>
+    return <LinearProgressCustom/>
   }
   if(error){
     return <Card>
