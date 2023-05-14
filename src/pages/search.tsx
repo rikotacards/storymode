@@ -32,6 +32,9 @@ export default function Search() {
   if(allPosts.error){
     return <Typography>error</Typography>
   }
+  if(!allPosts?.data){
+    return <></>
+  }
   return (
     <div
       style={{
