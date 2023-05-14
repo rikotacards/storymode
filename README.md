@@ -148,3 +148,8 @@ https://danishshakeel.me/protected-routes-in-nextjs/
 
 # Adding first time user to db
 Users are init via addUserToDb
+
+
+# Pages
+## Explore / Search
+Currently, we are grabbing all posts. This is done by iterating through all Uids, and getting their posts. This could be optimized.

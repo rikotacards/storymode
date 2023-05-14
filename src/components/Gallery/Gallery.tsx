@@ -10,7 +10,9 @@ interface GalleryProps {
   posts: PostFromDbProps[];
 }
 export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
- 
+  if(!posts.length){
+    return <></>
+  }
   const galleryItems = posts.map((post:PostFromDbProps, i) => {
     if (mode === "grid") {
       return (
