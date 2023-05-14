@@ -97,6 +97,7 @@ export const DoubleClickReactionPanel: React.FC<
                 setShowEmoji(true);
                 setTimeout(() => setShowEmoji(false), 2000);
               }}
+              onClose={()=> {setOpen(false); close()}}
             />
           </Collapse>
         </div>

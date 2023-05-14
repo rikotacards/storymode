@@ -1,9 +1,10 @@
 # Key features
 * React with multiple emojis
 * Swipe photo and caption
-* Link in bio
-* Clickable link in caption
+* Native Link in bio
+* Clickable links in caption
 * Text only post
+* Photo groups
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -147,3 +148,8 @@ https://danishshakeel.me/protected-routes-in-nextjs/
 
 # Adding first time user to db
 Users are init via addUserToDb
+
+
+# Pages
+## Explore / Search
+Currently, we are grabbing all posts. This is done by iterating through all Uids, and getting their posts. This could be optimized.

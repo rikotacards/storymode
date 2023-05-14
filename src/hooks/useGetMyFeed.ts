@@ -9,6 +9,7 @@ const fetcher = ([uid]: string[]) => {
     return []
   })
 }
+/**@description Gets your posts, and posts of people you follow */
 export const useGetMyFeed = (uid: string) => {
   const {data, error, isLoading} = useSWR([uid, 'useGetMyFeed'], fetcher);
   return {

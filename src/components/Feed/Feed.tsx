@@ -15,13 +15,14 @@ import React from "react";
 import { Gallery } from "../Gallery/Gallery";
 import { TabPanel } from "../TabPanel/TabPanel";
 import styles from './Feed.module.css'
+import { LinearProgressCustom } from "../LinearProgressCustom/LinearProgressCustom";
 export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
   const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
   const feedRes = useGetMyFeed(auth?.user?.uid || "");
   if (!userInfoRes.data && feedRes?.isLoading) {
-    return <LinearProgress className={styles.progressBar} style={{ width: "100%" }} />;
+    return <LinearProgressCustom />;
   }
   const hasNoContent =
     !feedRes.isLoading && userInfoRes?.data?.followersCount === 0;

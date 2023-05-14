@@ -1,10 +1,10 @@
 import { protectedRoutes, publicRoutes } from "@/constants/routes";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/firebase/clientApp";
-import { LinearProgress } from "@mui/material";
+
 import { useRouter } from "next/router";
 import React from "react";
 import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
+import { LinearProgressCustom } from "../LinearProgressCustom/LinearProgressCustom";
 interface RouteGuardProps {
   children: React.ReactNode;
 }
@@ -23,7 +23,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   
   if((isLoading || !isLoggedIn) && isProtectedPath){
     return (
-      <LinearProgress sx={{width: '100%'}}/>
+      <LinearProgressCustom/>
     )
   } 
 

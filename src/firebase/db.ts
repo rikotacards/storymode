@@ -355,6 +355,32 @@ export const getPostByPostId = async (uid: string, postId: string) => {
   return data;
 };
 
+// Used for discover / search
+export const getAllPosts = async () => {
+  const uidsWithPosts: string[] = []
+  let allPosts: PostFromDbProps[] = []
+  try {
+    const querySnapshot = await getDocs(collection(
+      firestore,
+      "content"
+    ))
+    querySnapshot.docs.forEach((doc) => {
+      uidsWithPosts.push(doc.data().author)
+    })
+    uidsWithPosts.forEach(async (uid) => {
+      const posts = await getPostsByUid(uid)
+      if(posts?.length){
+        allPosts.push(...posts)
+      }
+      
+    })
+    return allPosts
+
+  } catch (e) {
+    console.log('error', e)
+  }
+};
+
 export const getPostsByUid = async (uid: string) => {
   try {
     if (!uid) {
@@ -444,14 +470,17 @@ export const getAllNotifications = async (uid: string) => {
   );
   const nots = await getDocs(collRef);
   if (nots.size > 0) {
-    return nots.docs.map((data) => data.data())
+    return nots.docs.map((data) => data.data());
   }
   return [];
 };
-export const toggleNotificationStatus = async (uid: string, isRead: boolean) => {
-  setDoc(doc(firestore, "notifications", uid),  {isRead })
-}
-export const getNotificationIsReadStatus = async(uid: string) => {
-  const docRef = await getDoc(doc(firestore, "notifications", uid))
-  return docRef.data()
-}
+export const toggleNotificationStatus = async (
+  uid: string,
+  isRead: boolean
+) => {
+  setDoc(doc(firestore, "notifications", uid), { isRead });
+};
+export const getNotificationIsReadStatus = async (uid: string) => {
+  const docRef = await getDoc(doc(firestore, "notifications", uid));
+  return docRef.data();
+};

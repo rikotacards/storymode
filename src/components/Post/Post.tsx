@@ -16,6 +16,8 @@ import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
 import { ReactionsProvider } from "@/context/ReactionsContext";
+import { AddComment } from "../AddComment/AddComment";
+import { Comments } from "../Comments";
 
 export const Post: React.FC<PostFromDbProps> = (props) => {
   const { author, content, postTime, postId } = props;
@@ -78,29 +80,28 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
           </DoubleClickReactionWrapper>
         )}
         {!hasImages && (
-            <DoubleClickReactionWrapper author={author} postId={postId}>
-          <Swiper navigation={true} modules={[Navigation]}>
-
-            {captions.map((caption, i) => (
-              <SwiperSlide key={caption + i}>
-                <Paper
-                  elevation={1}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    minHeight: "300px",
-                    paddingLeft: "10%",
-                    paddingRight: "10%",
-                    borderRadius: "10px",
-                  }}
+          <DoubleClickReactionWrapper author={author} postId={postId}>
+            <Swiper navigation={true} modules={[Navigation]}>
+              {captions.map((caption, i) => (
+                <SwiperSlide key={caption + i}>
+                  <Paper
+                    elevation={1}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      minHeight: "300px",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                      borderRadius: "10px",
+                    }}
                   >
-                  <PostTextContent bold key={caption + i} caption={caption} />
-                </Paper>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-            </DoubleClickReactionWrapper>
+                    <PostTextContent bold key={caption + i} caption={caption} />
+                  </Paper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </DoubleClickReactionWrapper>
         )}
         <div className={hasImages ? styles.reactionsContainer : undefined}>
           <PostActions
@@ -108,6 +109,12 @@ export const Post: React.FC<PostFromDbProps> = (props) => {
             username={usernameFromAuthor?.data?.username}
             postId={postId}
           />
+        </div>
+        <div style={{marginLeft: '16px', marginTop: '4px', marginBottom: '4px'}}>
+          <Comments />
+        </div>
+        <div style={{marginLeft: '16px', marginTop: '4px', marginBottom: '4px'}}>
+          <AddComment />
         </div>
         <Typography variant="caption" className={styles.date}>
           <div onTouchStart={(e) => e.preventDefault()}></div> {dateString}

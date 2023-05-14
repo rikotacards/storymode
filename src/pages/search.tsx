@@ -1,14 +1,19 @@
 import Head from "next/head";
 import React from "react";
+import { Gallery } from "../components/Gallery/Gallery"
 
 import { useAuth } from "@/context/AuthContext";
 import {
   LinearProgress,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { useGetAllUsernames } from "@/hooks/useGetAllUsernames";
 import { SearchResultUser } from "@/components/SearchResultUser/SearchResultUser";
+import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
+import { getAllPosts } from "@/firebase/db";
+import { useGetAllPosts } from "@/hooks/useGetAllPosts";
 
 export default function Search() {
   const auth = useAuth();
@@ -16,12 +21,16 @@ export default function Search() {
   const [text, setText] = React.useState("");
   const usernames = useGetAllUsernames();
   const users = usernames?.data?.map((user) => <SearchResultUser   key={user.id} username={user.id}/>)
-  
+  const allPosts = useGetAllPosts()
+  console.log(allPosts)
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  if (isLoading) {
-    return <LinearProgress />;
+  if (isLoading || allPosts.isLoading) {
+    return <LinearProgressCustom />;
+  }
+  if(allPosts.error){
+    return <Typography>error</Typography>
   }
   return (
     <div
@@ -59,6 +68,7 @@ export default function Search() {
         <div style={{marginTop:'8px'}}>
 
         {users}
+        <Gallery mode='grid' posts={allPosts.data}/>
         </div>
       </div>
     </div>

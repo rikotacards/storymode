@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Skeleton,
+  CardContent,
 } from "@mui/material";
 import styles from "./PostHeader.module.css";
 import { deletePost } from "@/firebase/db";
@@ -50,8 +51,13 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
         </IconButton>
       </div>
       <Dialog open={open} onClose={onClose}>
-        <Card>
+        <Card variant="outlined" style={{display: 'flex', width: '100%'}}>
+          <CardContent>
+
           <Button onClick={() => deletePost(author, postId)}>Delete</Button>
+          <Button >Edit</Button>
+
+          </CardContent>
         </Card>
       </Dialog>
     </div>

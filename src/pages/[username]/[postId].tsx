@@ -1,4 +1,5 @@
 import { Gallery } from "@/components/Gallery/Gallery";
+import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -10,7 +11,6 @@ import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import {
   Card,
   CardContent,
-  LinearProgress,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -35,12 +35,11 @@ export const SinglePost: React.FC<SinglePost> = () => {
   const auth = useAuth();
 
   const data = useGetPostByPostId(uidFromUsernameRes?.data?.uid, postId || "");
-  console.log("data", data);
   if (data.isLoading) {
-    return <LinearProgress style={{ width: "100%" }} />;
+    return <LinearProgressCustom />;
   }
   if (!data?.post || uidFromUsernameRes.isLoading || !auth) {
-    return <LinearProgress style={{ width: "100%" }} />;
+    return <LinearProgressCustom />;
   }
   if (uidFromUsernameRes.error) {
     return (
