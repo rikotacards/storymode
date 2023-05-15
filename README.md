@@ -36,6 +36,7 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Instagram clone](https://www.youtube.com/watch?v=1hPgQWbWmEk)
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
@@ -153,3 +154,8 @@ Users are init via addUserToDb
 # Pages
 ## Explore / Search
 Currently, we are grabbing all posts. This is done by iterating through all Uids, and getting their posts. This could be optimized.
+
+
+# Firebase deploy
+https://github.com/firebase/firebase-functions/issues/1335
+
