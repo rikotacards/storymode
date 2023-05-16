@@ -4,6 +4,15 @@ import React from "react";
 import styles from './notifications.module.css'
 import { useGetNotifications } from "@/hooks/useGetNotifications";
 import { useAuth } from "@/context/AuthContext";
+
+const NotificationsLoggedOut: React.FC = () => {
+  return (
+    <Typography>
+      See reactions on your stories from your friends!
+    </Typography>
+  )
+}
+
 const Notifications: React.FC = () => {
     const auth = useAuth();
     const data = useGetNotifications(auth?.user?.uid || "")
@@ -17,7 +26,6 @@ const Notifications: React.FC = () => {
     }}>
       <AppBar className={styles.appbar}>
         <Paper>
-
         <Toolbar>
           <Typography fontWeight={600}>{"Notifications"}</Typography>
         </Toolbar>
@@ -25,7 +33,7 @@ const Notifications: React.FC = () => {
       </AppBar>
       <Toolbar />
       <div>
-        {notifications}
+        {auth.isLoggedIn ? notifications : <NotificationsLoggedOut/>}
       </div>
     </div>
   );

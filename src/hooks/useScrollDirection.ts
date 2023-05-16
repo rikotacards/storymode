@@ -6,7 +6,7 @@ export const useScrollDirection = () => {
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
    
-    if (currentScrollPos > prevScrollPos) {
+    if ((currentScrollPos > prevScrollPos) && currentScrollPos > 0) {
       setVisible(false)
     } else {
       setVisible(true)

@@ -15,13 +15,13 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   const isProtectedPath = protectedRoutes[router.pathname] !== undefined
   React.useEffect(() => {
     if(!isLoading && !isLoggedIn && isProtectedPath){
-      router.push('/signin')
+      router.push('/')
     }
    
   }, [isLoading, isLoggedIn, isProtectedPath])
 
   
-  if((isLoading || !isLoggedIn) && isProtectedPath){
+  if((isLoading) && isProtectedPath){
     return (
       <LinearProgressCustom/>
     )

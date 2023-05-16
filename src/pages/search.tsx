@@ -14,10 +14,11 @@ import { SearchResultUser } from "@/components/SearchResultUser/SearchResultUser
 import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
 import { getAllPosts } from "@/firebase/db";
 import { useGetAllPosts } from "@/hooks/useGetAllPosts";
+import { sampleId } from "@/constants/sampledId";
 
 export default function Search() {
   const auth = useAuth();
-  const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid as string);
+  const { data, error, isLoading } = useGetUserInfo(auth?.user?.uid || sampleId as string);
   const [text, setText] = React.useState("");
   const usernames = useGetAllUsernames();
   const users = usernames?.data?.map((user) => <SearchResultUser   key={user.id} username={user.id}/>)
