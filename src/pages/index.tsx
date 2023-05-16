@@ -16,7 +16,7 @@ export default function Home() {
   const { data, isLoading } = useGetUserInfo(auth?.user?.uid as string);
 
   const showCreateUserName = auth.isLoggedIn && !isLoading && !data?.username;
-  if (isLoading) {
+  if (isLoading && auth.isLoggedIn) {
     return <LinearProgressCustom />;
   }
 

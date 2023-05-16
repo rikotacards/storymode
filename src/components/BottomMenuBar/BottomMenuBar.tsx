@@ -2,18 +2,14 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import clx from "clsx";
 import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { Badge, Paper } from "@mui/material";
-import { useTheme } from "@mui/system";
 interface BottomMenuBarProps {
   hide?: boolean;
 }
 export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   const route = useRouter();
-  const theme = useTheme();
   const menuItems = useGetMenuItems({ isWide: false });
 
   let items = menuItems.map((item, i) => (
@@ -34,10 +30,7 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
       >
         <IconButton
           sx={{
-            background:
-              route.pathname == item.path
-                ? theme.palette.primary.light
-                : undefined,
+            color: route.pathname == item.path ? "white" : "gray",
           }}
           key={item.path + i}
         >
@@ -67,9 +60,9 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
       <Paper
         style={{
           opacity: 0.8,
-          display: 'flex',
-          width: '100%',
-          borderRadius: 0
+          display: "flex",
+          width: "100%",
+          borderRadius: 0,
         }}
         elevation={0}
       >

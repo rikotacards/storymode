@@ -6,7 +6,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  LinearProgress,
   Typography,
 } from "@mui/material";
 import Head from "next/head";
@@ -16,11 +15,12 @@ import { Gallery } from "../Gallery/Gallery";
 import { TabPanel } from "../TabPanel/TabPanel";
 import styles from './Feed.module.css'
 import { LinearProgressCustom } from "../LinearProgressCustom/LinearProgressCustom";
+import { sampleId } from "@/constants/sampledId";
 export const Feed: React.FC = () => {
   const auth = useAuth();
   const router = useRouter();
-  const userInfoRes = useGetUserInfo(auth?.user?.uid || "");
-  const feedRes = useGetMyFeed(auth?.user?.uid || "");
+  const userInfoRes = useGetUserInfo(auth?.user?.uid || sampleId);
+  const feedRes = useGetMyFeed(auth?.user?.uid || sampleId);
   if (!userInfoRes.data && feedRes?.isLoading) {
     return <LinearProgressCustom />;
   }
