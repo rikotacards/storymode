@@ -65,8 +65,8 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         // scroll down
         backdropFilter: "blur(45px)",
         flexDirection: "row",
-        borderRadius: visible ? 0 :'50px 50px 0px 0px',
-        transition: "border-radius 0.5s ease-in-out, height 1s ease",
+        // borderRadius: visible ? 0 :'50px 50px 0px 0px',
+        transition: "border-radius 0.5s ease-in-out, height 0.3s ease",
         overflow: 'hidden',
       }}
     >
