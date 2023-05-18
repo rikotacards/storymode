@@ -1,8 +1,9 @@
 import React from "react";
 import { getImagePath } from "@/firebase/db";
 import { Skeleton } from "@mui/material";
+import photo from '../../demo/demoPost1Part1.png'
 import styles from "./PostImageContent.module.css";
-import { PostTextContent } from "../PostTextContent/PostTextContent";
+import Image from "next/image";
 interface PostImageContentProps {
   imagePath: string;
   ref?: any;
@@ -42,7 +43,6 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
       )}
      
       {path && (
-
         <img
           draggable={false}
           className={styles.image}
@@ -53,7 +53,7 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
           width={path ? 468 : 0}
           //oriignally 540
           height={path ? 484 : 0}
-          />
+        />
       )}
     </div>
   );

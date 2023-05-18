@@ -19,30 +19,58 @@ import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 interface PostHeaderProps {
   author: string;
   postId: string;
+  demoUsername?: string;
+  demoPhotoUrl?: string;
 }
 
-export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
+export const PostHeader: React.FC<PostHeaderProps> = ({
+  demoPhotoUrl,
+  demoUsername,
+  postId,
+  author,
+}) => {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const auth = useAuth();
-  const {data, isLoading} = useGetUserInfo(author || "")
+  const { data, isLoading } = useGetUserInfo(author || "");
   const onClick = () => {
-    if(auth?.user?.uid === author)
-    setOpen(true);
+    if (auth?.user?.uid === author) setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
   const onProfileHeaderClick = () => {
-    router.push('/'+data?.username)
-  }
+    router.push("/" + data?.username);
+  };
   return (
     <div className={styles["post-header"]}>
       <div className={styles.avatar} onClick={onProfileHeaderClick}>
-       {(!data?.photoUrl|| isLoading) ? <Skeleton variant='circular'/> : <Avatar src={data.photoUrl || ""} color='action' alt={author[0]}>{data?.username[0]||""}</Avatar>}
+        {!demoPhotoUrl &&( (!data?.photoUrl || isLoading) ? (
+          <Skeleton variant="circular" />
+        ) : (
+          <Avatar
+            src={ data.photoUrl || ""}
+            color="action"
+            alt={author[0]}
+          >
+            {data?.username[0] || ""}
+          </Avatar>
+        ))}
+        {demoPhotoUrl && 
+          <Avatar
+          src={demoPhotoUrl}
+          color="action"
+          alt={author[0]}
+          sx={{boxShadow: '0px 0px 2px black'}}
+        >
+          {demoPhotoUrl}
+        </Avatar>
+        }
       </div>
       <div className={styles.authorInfo} onClick={onProfileHeaderClick}>
-        <Typography sx={{ fontWeight: '600', mr: 1 }}>{data?.username}</Typography>
+        <Typography sx={{ fontWeight: "600", mr: 1 }}>
+          {demoUsername || data?.username}
+        </Typography>
         {/* <Typography variant="caption">San Diego</Typography> */}
       </div>
       <div className={styles["more-btn"]}>
@@ -51,12 +79,10 @@ export const PostHeader: React.FC<PostHeaderProps> = ({postId, author }) => {
         </IconButton>
       </div>
       <Dialog open={open} onClose={onClose}>
-        <Card variant="outlined" style={{display: 'flex', width: '100%'}}>
+        <Card variant="outlined" style={{ display: "flex", width: "100%" }}>
           <CardContent>
-
-          <Button onClick={() => deletePost(author, postId)}>Delete</Button>
-          <Button >Edit</Button>
-
+            <Button onClick={() => deletePost(author, postId)}>Delete</Button>
+            <Button>Edit</Button>
           </CardContent>
         </Card>
       </Dialog>

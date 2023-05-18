@@ -22,7 +22,7 @@ export const ReactionQuickSelect: React.FC<ReactionQuickSelectProps> = ({
     </IconButton>
   ));
   return (
-    <Paper sx={{ borderRadius: "20px", display: "flex", alignItems: "center", flexDirection: 'row', width: '100%' }}>
+    <Paper sx={{ borderRadius: "20px", display: "flex", alignItems: "center", flexDirection: 'row', width: '100%', opacity: '1', zIndex: '10000' }}>
       {emojis}
       <IconButton onClick={() => {openEmojiPicker && openEmojiPicker()}}>
         <AddCircleIcon />

@@ -4,7 +4,8 @@
   align-items: center;
   width: 100%;
   overflow-x: hidden;
-  padding: 0px 4px 0px 8px;
+  padding: 0px 4px 0px 16px;
+  position: relative;
 }
 .allEmojis::-webkit-scrollbar {
   /* WebKit */

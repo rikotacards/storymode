@@ -25,17 +25,8 @@ interface PostProps extends PostFromDbProps {
   demoUsername?: string;
 }
 
-export const Post: React.FC<PostProps> = (props) => {
-  const {
-    author,
-    content,
-    postTime,
-    postId,
-    isDemo,
-    demoPhotoUrl,
-    demoUsername,
-    demoReactions,
-  } = props;
+export const Post2: React.FC<PostProps> = (props) => {
+  const { author, content, postTime, postId, isDemo, demoPhotoUrl, demoUsername, demoReactions } = props;
   const images: string[] = [];
   const captions: string[] = [];
   const router = useRouter();
@@ -69,75 +60,70 @@ export const Post: React.FC<PostProps> = (props) => {
     );
   }
   return (
-    <PostWrapper
-      demoPhotoUrl={demoPhotoUrl}
-      demoUsername={demoUsername}
-      author={author}
-      postId={postId}
-    >
+    <PostWrapper demoPhotoUrl={demoPhotoUrl} demoUsername={demoUsername} author={author} postId={postId} >
       <ReactionsProvider>
-        <div>
-          {hasImages && (
-            <DoubleClickReactionWrapper author={author} postId={postId}>
-              <Swiper
-                onDoubleClick={() => console.log("do")}
-                navigation={true}
-                modules={[Navigation]}
-              >
-                {content?.map((contentItem, i) => {
-                  return (
-                    <SwiperSlide key={contentItem.imagePath + i}>
-                      <div style={{ position: "relative" }}>
-                        <PostImageContent
-                          isDemo={!!demoUsername}
-                          imagePath={contentItem.imagePath}
-                          demoImagePath={contentItem.imagePath}
-                        />
-                        <PostTextContent
-                          key={contentItem.caption + i}
-                          fontWeight={500}
-                          caption={contentItem.caption}
-                        />
-                       
-                      </div>
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-            </DoubleClickReactionWrapper>
-          )}
-          {!hasImages && (
-            <DoubleClickReactionWrapper author={author} postId={postId}>
-              <Swiper navigation={true} modules={[Navigation]}>
-                {captions.map((caption, i) => (
-                  <SwiperSlide key={caption + i}>
-                    <Paper
-                      elevation={1}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        minHeight: "300px",
-                        paddingLeft: "10%",
-                        paddingRight: "10%",
-                        borderRadius: "10px",
-                      }}
-                    ></Paper>
-                    <div style={{ height: "35px" }}></div>
+        {hasImages && (
+          <DoubleClickReactionWrapper author={author} postId={postId}>
+            <Swiper
+              onDoubleClick={() => console.log("do")}
+              navigation={true}
+              modules={[Navigation]}
+            >
+              {content?.map((contentItem, i) => {
+                return (
+                  <SwiperSlide key={contentItem.imagePath + i}>
+                    <PostImageContent isDemo={!!demoUsername} imagePath={contentItem.imagePath} demoImagePath={contentItem.imagePath} />
+                    <PostTextContent
+                      key={contentItem.caption + i}
+                      fontWeight={500}
+                      caption={contentItem.caption}
+                    />
                   </SwiperSlide>
-                ))}
-              </Swiper>
-            </DoubleClickReactionWrapper>
-          )}
+                );
+              })}
+            </Swiper>
+          </DoubleClickReactionWrapper>
+        )}
+        {!hasImages && (
+          <DoubleClickReactionWrapper author={author} postId={postId}>
+            <Swiper navigation={true} modules={[Navigation]}>
+              {captions.map((caption, i) => (
+                <SwiperSlide key={caption + i}>
+                  <Paper
+                    elevation={1}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      minHeight: "300px",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <PostTextContent bold key={caption + i} caption={caption} />
+                  </Paper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </DoubleClickReactionWrapper>
+        )}
+        <div className={hasImages ? styles.reactionsContainer : undefined}>
           <PostActions
             author={author}
             username={usernameFromAuthor?.data?.username}
             postId={postId}
             isDemo
             demoReactions={demoReactions}
+
           />
         </div>
-
+        <div style={{marginLeft: '16px', marginTop: '4px', marginBottom: '4px'}}>
+          <Comments />
+        </div>
+        <div style={{marginLeft: '16px', marginTop: '4px', marginBottom: '4px'}}>
+          <AddComment />
+        </div>
         <Typography variant="caption" className={styles.date}>
           <div onTouchStart={(e) => e.preventDefault()}></div> {dateString}
         </Typography>

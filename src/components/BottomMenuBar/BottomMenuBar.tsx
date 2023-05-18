@@ -52,14 +52,17 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         top: "auto",
         bottom: hide ? "-55px" : 0,
         backgroundColor: "transparent",
-        backdropFilter: "blur(5px)",
+        backdropFilter: "blur(15px)",
         flexDirection: "row",
         transition: "bottom 0.3s",
+        // borderTopLeftRadius: '50px',
+        // borderTopRightRadius: '50px',
+        overflow: 'hidden',
       }}
     >
       <Paper
         style={{
-          opacity: 0.8,
+          background: 'rgba(0,0,0,0.5)',
           display: "flex",
           width: "100%",
           borderRadius: 0,

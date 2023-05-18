@@ -100,7 +100,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
         {showPostBar && <Toolbar />}
         {children}
-        {!auth.isLoggedIn &&  <NotLoggedInMessage />}
+        {/* {!auth.isLoggedIn &&  <NotLoggedInMessage />} */}
       </main>
       { md && 
         <BottomMenuBar hide={false} />

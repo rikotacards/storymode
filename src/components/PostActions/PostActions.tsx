@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./PostActions.module.css";
 import { PartCount } from "../PartCount/PartCount";
-import { Reactions } from "../Reactions/Reactions";
+import { Reactions, ReactionsStateType } from "../Reactions/Reactions";
 import { BookmarkButton } from "../BookmarkButton/BookmarkButton";
 import { ShareButton } from "../ShareButton/ShareButton";
 import { useAuth } from "@/context/AuthContext";
@@ -15,12 +15,16 @@ interface PostActionsProps {
   username: string;
   // used for recevingUid
   author: string;
+  isDemo?: boolean;
+  demoReactions?: ReactionsStateType
 }
 
 export const PostActions: React.FC<PostActionsProps> = ({
   author,
   username,
   postId,
+  isDemo,
+  demoReactions
 }) => {
   const auth = useAuth();
   const baseUrl = window.location.origin;
@@ -29,7 +33,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
     setOpen(false);
   };
   const onOpen = () => {
-    !auth.isLoggedIn && setOpen(true);
+    // !auth.isLoggedIn && setOpen(true);
   };
   return (
     <>
@@ -42,12 +46,12 @@ export const PostActions: React.FC<PostActionsProps> = ({
       >
         <div
           style={{
-            pointerEvents: auth?.isLoggedIn ? undefined : "none",
+            // pointerEvents: auth?.isLoggedIn ? undefined : "none",
             display: "flex",
             width: '100%'
           }}
         >
-          <Reactions author={author} postId={postId} />
+          <Reactions demoReactions={demoReactions} isDemo author={author} postId={postId} />
           <IconButton
             onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)}
           >

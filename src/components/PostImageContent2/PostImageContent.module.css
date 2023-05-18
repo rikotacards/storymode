@@ -14,7 +14,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
-  /* border-radius: 20px; */
+  border-radius: 10px;
   position: relative;
   -webkit-touch-callout: none;
 }

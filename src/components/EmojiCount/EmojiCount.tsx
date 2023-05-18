@@ -58,6 +58,7 @@ export const EmojiCount: React.FC<EmojiCountProps> = ({
           size="small"
           variant="outlined"
           label={`${symbol} ${displayedCount}`}
+          sx={{}}
         />
       </div>
     );
