@@ -5,13 +5,15 @@ import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { Badge, Paper } from "@mui/material";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 interface BottomMenuBarProps {
   hide?: boolean;
 }
 export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   const route = useRouter();
   const menuItems = useGetMenuItems({ isWide: false });
-
+  let isSafari = window?.safari !== undefined;
+  const {visible} = useScrollDirection()
   let items = menuItems.map((item, i) => (
     <div
       key={item.path + i}
@@ -50,13 +52,21 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        bottom: hide ? "-55px" : 0,
-        backgroundColor: "transparent",
-        backdropFilter: "blur(15px)",
+        bottom: '0',
+        height: visible ? "55px" : '55px',
+        //scroll up color
+        // background: 'rgba(0,0,0,0.1)',
+        // scrooll up blur
+        // backdropFilter: "blur(100px)",
+
+
+        //scroll down
+        background: 'rgba(0,0,0,0.3)',
+        // scroll down
+        backdropFilter: "blur(45px)",
         flexDirection: "row",
-        transition: "bottom 0.3s",
-        // borderTopLeftRadius: '50px',
-        // borderTopRightRadius: '50px',
+        borderRadius: visible ? 0 :'50px 50px 0px 0px',
+        transition: "border-radius 0.5s ease-in-out, height 1s ease",
         overflow: 'hidden',
       }}
     >

@@ -77,28 +77,28 @@ export const demoFeed: PostFromDbProps[] = [
       },
     },
   },
-  {
-    author: "Michael",
-    content: [
-      { imagePath: '/demo/demoPost3Part1.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Yesterday by the grace of God I passed my commercial checkride and officially became a commercial pilot ✈️Throughout my commercial training and all the cross country flights I kept on wanting to be done and move on to the next stage. However sometimes you got to slow down and appreciate where you are in life instead of always looking towards the next thing.", blobData: "string" },
-      { imagePath: '/demo/demoPost3Part2.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Here’s to reaching 1500 hours 🎉🎊🍾🎈This is a team effort, and I couldn’t have done it alone. Thank you to my parents for suggesting me to be a pilot. Always supporting and encouraging me Thank you to all my instructor for having to deal with me and helping me succeed. Most of all, thank you to all my students for not killing me 😅Excited to see what’s next in this aviation journey", blobData: "string" },
-      { imagePath: '/demo/demoPost3Part3.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Happy to be flying", blobData: "string" },
-    ],
-    postTime: 1,
-    postId: "0",
-    demoUsername: 'MichaelHsu',
-    demoPhotoUrl: '/demo/demoPost3Part1.png',
-    demoReactions: {
-      'heart': {
-        emoji: '❤️',
-        count: 1092,
-        hasLiked: false
-      },
-      'smile': {
-        emoji: "😀",
-        count: 134,
-        hasLiked: false
-      },
-    },
-  },
+  // {
+  //   author: "Michael",
+  //   content: [
+  //     { imagePath: '/demo/demoPost3Part1.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Yesterday by the grace of God I passed my commercial checkride and officially became a commercial pilot ✈️Throughout my commercial training and all the cross country flights I kept on wanting to be done and move on to the next stage. However sometimes you got to slow down and appreciate where you are in life instead of always looking towards the next thing.", blobData: "string" },
+  //     { imagePath: '/demo/demoPost3Part2.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Here’s to reaching 1500 hours 🎉🎊🍾🎈This is a team effort, and I couldn’t have done it alone. Thank you to my parents for suggesting me to be a pilot. Always supporting and encouraging me Thank you to all my instructor for having to deal with me and helping me succeed. Most of all, thank you to all my students for not killing me 😅Excited to see what’s next in this aviation journey", blobData: "string" },
+  //     { imagePath: '/demo/demoPost3Part3.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Happy to be flying", blobData: "string" },
+  //   ],
+  //   postTime: 1,
+  //   postId: "0",
+  //   demoUsername: 'MichaelHsu',
+  //   demoPhotoUrl: '/demo/demoPost3Part1.png',
+  //   demoReactions: {
+  //     'heart': {
+  //       emoji: '❤️',
+  //       count: 1092,
+  //       hasLiked: false
+  //     },
+  //     'smile': {
+  //       emoji: "😀",
+  //       count: 134,
+  //       hasLiked: false
+  //     },
+  //   },
+  // },
 ];

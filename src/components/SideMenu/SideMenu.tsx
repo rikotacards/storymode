@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 export const menuItems = [
   { name: "Home", path: "/", icon: <HomeIcon  fontSize="medium" /> },
   { name: "Search", path: "/search", icon: <SearchIcon fontSize="medium" /> },
