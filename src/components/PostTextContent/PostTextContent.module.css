@@ -1,9 +1,34 @@
-.text {
-  -webkit-user-select: none;
+.container {
+  /* -webkit-user-select: none;
   -webkit-touch-callout: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-touch-callout: none;
-  padding: 0 16px;
+  -webkit-touch-callout: none; */
+  padding:  50px 16px 45px 16px;
+  position: absolute;
+  bottom: 0px;
+  z-index: 9999;
+  overflow: hidden;
+  color: white;
+  width: -webkit-fill-available;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
 }
+.textContainer {
+  text-overflow: ellipsis;
+  /* max-height: 4.5em; */
+  /* line-height: 1.5; */
+  /* transition: max-height 0.3s ease-in-out; */
+  font-family: sans-serif;
+  overflow: hidden;
+  /* -webkit-line-clamp: 3; */
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+.expanded {
+  max-height: none
+}
+

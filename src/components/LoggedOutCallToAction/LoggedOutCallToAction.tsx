@@ -46,10 +46,10 @@ export const NotLoggedInMessage: React.FC = () => {
       <CardContent sx={{ width: "100%", borderRadius: "20px" }}>
         {messages[route.pathname]}
         <div style={{ marginTop: '8px', display: "flex", flexDirection: "row" }}>
-          <Button fullWidth variant="contained">
+          <Button size='small' fullWidth variant="contained">
             Sign up
           </Button>
-          <Button fullWidth variant="outlined" style={{ marginLeft: "8px" }}>
+          <Button  size='small' fullWidth variant="outlined" style={{ marginLeft: "8px" }}>
             Log in
           </Button>
         </div>

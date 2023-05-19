@@ -25,6 +25,7 @@ import {
 import { PostType } from "@/context/AddPostContext";
 import { abort } from "process";
 import { doesUsernameExist } from "./usernameFunctions";
+import { ReactionsStateType } from "@/components/Reactions/Reactions";
 const storage = getStorage();
 
 interface uploadPostProps {
@@ -37,7 +38,12 @@ export interface PostFromDbProps {
   content: PostType[];
   postTime: number;
   postId: string;
+  demoPhotoUrl?: string;
+  demoUsername?: string;
+  demoReactions?: ReactionsStateType
 }
+
+
 
 export const deletePost = async (uid: string, postId: string) => {
   await deleteDoc(doc(firestore, "content", uid, "posts", postId));

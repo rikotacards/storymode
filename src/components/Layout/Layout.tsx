@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardContent,
+  CssBaseline,
   IconButton,
   Paper,
   Snackbar,
@@ -28,6 +29,7 @@ import { useGetNotificationIsReadStatus } from "@/hooks/useGetNotificationIsRead
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 import { NotLoggedInMessage } from "../LoggedOutCallToAction/LoggedOutCallToAction";
+import { TopAppBar } from "../TopAppBar/TopAppBar";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -57,6 +59,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <main
         className={styles.mainColumn}
       >
+              {/* <div style={{height: '45px'}}/> */}
+
+        { false && md && 
+        <TopAppBar hide={false} />
+      }
         {showPostBar && (
           <div
             className={styles.topbar}
@@ -100,7 +107,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
         {showPostBar && <Toolbar />}
         {children}
-        {!auth.isLoggedIn &&  <NotLoggedInMessage />}
+        {/* {!auth.isLoggedIn &&  <NotLoggedInMessage />} */}
       </main>
       { md && 
         <BottomMenuBar hide={false} />

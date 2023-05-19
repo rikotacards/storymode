@@ -5,11 +5,11 @@ import { PostPreview } from "../PostPreview/PostPreview";
 import { Post } from "../Post/Post";
 
 interface GalleryProps {
-  // posts: PostFromDbProps[];
   mode: "grid" | "column";
   posts: PostFromDbProps[];
 }
 export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
+  console.log('po', posts)
   if(!posts.length){
     return <></>
   }
@@ -17,26 +17,30 @@ export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
     if (mode === "grid") {
       return (
         <PostPreview
-          postId={post.postId}
-          key={post.content[0].caption + i}
-          post={post.content[0]}
+        postId={post.postId}
+        key={post.content[0].caption + i}
+        post={post.content[0]}
         />
-      );
-    }
-    return (
-      <Post
+        );
+      }
+      console.log('toona', post.demoPhotoUrl)
+      return (
+        <Post
         postTime={post.postTime}
         key={i}
         author={post.author}
         postId={post.postId}
         content={post.content}
-      />
-    );
-  });
-  if (mode == "grid")
-    return <section className={styles["post-list"]}>{galleryItems}</section>;
-
-  return (
+        demoPhotoUrl={post.demoPhotoUrl}
+        demoUsername={post.demoUsername}
+        demoReactions={post.demoReactions}
+        />
+        );
+      });
+      if (mode == "grid")
+      return <section className={styles["post-list"]}>{galleryItems}</section>;
+      
+      return (
     <main
       style={{
         width: "100%",

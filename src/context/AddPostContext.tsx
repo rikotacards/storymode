@@ -3,6 +3,7 @@ import { uploadPost } from '@/firebase/db';
 import { useAuth } from './AuthContext';
 import { useGetUserInfo } from '@/hooks/useGetUserInfo';
 import { useRouter } from 'next/router';
+import { StaticImageData } from 'next/image';
 
 export interface PostType {
   imagePath: string;

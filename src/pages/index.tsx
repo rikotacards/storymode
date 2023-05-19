@@ -8,7 +8,6 @@ import { CreateUsername } from "@/components/CreateUsername/CreateUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { Feed } from "@/components/Feed/Feed";
 import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearProgressCustom";
-import { AppBar, Toolbar } from "@mui/material";
 
 export default function Home() {
   const auth = useAuth();

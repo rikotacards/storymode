@@ -15,13 +15,20 @@ interface ReactionsProps {
   postId: string;
   // used for receiving uid
   author: string;
+  demoReactions?: ReactionsStateType;
+  isDemo?: boolean;
 }
 
-interface ReactionsStateType {
+export interface ReactionsStateType {
   [key: string]: { count: number; hasLiked: boolean; emoji: string };
 }
 
-export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
+export const Reactions: React.FC<ReactionsProps> = ({
+  isDemo,
+  postId,
+  author,
+  demoReactions,
+}) => {
   const displayed = [];
   const reactionsContext = useReactionsContext();
   const [openEmojiPicker, setOpenPicker] = React.useState(false);
@@ -39,6 +46,9 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
   };
 
   React.useEffect(() => {
+    if (!auth.isLoggedIn) {
+      return;
+    }
     getReactions(postId)
       .then((data) => {
         if (data) {
@@ -51,8 +61,6 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
       })
       .then(() => {});
   }, [postId]);
-
-
 
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
@@ -70,35 +78,58 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
           });
       }
     },
-    [reactionsContext.displayedReactions, postId, reactionsContext.updateDisplayedReactions]
+    [
+      reactionsContext.displayedReactions,
+      postId,
+      reactionsContext.updateDisplayedReactions,
+    ]
   );
 
-  for (let key in reactionsContext.displayedReactions) {
+  for (let key in (demoReactions || reactionsContext.displayedReactions)) {
     if (
       key !== "2764-fe0f" &&
-      (reactionsContext.displayedReactions[key].count === 0 || !reactionsContext.displayedReactions[key].emoji)
+      (!!reactionsContext.displayedReactions[key]?.count || !reactionsContext.displayedReactions[key]?.emoji)
     ) {
       continue;
     }
+
     displayed.push(
       <EmojiCount
         key={key}
         postId={postId}
-        symbol={reactionsContext.displayedReactions[key].emoji}
+        symbol={demoReactions?.[key]?.emoji || reactionsContext.displayedReactions[key]?.emoji}
         label={key}
         unified={key}
         author={author}
-        count={reactionsContext.displayedReactions[key].count}
-        hasLiked={reactionsContext.displayedReactions[key].hasLiked}
+        count={demoReactions?.[key]?.count || reactionsContext.displayedReactions[key]?.count}
+        hasLiked={reactionsContext.displayedReactions[key]?.hasLiked}
       />
     );
+  }
+  if(demoReactions){
+    for (let key in (demoReactions)) {
+      
+  
+      displayed.push(
+        <EmojiCount
+          key={key}
+          postId={postId}
+          symbol={demoReactions?.[key]?.emoji }
+          label={key}
+          unified={key}
+          author={author}
+          count={demoReactions?.[key]?.count }
+          hasLiked={reactionsContext.displayedReactions[key]?.hasLiked}
+        />
+      );
+    }
   }
   return (
     <>
       <div className={styles.reactions}>
         <div className={styles.allEmojis}>{displayed}</div>
         <Collapse
-          sx={{ position: "absolute", zIndex: 1000 }}
+          sx={{ position: "absolute", zIndex: 10000 }}
           in={openQuick}
           orientation="horizontal"
         >
@@ -107,7 +138,10 @@ export const Reactions: React.FC<ReactionsProps> = ({ postId, author }) => {
               onAddEmojiClick(unified, emoji);
               toggleOpenQuickSelect();
             }}
-            openEmojiPicker={() => {onClick(); toggleOpenQuickSelect()}}
+            openEmojiPicker={() => {
+              onClick();
+              toggleOpenQuickSelect();
+            }}
             onClose={toggleOpenQuickSelect}
           />
         </Collapse>
