@@ -129,7 +129,7 @@ export const Reactions: React.FC<ReactionsProps> = ({
       <div className={styles.reactions}>
         <div className={styles.allEmojis}>{displayed}</div>
         <Collapse
-          sx={{ position: "absolute", zIndex: 1000 }}
+          sx={{ position: "absolute", zIndex: 10000 }}
           in={openQuick}
           orientation="horizontal"
         >

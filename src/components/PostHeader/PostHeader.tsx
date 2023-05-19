@@ -49,7 +49,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
           <Skeleton variant="circular" />
         ) : (
           <Avatar
-            src={ data.photoUrl || ""}
+            src={ data?.photoUrl || ""}
             color="action"
             alt={author[0]}
           >
@@ -61,14 +61,14 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
           src={demoPhotoUrl}
           color="action"
           alt={author[0]}
-          sx={{boxShadow: '0px 0px 2px black'}}
+          sx={{boxShadow: '0px 0px 1px black', height: 32, width: 32}}
         >
           {demoPhotoUrl}
         </Avatar>
         }
       </div>
       <div className={styles.authorInfo} onClick={onProfileHeaderClick}>
-        <Typography sx={{ fontWeight: "600", mr: 1 }}>
+        <Typography sx={{fontSize: '0.875rem', fontWeight: "600", mr: 1, textShadow:'0px 0px 0px black' }}>
           {demoUsername || data?.username}
         </Typography>
         {/* <Typography variant="caption">San Diego</Typography> */}

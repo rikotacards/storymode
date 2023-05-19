@@ -4,12 +4,12 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
-import { Badge, Paper } from "@mui/material";
+import { Badge, Paper, Typography } from "@mui/material";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
-interface BottomMenuBarProps {
+interface TopAppBarProps {
   hide?: boolean;
 }
-export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
+export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
   const route = useRouter();
   const menuItems = useGetMenuItems({ isWide: false });
   const {visible} = useScrollDirection()
@@ -50,14 +50,8 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
-        top: "auto",
-        bottom: '0',
-        height: visible ? "55px" : '55px',
-        //scroll up color
-        // background: 'rgba(0,0,0,0.1)',
-        // scrooll up blur
-        // backdropFilter: "blur(100px)",
-
+        top: !visible ? '-55px': '0',
+        // top:0,
 
         //scroll down
         background: 'rgba(0,0,0,0.3)',
@@ -65,7 +59,7 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         backdropFilter: "blur(45px)",
         flexDirection: "row",
         // borderRadius: visible ? 0 :'50px 50px 0px 0px',
-        transition: "border-radius 0.5s ease-in-out, height 0.3s ease",
+        transition: "top 0.5s ease-in-out, height 0.3s ease",
         overflow: 'hidden',
       }}
     >
@@ -76,7 +70,7 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
           width: "100%",
           borderRadius: 0,
         }}
-        elevation={0}
+        elevation={1}
       >
         <Toolbar
           sx={{
@@ -85,7 +79,9 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
             width: "100%",
           }}
         >
-          {items}
+          <Typography sx={{fontWeight: '600'}}>
+            Sumri
+          </Typography>
         </Toolbar>
       </Paper>
     </AppBar>

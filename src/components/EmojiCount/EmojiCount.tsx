@@ -61,7 +61,6 @@ export const EmojiCount: React.FC<EmojiCountProps> = ({
           sx={{
             background: 'rgba(0,0,0,0.2)',
             backdropFilter:'blur(45px)',
-            // border: '1px solid white'
           }}
         />
       </div>

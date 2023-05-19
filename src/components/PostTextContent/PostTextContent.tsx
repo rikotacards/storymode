@@ -20,6 +20,7 @@ export const PostTextContent: React.FC<PostTextContent> = ({ caption, bold,fontW
         WebkitBoxOrient: 'vertical',
         display: '-webkit-box',
         textShadow: '1px 1px 4px black',
+        fontFamily: 'system-ui'
       }} 
       
       variant={bold ?'h5' : 'body2'}  >
