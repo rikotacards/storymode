@@ -85,10 +85,11 @@ export const Reactions: React.FC<ReactionsProps> = ({
     ]
   );
 
-  for (let key in (demoReactions || reactionsContext.displayedReactions)) {
+  for (let key in demoReactions || reactionsContext.displayedReactions) {
     if (
       key !== "2764-fe0f" &&
-      (!!reactionsContext.displayedReactions[key]?.count || !reactionsContext.displayedReactions[key]?.emoji)
+      (!!reactionsContext.displayedReactions[key]?.count ||
+        !reactionsContext.displayedReactions[key]?.emoji)
     ) {
       continue;
     }
@@ -97,28 +98,32 @@ export const Reactions: React.FC<ReactionsProps> = ({
       <EmojiCount
         key={key}
         postId={postId}
-        symbol={demoReactions?.[key]?.emoji || reactionsContext.displayedReactions[key]?.emoji}
+        symbol={
+          demoReactions?.[key]?.emoji ||
+          reactionsContext.displayedReactions[key]?.emoji
+        }
         label={key}
         unified={key}
         author={author}
-        count={demoReactions?.[key]?.count || reactionsContext.displayedReactions[key]?.count}
+        count={
+          demoReactions?.[key]?.count ||
+          reactionsContext.displayedReactions[key]?.count
+        }
         hasLiked={reactionsContext.displayedReactions[key]?.hasLiked}
       />
     );
   }
-  if(demoReactions){
-    for (let key in (demoReactions)) {
-      
-  
+  if (demoReactions) {
+    for (let key in demoReactions) {
       displayed.push(
         <EmojiCount
           key={key}
           postId={postId}
-          symbol={demoReactions?.[key]?.emoji }
+          symbol={demoReactions?.[key]?.emoji}
           label={key}
           unified={key}
           author={author}
-          count={demoReactions?.[key]?.count }
+          count={demoReactions?.[key]?.count}
           hasLiked={reactionsContext.displayedReactions[key]?.hasLiked}
         />
       );
