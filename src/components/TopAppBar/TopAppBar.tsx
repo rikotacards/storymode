@@ -10,37 +10,8 @@ interface TopAppBarProps {
   hide?: boolean;
 }
 export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
-  const route = useRouter();
-  const menuItems = useGetMenuItems({ isWide: false });
   const {visible} = useScrollDirection()
-  let items = menuItems.map((item, i) => (
-    <div
-      key={item.path + i}
-      onClick={() => route.push(item.path)}
-      style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <div
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <IconButton
-          sx={{
-            color: route.pathname == item.path ? "white" : "gray",
-          }}
-          key={item.path + i}
-        >
-          {item.icon}
-        </IconButton>
-        <Badge />
-      </div>
-    </div>
-  ));
+
   return (
     <AppBar
       position="fixed"
@@ -59,7 +30,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
         backdropFilter: "blur(45px)",
         flexDirection: "row",
         // borderRadius: visible ? 0 :'50px 50px 0px 0px',
-        transition: "top 0.5s ease-in-out, height 0.3s ease",
+        transition: "top 0.1s ease-in-out, height 0.3s ease",
         overflow: 'hidden',
       }}
     >
@@ -80,7 +51,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
           }}
         >
           <Typography sx={{fontWeight: '600'}}>
-            Sumri
+            Closer
           </Typography>
         </Toolbar>
       </Paper>

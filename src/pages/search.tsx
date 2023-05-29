@@ -27,7 +27,7 @@ export default function Search() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  if (isLoading || allPosts.isLoading) {
+  if (allPosts.isLoading) {
     return <LinearProgressCustom />;
   }
   if(allPosts.error){
@@ -71,7 +71,7 @@ export default function Search() {
         />
         <div style={{marginTop:'8px'}}>
 
-        {users}
+        {/* {users} */}
         <Gallery mode='grid' posts={allPosts.data}/>
         </div>
       </div>

@@ -139,9 +139,10 @@ export const Post: React.FC<PostProps> = (props) => {
         </div>
 
         <Typography variant="caption" className={styles.date}>
-          <div onTouchStart={(e) => e.preventDefault()}></div> {dateString}
+        {dateString}
         </Typography>
       </ReactionsProvider>
+      
     </PostWrapper>
   );
 };

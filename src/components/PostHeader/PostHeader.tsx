@@ -52,6 +52,8 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             src={ data?.photoUrl || ""}
             color="action"
             alt={author[0]}
+            sx={{boxShadow: '0px 0px 1px black', height: 32, width: 32}}
+
           >
             {data?.username[0] || ""}
           </Avatar>

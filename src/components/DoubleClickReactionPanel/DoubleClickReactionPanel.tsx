@@ -78,7 +78,6 @@ export const DoubleClickReactionPanel: React.FC<
             style={{
               display: "absolute",
               top: 0,
-              border: "1px solid blue",
               zIndex: 1000,
             }}
           >

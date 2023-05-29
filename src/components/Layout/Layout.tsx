@@ -2,17 +2,12 @@ import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {
   Badge,
   Button,
-  Card,
-  CardContent,
-  CssBaseline,
-  IconButton,
   Paper,
   Snackbar,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { featureFlags } from "../..//featureFlags";
-import HomeIcon from "@mui/icons-material/Home";
 
 import React from "react";
 import { SideMenu } from "../SideMenu/SideMenu";
@@ -107,7 +102,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
         {showPostBar && <Toolbar />}
         {children}
-        {/* {!auth.isLoggedIn &&  <NotLoggedInMessage />} */}
+        {!auth.isLoggedIn &&  <NotLoggedInMessage />}
       </main>
       { md && 
         <BottomMenuBar hide={false} />
@@ -127,11 +122,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Button>
         }
       />
-      {!featureFlags.enableBottomMenuBar && auth?.isLoggedIn && (
-        <Badge badgeContent={1} variant="dot">
-          <FloatingMenu />
-        </Badge>
-      )}
     </div>
   );
 };

@@ -49,7 +49,7 @@ export const NotLoggedInMessage: React.FC = () => {
           <Button size='small' fullWidth variant="contained">
             Sign up
           </Button>
-          <Button  size='small' fullWidth variant="outlined" style={{ marginLeft: "8px" }}>
+          <Button onClick={() => route.push('/signin')}  size='small' fullWidth variant="outlined" style={{ marginLeft: "8px" }}>
             Log in
           </Button>
         </div>
