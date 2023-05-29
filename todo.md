@@ -1,3 +1,8 @@
+# May 29 2023 Monday
+- [ ] Make comments section
+- [ ] Create notifcation section
+- [ ] Create better login page
+- [ ] Clean up and standardize styling on post.
 # March 25 2023 Saturday
 - [ ] Fix reactions bug of showing NaN
 

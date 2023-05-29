@@ -15,7 +15,7 @@ export const SignInNewUser: React.FC = () => {
 
   return (
     <div style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-      <div>
+      <div style={{height: '100%'}}>
    
       <Button variant='contained'  onClick={(e) => {e.preventDefault; signIn.signIn()}}>
         Sign In with Google
