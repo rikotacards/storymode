@@ -6,7 +6,7 @@ export const LoggedOutProfileMessage: React.FC = () => {
       <div>
         <Typography variant='h6' fontWeight={'bold'}>Express Yourself</Typography>
       </div>
-      <div>You're the main character. Share your memories and stories to people that matter.</div>
+      <Typography>You're the main character. Share your memories and stories to people that matter.</Typography>
     </div>
   );
 };
