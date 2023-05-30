@@ -5,9 +5,8 @@
   /* position: relative; */
   /* display flex commented about because it wouldnt work with the slider */
   flex-direction: column;
-  /* border: 1px solid black; */
   /* overflow:auto; */
-  margin-bottom: 36px;
+  /* margin-bottom: 3/6px; */
   align-items: center;
   position: relative;
   justify-content: center;

@@ -29,8 +29,10 @@
   -webkit-touch-callout:none;
   width: 100%;
   display: flex;
+  margin-bottom: 16px;
   padding-left: 16px;
   font-weight: 200;
+  font-family: system-ui
 }
 .reactionsContainer {
   position: absolute;

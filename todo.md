@@ -1,5 +1,10 @@
+# May 30 2029
+- Highest priority now is to create the below features: 
+- Be able to add comments
+- Be able to retrieve comments
+- You've worked on creating the comments drawer. 
 # May 29 2023 Monday
-- [ ] Make comments section
+- [x] Make comments section
 - [ ] Create notifcation section
 - [ ] Create better login page
 - [ ] Clean up and standardize styling on post.
