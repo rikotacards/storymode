@@ -1,4 +1,6 @@
-# May 30 2029
+# June 1 2023
+- Working on the comments feature now. 
+# May 30 2023
 - Highest priority now is to create the below features: 
 - Be able to add comments
 - Be able to retrieve comments

@@ -490,3 +490,51 @@ export const getNotificationIsReadStatus = async (uid: string) => {
   const docRef = await getDoc(doc(firestore, "notifications", uid));
   return docRef.data();
 };
+
+// uid to know whos posting
+// text of post
+// parentId
+interface AddCommentProps {
+  postId: string;
+  postAuthorUid: string;
+  comment: string;
+  commentAuthorUid: string;
+
+}
+export const addComment = async ({postId,commentAuthorUid, postAuthorUid, comment}: AddCommentProps) => {
+  const docRef = await addDoc(collection(firestore, 'content', postAuthorUid, 'posts', postId, 'comments'), {
+    comment, 
+    postTime: Timestamp.fromDate(new Date()),
+    commentAuthorUid
+
+  })
+  if(docRef.id){
+    return {ok: true, data: {comment, postTime: Timestamp.fromDate(new Date()), commentAuthorUid}}
+  }
+}
+
+export const deleteComment = async() => {
+
+}
+export interface GetAllCommentsProps {
+  postId: string;
+  postAuthorUid: string;
+}
+export const getAllComments = async ({postId, postAuthorUid}: GetAllCommentsProps) => {
+  const snapshot = await getDocs(collection(firestore, "content", postAuthorUid, 'posts', postId, 'comments'))
+  const res = [] as any[]
+  snapshot.forEach((data) => {
+    const newData = {
+      ...data.data(),
+      commentId: data.id
+    }
+
+    res.push(newData)
+    console.log(res)
+  })
+  return res
+}
+
+export const reportComment = async () => {
+
+}

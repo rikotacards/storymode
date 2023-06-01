@@ -1,7 +1,12 @@
 import { Avatar, Typography } from "@mui/material";
 import React from "react";
-
-export const CommentRow: React.FC = () => {
+interface CommentRowProps {
+  username: string; 
+  comment: string;
+  timestamp?: string;
+}
+export const CommentRow: React.FC<CommentRowProps> = (props) => {
+  const {username, comment, timestamp} = props;
   return (
     <div
       style={{
@@ -17,12 +22,12 @@ export const CommentRow: React.FC = () => {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div>
           <Typography variant='caption' >
-          MaxwellHsu
+          {username || 'Username'}
           </Typography>
         </div>
         <div>
           <Typography variant="body2">
-            This is a comment from a person
+            {comment || 'testcomment'}
           </Typography>
         </div>
       </div>

@@ -35,7 +35,6 @@ export const ReactionsProvider: React.FC<ReactionsProviderProps> = ({
       incrementValue: number,
       emoji: string
     ) => {
-      console.log('whatever context')
       const newState = {
         ...displayedReactions[unified],
         count: (displayedReactions[unified]?.count || 0) + incrementValue,
@@ -46,9 +45,7 @@ export const ReactionsProvider: React.FC<ReactionsProviderProps> = ({
     },
     [displayedReactions]
   );
-  console.log('CONTEXT', displayedReactions)
   React.useEffect(() => {
-    console.log('displayed, ', displayedReactions)
   },[displayedReactions])
   const context = {
     setDisplayedReactions,
