@@ -144,7 +144,7 @@ export const Post: React.FC<PostProps> = (props) => {
     </PostWrapper>
     <div style={{paddingTop: '4px', paddingLeft: '16px'}}>
 
-    <Comments/>
+    <Comments postId={postId} authorUid={author}/>
 
     </div>
     <Typography variant="caption" className={styles.date}>

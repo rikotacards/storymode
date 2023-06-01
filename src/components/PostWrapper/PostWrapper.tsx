@@ -16,7 +16,6 @@ export const PostWrapper: React.FC<PostWrapper> = ({
   children,
   author,
 }) => {
-  console.log('hi', demoPhotoUrl)
   return (
     <div className={styles.post}>
       <PostHeader

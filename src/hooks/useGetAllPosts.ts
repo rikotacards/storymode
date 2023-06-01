@@ -1,4 +1,4 @@
-import { getAllNotifications, getAllPosts, getUsernames } from '@/firebase/db';
+import { getAllPosts } from '@/firebase/db';
 import useSWR from 'swr';
 
 const fetcher = () => {

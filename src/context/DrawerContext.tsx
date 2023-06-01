@@ -6,6 +6,8 @@ interface DrawerContextProps {
   onOpen: () => void;
   onClose: () => void;
   setComponent: (cName: string) => void;
+  setData: (data: any) => void;
+  data: {[key: string]: any}
 }
 export const DrawerContext = React.createContext({} as DrawerContextProps);
 export const useDrawerContext = () => React.useContext(DrawerContext);
@@ -19,6 +21,13 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
   const [open, setOpen] = React.useState(false);
   const [componentName, setComponentName] =
     React.useState<string>("linkEditForm");
+
+  const [postInfo, setPostInfo] = React.useState({})
+
+  const setData= React.useCallback((data: any) => {
+    setPostInfo(data);
+  }, []);
+
 
   const setComponent = React.useCallback((cName: string) => {
     setComponentName(cName);
@@ -37,6 +46,10 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
     onOpen,
     onClose,
     setComponent,
+    setData,
+    data: {
+      postInfo
+    }
   };
 
   return (

@@ -12,14 +12,27 @@ import React from "react";
 import styles from "./CommentsDrawer.module.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import { CommentRow } from "../CommentRow/CommentRow";
+import { addComment } from "@/firebase/db";
+import { useAuth } from "@/context/AuthContext";
 
 export const CommentsDrawer: React.FC = () => {
   const drawerContext = useDrawerContext();
   const onClose = () => {
     drawerContext.onClose();
   };
+  const auth = useAuth();
+  const uid = auth?.user?.uid;
+  const data = drawerContext.data
+  console.log('data')
+  const onPostClick = async() => {
+    await addComment({
+      comment: 'test1 from max, this is a very long post', 
+      commentAuthorUid: uid || '',
+      postId: '1mTBbss9I77Stfz45kSj',
+      postAuthorUid: 'Jq6BwdiA2NSioj7m0son8IS1kXs1'
+    })
+  }
 
   return (
     <div>
@@ -65,7 +78,7 @@ export const CommentsDrawer: React.FC = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton edge="end" color="primary">
+                <IconButton onClick={onPostClick} edge="end" color="primary">
                   <Typography variant="caption">Post</Typography>
                 </IconButton>
               </InputAdornment>
