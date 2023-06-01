@@ -105,7 +105,7 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
                 placeholder="Leave a comment"
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    !!comment.length && <InputAdornment position="end">
                       <IconButton
                         onClick={onAddComment}
                         edge="end"

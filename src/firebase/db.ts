@@ -512,9 +512,14 @@ export const addComment = async ({postId,commentAuthorUid, postAuthorUid, commen
     return {ok: true, data: {comment, postTime: Timestamp.fromDate(new Date()), commentAuthorUid}}
   }
 }
-
-export const deleteComment = async() => {
-
+interface DeleteCommentProps {
+  postId: string;
+  postAuthorUid: string;
+  commentId: string;
+}
+export const deleteComment = async(args: DeleteCommentProps) => {
+  const {postAuthorUid, postId, commentId} = args;
+  await deleteDoc(doc(firestore, "content", postAuthorUid,'posts', postId, "comments", commentId))
 }
 export interface GetAllCommentsProps {
   postId: string;

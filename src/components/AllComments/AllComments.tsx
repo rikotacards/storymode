@@ -14,7 +14,7 @@ export const AllComments: React.FC<AllCommentsProps> = ({postId, postAuthorUid})
   if(isLoading){
     return <></>
   }
-  const commentRows = data?.map((data, i) => <CommentRow key={data.commentId} username={data?.commentAuthorUid} comment={data.comment}/>)
+  const commentRows = data?.map((data, i) => <CommentRow commentAuthorUid={data.commentAuthorUid} commentId={data.commentId} postId={postId} postAuthorUid={postAuthorUid}key={data.commentId} username={data?.commentAuthorUid} comment={data.comment}/>)
   return (
     <>{commentRows}</>
   )

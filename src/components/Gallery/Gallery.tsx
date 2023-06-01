@@ -9,7 +9,6 @@ interface GalleryProps {
   posts: PostFromDbProps[];
 }
 export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
-  console.log('po', posts)
   if(!posts.length){
     return <></>
   }
@@ -23,7 +22,6 @@ export const Gallery: React.FC<GalleryProps> = ({ mode, posts }) => {
         />
         );
       }
-      console.log('toona', post.demoPhotoUrl)
       return (
         <Post
         postTime={post.postTime}
