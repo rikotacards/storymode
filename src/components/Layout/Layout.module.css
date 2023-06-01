@@ -10,7 +10,7 @@
   width: 100%;
   align-items: center;
   justify-content: flex-start;
-  touch-action: pan-y;
+  /* touch-action: pan-y; */
 }
 .layoutMenuDesktop {
   height: 100%;

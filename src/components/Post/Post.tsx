@@ -69,6 +69,7 @@ export const Post: React.FC<PostProps> = (props) => {
     );
   }
   return (
+    <div style={{ width: '100%', alignItems: 'center', justifyContent: 'center'}}>
     <PostWrapper
       demoPhotoUrl={demoPhotoUrl}
       demoUsername={demoUsername}
@@ -137,12 +138,18 @@ export const Post: React.FC<PostProps> = (props) => {
             demoReactions={demoReactions}
           />
         </div>
-
-        <Typography variant="caption" className={styles.date}>
-        {dateString}
-        </Typography>
+        
       </ReactionsProvider>
       
     </PostWrapper>
+    <div style={{paddingTop: '4px', paddingLeft: '16px'}}>
+
+    <Comments/>
+
+    </div>
+    <Typography variant="caption" className={styles.date}>
+    {dateString}
+    </Typography>
+    </div>
   );
 };
