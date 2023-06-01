@@ -1,5 +1,6 @@
 # June 1 2023
 - Working on the comments feature now. 
+- Finished ability to add and delete comments
 # May 30 2023
 - Highest priority now is to create the below features: 
 - Be able to add comments
