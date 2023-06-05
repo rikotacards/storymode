@@ -1,3 +1,10 @@
+# June 5 2023
+Polished up the notifications part, added the images correctly.
+Next, need to fix the column issue with the main.
+- I should add a back button. Didn't want to originally. 
+# June 4 2023
+- [x] Finish notification section
+- [ ] Fix deployment
 # June 1 2023
 - Working on the comments feature now. 
 - Finished ability to add and delete comments

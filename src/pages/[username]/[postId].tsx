@@ -3,7 +3,6 @@ import { LinearProgressCustom } from "@/components/LinearProgressCustom/LinearPr
 import { TabPanel } from "@/components/TabPanel/TabPanel";
 import { useAuth } from "@/context/AuthContext";
 import {
-  getPostByPostId,
   PostFromDbProps,
 } from "@/firebase/db";
 import { useGetPostByPostId } from "@/hooks/useGetPostByPostId";

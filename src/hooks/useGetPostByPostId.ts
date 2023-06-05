@@ -1,7 +1,8 @@
-import { getPostByPostId } from '@/firebase/db'
+import { PostFromDbProps, getPostByPostId } from '@/firebase/db'
 import useSWR from 'swr'
 
 const fetcher = ([uid, postId]: string[]) => {
+  console.log('hithe', uid,postId)
   return getPostByPostId(uid, postId).then((res) => {
     if(res){
       return res
@@ -12,7 +13,7 @@ const fetcher = ([uid, postId]: string[]) => {
 export const  useGetPostByPostId = (uid: string | string[], postId: string | string[]) => {
   const {data, error, isLoading} = useSWR([uid,postId, 'useGetPostByPostId'], fetcher);
   return {
-    post: [data] || [], 
+    post: [data] as PostFromDbProps[] || [], 
     error, 
     isLoading
   }
