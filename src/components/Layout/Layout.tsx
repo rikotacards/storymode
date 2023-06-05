@@ -7,7 +7,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { featureFlags } from "../..//featureFlags";
 
 import React from "react";
 import { SideMenu } from "../SideMenu/SideMenu";
@@ -104,7 +103,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
       { md && 
+      <>
+            <div style={{ height: "50px" }} />
+
         <BottomMenuBar hide={false} />
+        </>
       }
       <Snackbar
         open={false}
