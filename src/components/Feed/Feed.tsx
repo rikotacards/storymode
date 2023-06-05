@@ -62,12 +62,7 @@ export const Feed: React.FC<FeedProps> = () => {
 
   return (
     <div>
-      <div>
-        <TabPanel value={0} index={0}>
           <Gallery  posts={ data} mode="column" />
-        </TabPanel>
-      </div>
-      <div style={{ height: "50px" }} />
     </div>
   );
 };

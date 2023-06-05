@@ -24,9 +24,8 @@ export default function Home() {
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
-        width: "100%",
+        width: '100%',
       }}
     >
       <Head>
@@ -36,18 +35,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          flexDirection: "column",
-        }}
-      >
+      
         <div style={{ padding: "8px" }}>
           {showCreateUserName ? <CreateUsername /> : null}
         </div>
         <Feed />
-      </div>
     </div>
   );
 }
