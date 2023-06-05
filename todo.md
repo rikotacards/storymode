@@ -1,6 +1,13 @@
 # June 5 2023
 Polished up the notifications part, added the images correctly.
 Next, need to fix the column issue with the main.
+- [x] Fixed main column
+
+For next session: 
+- [ ] Fix login issue
+- [ ] Fix reacting issue
+- [ ] Fix "notification" text in notification page
+
 - I should add a back button. Didn't want to originally. 
 # June 4 2023
 - [x] Finish notification section
