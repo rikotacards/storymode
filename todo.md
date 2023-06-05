@@ -1,3 +1,6 @@
+# June 4 2023
+- [ ] Finish notification section
+- [ ] Fix deployment
 # June 1 2023
 - Working on the comments feature now. 
 - Finished ability to add and delete comments

@@ -335,6 +335,7 @@ export const getReactions = async (docId: string) => {
 };
 
 export const getImagePath = (imagePath: string) => {
+  console.log(imagePath)
   const pathReference = ref(storage, imagePath);
   return getDownloadURL(pathReference)
     .then((url) => url)
@@ -358,7 +359,7 @@ export const getPostByPostId = async (uid: string, postId: string) => {
     postTime: querySnapshot.data().postTime?.toDate().getTime(),
     postId: querySnapshot.id,
   };
-  return data;
+  return data as PostFromDbProps;
 };
 
 // Used for discover / search
