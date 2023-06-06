@@ -14,7 +14,6 @@ import styles from "./Layout.module.css";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { useSignInWithGooglePopUp } from "@/firebase/useSignInWithGooglePop";
-import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
@@ -24,12 +23,15 @@ import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 import { NotLoggedInMessage } from "../LoggedOutCallToAction/LoggedOutCallToAction";
 import { TopAppBar } from "../TopAppBar/TopAppBar";
+import { getAuth } from "firebase/auth";
 interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
   const auth = useAuth();
+  const auth2 = getAuth();
+  console.log('LAYOUT', auth2?.currentUser?.uid)
   const router = useRouter();
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
@@ -55,7 +57,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
               {/* <div style={{height: '45px'}}/> */}
 
-        { false && md && 
+        { true && md && 
         <TopAppBar hide={false} />
       }
         {showPostBar && (

@@ -1,3 +1,11 @@
+# June 6 2023
+- [ ] Try and fix the log in issue. Focused 1 hour. 
+
+Other outstanding issues carrying from before: 
+- [ ] Fix login issue
+- [ ] Fix reacting issue
+- [ ] Fix "notification" text in notification page
+
 # June 5 2023
 Polished up the notifications part, added the images correctly.
 Next, need to fix the column issue with the main.

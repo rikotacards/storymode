@@ -335,7 +335,6 @@ export const getReactions = async (docId: string) => {
 };
 
 export const getImagePath = (imagePath: string) => {
-  console.log(imagePath)
   const pathReference = ref(storage, imagePath);
   return getDownloadURL(pathReference)
     .then((url) => url)

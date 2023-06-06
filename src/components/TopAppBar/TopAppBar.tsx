@@ -4,13 +4,17 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
-import { Badge, Paper, Typography } from "@mui/material";
+import { Badge, Button, Paper, Typography } from "@mui/material";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 interface TopAppBarProps {
   hide?: boolean;
 }
 export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
   const {visible} = useScrollDirection()
+  const route = useRouter();
+  const onLogin = () => {
+    route.push('/signin')
+  }
 
   return (
     <AppBar
@@ -53,6 +57,9 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
           <Typography sx={{fontWeight: '600'}}>
             Closer
           </Typography>
+          <Button sx={{ml:'auto'}} variant='contained' size="small" onClick={onLogin}>
+            Log in
+          </Button>
         </Toolbar>
       </Paper>
     </AppBar>
