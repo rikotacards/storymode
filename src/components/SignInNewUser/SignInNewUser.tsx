@@ -68,7 +68,7 @@ export const SignInWithGoogle: React.FC = () => {
     >
       <Button
         variant="contained"
-        sx={{ textTransform: "none",  }}
+        sx={{ textTransform: "none" }}
         onClick={(e) => {
           signInWithRedirect(auth, provider);
         }}

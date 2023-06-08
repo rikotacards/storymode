@@ -11,6 +11,7 @@ import { LoggedOutExploreMessage } from "../LoggedOutExploreMessage/LoggedOutExp
 import { LoggedOutHomeMessage } from "../LoggedOutHomeMessage/LoggedOutHomeMessage";
 import { LoggedOutNotificationsMessageCard } from "../LoggedOutNotificationsMessageCard/LoggedOutNotificationsMessageCard";
 import { LoggedOutFollowProfileMessage } from "../LoggedOutFollowProfileMessage/LoggedOutFollowProfileMessage";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 
 const messages: { [key: string]: React.ReactNode } = {
   "/search": <LoggedOutExploreMessage />,
@@ -34,24 +35,20 @@ export const NotLoggedInMessage: React.FC = () => {
         backgroundColor: "transparent",
         backdropFilter: "blur(5px)",
         position: "fixed",
-        background: 'rgba(0, 0, 0, 1)',
+        background: 'rgba(0, 0, 0, 0.9)',
         zIndex: "1000",
         flexDirection: "row",
         borderRadius: "20px",
         transition: "bottom 0.3s",
-        margin: "4px",
+        // margin: "4px",
+        width: '100%'
       }}
       className={styles.container}
     >
       <CardContent sx={{ width: "100%", borderRadius: "20px" }}>
         {messages[route.pathname]}
         <div style={{ marginTop: '8px', display: "flex", flexDirection: "row" }}>
-          <Button size='small' fullWidth variant="contained">
-            Sign up
-          </Button>
-          <Button onClick={() => route.push('/signin')}  size='small' fullWidth variant="outlined" style={{ marginLeft: "8px" }}>
-            Log in
-          </Button>
+          <SignInWithGoogle/>
         </div>
       </CardContent>
     </Card>

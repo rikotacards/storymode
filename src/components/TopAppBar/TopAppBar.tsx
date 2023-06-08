@@ -58,7 +58,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
           <Typography sx={{ fontWeight: "600" }}>Journey</Typography>
           {!auth.currentUser && (
             <Button
-              sx={{ ml: "auto" }}
+              sx={{ ml: "auto", textTransform: 'none' }}
               variant="contained"
               size="small"
               onClick={onLogin}

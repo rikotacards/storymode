@@ -25,6 +25,7 @@ import { NotLoggedInMessage } from "../LoggedOutCallToAction/LoggedOutCallToActi
 import { TopAppBar } from "../TopAppBar/TopAppBar";
 import { getAuth } from "firebase/auth";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
+import { LoggedOutHomeMessage } from "../LoggedOutHomeMessage/LoggedOutHomeMessage";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -35,7 +36,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const auth2 = getAuth();
   const router = useRouter();
   if(!auth.isLoggedIn){
-    setTimeout(() => {setShowSnackbar(true)}, 5000)
+    setTimeout(() => {setShowSnackbar(true)}, 10000)
   }
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
@@ -109,13 +110,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </>
       )}
       
-      <Snackbar
-        open={showSnackbar}
-        message="Welcome to Journey"
-        action={
-          <SignInWithGoogle/>
-        }
-      />
+      {showSnackbar && <NotLoggedInMessage/>}
     </div>
   );
 };
