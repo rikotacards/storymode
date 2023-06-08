@@ -1,5 +1,8 @@
+# June 8 2023
+Login issue. Thought it was a bug on my end. but actually, it's an issue with firebase. The fix is that you HAVE to login to the app via the same authDomain, and not from localhost or anything like that. 
+
 # June 6 2023
-- [ ] Try and fix the log in issue. Focused 1 hour. 
+- [x] Try and fix the log in issue. Focused 1 hour. 
 
 Other outstanding issues carrying from before: 
 - [ ] Fix login issue

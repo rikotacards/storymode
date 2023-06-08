@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 
 import { useRouter } from "next/router";
 import React from "react";
-import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import { LinearProgressCustom } from "../LinearProgressCustom/LinearProgressCustom";
 interface RouteGuardProps {
   children: React.ReactNode;

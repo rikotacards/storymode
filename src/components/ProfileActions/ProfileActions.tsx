@@ -13,12 +13,11 @@ import styles from "./ProfileActions.module.css";
 import { updateFollowers } from "@/firebase/followerFunctions";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import { useGetUserInfo } from "@/hooks/useGetUserInfo";
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetIsFollowing } from "@/hooks/useGetIsFollowing";
 import { EditProfile } from "../EditProfile/EditProfile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
-import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 
 interface ProfileActionsProps {
   hideName?: boolean;
@@ -153,7 +152,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
           setOpenLogin(false);
         }}
       >
-        <SignInNewUser />
+        <SignInWithGoogle />
       </Dialog>
     </>
   );

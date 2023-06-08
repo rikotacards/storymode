@@ -6,7 +6,7 @@ const fetcher = ([uid]: string[]) => {
     if(res){
       return res
     } 
-    return []
+    return undefined
   })
 }
 export const useGetUsernameFromUid = (uid: string) => {

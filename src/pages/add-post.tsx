@@ -4,7 +4,7 @@ import { AddPostContainer } from "@/components/AddPostContainer/AddPostContainer
 import { AddPostContextWrapper } from "@/context/AddPostContext";
 import { useAuth } from "@/context/AuthContext";
 import { Dialog } from "@mui/material";
-import { SignInNewUser } from "@/components/SignInNewUser/SignInNewUser";
+import { SignInWithGoogle } from "@/components/SignInNewUser/SignInNewUser";
 
 const AddPost = () => {
   const { isLoggedIn } = useAuth();
@@ -38,7 +38,7 @@ const AddPost = () => {
       )}
 
       <Dialog onClose={onClose} open={open}>
-        <SignInNewUser />
+        <SignInWithGoogle />
       </Dialog>
     </>
   );

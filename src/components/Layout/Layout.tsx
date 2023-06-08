@@ -24,15 +24,19 @@ import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 import { NotLoggedInMessage } from "../LoggedOutCallToAction/LoggedOutCallToAction";
 import { TopAppBar } from "../TopAppBar/TopAppBar";
 import { getAuth } from "firebase/auth";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
+  const [showSnackbar, setShowSnackbar] = React.useState(false);
   const auth = useAuth();
   const auth2 = getAuth();
-  console.log('LAYOUT', auth2?.currentUser?.uid)
   const router = useRouter();
+  if(!auth.isLoggedIn){
+    setTimeout(() => {setShowSnackbar(true)}, 5000)
+  }
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
@@ -46,20 +50,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     router.pathname == "/p";
 
   const signIn = useSignInWithGooglePopUp();
-  const isOtherProfile = router.pathname == '/[username]'
+  const isOtherProfile = router.pathname == "/[username]";
   return (
     <div className={styles.main}>
-      <div className={styles.layoutMenuDesktop}>
-        {!md && <SideMenu />}
-      </div>
-      <main
-        className={styles.mainColumn}
-      >
-              {/* <div style={{height: '45px'}}/> */}
+      <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
+      <main className={styles.mainColumn}>
+        {/* <div style={{height: '45px'}}/> */}
 
-        { true && md && 
-        <TopAppBar hide={false} />
-      }
+        {true && md && <TopAppBar hide={false} />}
         {showPostBar && (
           <div
             className={styles.topbar}
@@ -101,29 +99,21 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             )}
           </div>
         )}
-        {showPostBar && <Toolbar />}
+        <Toolbar />
         {children}
       </main>
-      { md && 
-      <>
-            <div style={{ height: "50px" }} />
-
-        <BottomMenuBar hide={false} />
+      {md && (
+        <>
+          <div style={{ height: "50px" }} />
+          <BottomMenuBar hide={false} />
         </>
-      }
+      )}
+      
       <Snackbar
-        open={false}
-        message="Welcome to Stomo.io"
+        open={showSnackbar}
+        message="Welcome to Journey"
         action={
-          <Button
-            variant="contained"
-            onClick={(e) => {
-              e.preventDefault();
-              signIn.signIn();
-            }}
-          >
-            Sign Up
-          </Button>
+          <SignInWithGoogle/>
         }
       />
     </div>

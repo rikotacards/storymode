@@ -19,7 +19,6 @@ const firebaseConfigHardCoded = {
   appId: "1:546787786385:web:4401705f292b9dd0ca4930",
   measurementId: "G-4Y0H8V2VZY"
 };
-
 const firebaseConfigApacDb = {
   
     apiKey: "AIzaSyA6terG0jvp_XqDI3NpiB3ZNEE1riWSTyA",

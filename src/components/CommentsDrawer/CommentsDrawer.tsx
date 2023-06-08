@@ -12,7 +12,6 @@ import React from "react";
 import styles from "./CommentsDrawer.module.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import { CommentRow } from "../CommentRow/CommentRow";
 import { addComment } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
 
@@ -23,8 +22,6 @@ export const CommentsDrawer: React.FC = () => {
   };
   const auth = useAuth();
   const uid = auth?.user?.uid;
-  const data = drawerContext.data
-  console.log('data')
   const onPostClick = async() => {
     await addComment({
       comment: 'test1 from max, this is a very long post', 
@@ -45,21 +42,13 @@ export const CommentsDrawer: React.FC = () => {
             </div>
             <Typography fontWeight={600}>Comments</Typography>
             <div>
-              <Button onClick={onClose}>
+              <Button size='small' onClick={onClose}>
                 <Typography>Close</Typography>
               </Button>
             </div>
           </div>
         </Toolbar>
       <div style={{maxHeight: '50vh', overflowY: 'scroll', padding: "4px", paddingBottom: "55px" }}>
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
-        <CommentRow />
       </div>
       <Paper
         style={{
