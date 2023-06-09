@@ -11,6 +11,8 @@ import React from "react";
 import { Expand } from "@mui/icons-material";
 import { deleteComment } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 interface CommentRowProps {
   username: string;
   comment: string;
@@ -30,6 +32,9 @@ export const CommentRow: React.FC<CommentRowProps> = (props) => {
     postId,
     commentId,
   } = props;
+  const { data } = useGetUserInfo(commentAuthorUid);
+  const { data: commentAuthorUsername } = useGetUsernameFromUid(commentAuthorUid);
+
   const [open, setOpen] = React.useState<boolean>(false);
   const [isDeleted, setDelete] = React.useState(false);
   const auth = useAuth();
@@ -59,11 +64,11 @@ export const CommentRow: React.FC<CommentRowProps> = (props) => {
         }}
       >
         <div style={{ marginRight: "8px" }}>
-          <Avatar>mh</Avatar>
+          <Avatar src={data?.photoUrl}>mh</Avatar>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div>
-            <Typography variant="caption">{username || "Username"}</Typography>
+            <Typography variant="caption">{commentAuthorUsername?.username || "Username"}</Typography>
           </div>
           <div>
             <Typography variant="body2">{comment || "testcomment"}</Typography>

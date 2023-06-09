@@ -26,6 +26,7 @@ import { TopAppBar } from "../TopAppBar/TopAppBar";
 import { getAuth } from "firebase/auth";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import { LoggedOutHomeMessage } from "../LoggedOutHomeMessage/LoggedOutHomeMessage";
+import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -111,7 +112,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <BottomMenuBar hide={false} />
         </>
       )}
-
       {showSnackbar && <NotLoggedInMessage />}
     </div>
   );

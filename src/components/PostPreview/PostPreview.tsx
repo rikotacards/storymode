@@ -27,9 +27,9 @@ export const PostPreview: React.FC<PostPreviewProps> = ({ post }) => {
   if (post?.imagePath?.length > 0) {
     console.log("path", post.imagePath);
     return (
-      <div onClick={onClick} className={styles.post}>
+      <div style={{visibility: post?.imagePath ? 'visible' :'hidden'}} onClick={onClick} className={styles.post}>
         <figure className={styles.postImage}>
-          <img alt="" src={path}  />
+          <img style={{visibility: post?.imagePath ? 'visible' :'hidden'}} alt="" src={path}  />
         </figure>
       </div>
     );

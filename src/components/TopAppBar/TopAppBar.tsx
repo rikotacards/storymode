@@ -7,12 +7,18 @@ import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { Badge, Button, Paper, Typography } from "@mui/material";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { getAuth } from "firebase/auth";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 interface TopAppBarProps {
   hide?: boolean;
 }
 export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
   const { visible } = useScrollDirection();
   const route = useRouter();
+  const pathLength = route.asPath.split("/");
+  const enableBack = pathLength.length > 1;
+  const isUserProfile = route.pathname === "/[username]";
+  const isHome = route.pathname ==='/'
+  console.log(route);
   const auth = getAuth();
   const onLogin = () => {
     route.push("/signin");
@@ -27,7 +33,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
-        top: !visible ? "-55px" : "0",
+        top: isUserProfile || !visible ? "-55px" : "0",
         // top:0,
 
         //scroll down
@@ -55,10 +61,13 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
             width: "100%",
           }}
         >
+          {!isHome && <IconButton size="small" onClick={route.back}>
+            <ArrowBackIosNewIcon />
+          </IconButton>}
           <Typography sx={{ fontWeight: "600" }}>Journey</Typography>
           {!auth.currentUser && (
             <Button
-              sx={{ ml: "auto", textTransform: 'none' }}
+              sx={{ ml: "auto", textTransform: "none" }}
               variant="contained"
               size="small"
               onClick={onLogin}
