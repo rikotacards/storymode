@@ -35,8 +35,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const auth = useAuth();
   const auth2 = getAuth();
   const router = useRouter();
-  if(!auth.isLoggedIn){
-    setTimeout(() => {setShowSnackbar(true)}, 10000)
+  if (!auth.isLoggedIn) {
+    setTimeout(() => {
+      setShowSnackbar(true);
+    }, 10000);
   }
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
@@ -109,8 +111,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <BottomMenuBar hide={false} />
         </>
       )}
-      
-      {showSnackbar && <NotLoggedInMessage/>}
+
+      {showSnackbar && <NotLoggedInMessage />}
     </div>
   );
 };

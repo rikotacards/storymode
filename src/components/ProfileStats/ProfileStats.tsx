@@ -30,15 +30,25 @@ export const ProfileStats: React.FC<ProfileStatsProps> = ({
           posts
         </Typography>
       </div>
-      <div className={styles.stats}>
-        <div style={{ fontWeight: "600" }}>
+      <div className={styles.stats}
+      onClick={() => {
+          route.push(`/${username}/followers`)
+        }}>
+        <div style={{ fontWeight: "600" }}
+        
+        
+        >
           {followers || userInfoRes.data?.followersCount || 0}
         </div>
         <Typography variant="body2" style={{ textTransform: "capitalize" }}>
           followers
         </Typography>
       </div>
-      <div className={styles.stats}>
+      <div className={styles.stats}
+       onClick={() => {
+        route.push(`/${username}/followings`)
+      }}
+      >
         <div style={{ fontWeight: "600" }}>
           {following || userInfoRes.data?.followingCount || 0}
         </div>
