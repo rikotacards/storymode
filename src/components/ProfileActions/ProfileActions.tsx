@@ -29,7 +29,7 @@ const actionButtonTypographyStyle = {
 };
 
 export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
-  const router = useRouter();
+  const route = useRouter();
   const { uid, isLoggedIn } = useAuth();
   const [open, setOpen] = React.useState(false);
   const openDrawer = () => {
@@ -46,7 +46,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const closeDrawer = React.useCallback(() => {
     setOpen(false);
   }, []);
-  const usernameInPath = router.query.username as string;
+  const usernameInPath = route.query.username as string;
   const uidFromUsernameRes = useGetUidFromUsername(usernameInPath);
   const { data: isFollowing } = useGetIsFollowing(
     uid || "",

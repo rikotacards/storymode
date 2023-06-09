@@ -361,6 +361,8 @@ export const getPostByPostId = async (uid: string, postId: string) => {
   return data as PostFromDbProps;
 };
 
+
+
 // Used for discover / search
 export const getAllPosts = async () => {
   const uidsWithPosts: string[] = []
@@ -384,6 +386,34 @@ export const getAllPosts = async () => {
 
   } catch (e) {
     console.log('error', e)
+  }
+};
+
+export const getFollowers = async(uid: string) => {
+  try {
+    const querySnapshot = await getDocs(
+      collection(firestore, "userProfiles", uid, "followers")
+    );
+    const followers = querySnapshot.docs.map((doc) => {
+      return doc.id
+    });
+    return followers
+  } catch (e) {
+    console.log("eee", e);
+  }
+};
+
+export const getFollowings = async(uid: string) => {
+  try {
+    const querySnapshot = await getDocs(
+      collection(firestore, "userProfiles", uid, "following")
+    );
+    const followings = querySnapshot.docs.map((doc) => {
+      return doc.id
+    });
+    return followings
+  } catch (e) {
+    console.log("eee", e);
   }
 };
 
