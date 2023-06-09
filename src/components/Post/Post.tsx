@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
-import { Paper, Skeleton, Typography } from "@mui/material";
+import { Divider, Paper, Skeleton, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
@@ -144,6 +144,7 @@ export const Post: React.FC<PostProps> = (props) => {
         <Typography variant="caption" className={styles.date}>
           {dateString}
         </Typography>
+        <Divider sx={{width: '100%', padding: '8px 0px'}}/>
       </PostWrapper>
   );
 };

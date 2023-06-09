@@ -14,7 +14,6 @@ import styles from "./Layout.module.css";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { useSignInWithGooglePopUp } from "@/firebase/useSignInWithGooglePop";
-import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
@@ -24,13 +23,21 @@ import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { BottomMenuBar } from "../BottomMenuBar/BottomMenuBar";
 import { NotLoggedInMessage } from "../LoggedOutCallToAction/LoggedOutCallToAction";
 import { TopAppBar } from "../TopAppBar/TopAppBar";
+import { getAuth } from "firebase/auth";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
+import { LoggedOutHomeMessage } from "../LoggedOutHomeMessage/LoggedOutHomeMessage";
 interface LayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const md = useGetBreakpoints("md");
+  const [showSnackbar, setShowSnackbar] = React.useState(false);
   const auth = useAuth();
+  const auth2 = getAuth();
   const router = useRouter();
+  if(!auth.isLoggedIn){
+    setTimeout(() => {setShowSnackbar(true)}, 10000)
+  }
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
@@ -44,20 +51,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     router.pathname == "/p";
 
   const signIn = useSignInWithGooglePopUp();
-  const isOtherProfile = router.pathname == '/[username]'
+  const isOtherProfile = router.pathname == "/[username]";
   return (
     <div className={styles.main}>
-      <div className={styles.layoutMenuDesktop}>
-        {!md && <SideMenu />}
-      </div>
-      <main
-        className={styles.mainColumn}
-      >
-              {/* <div style={{height: '45px'}}/> */}
+      <div className={styles.layoutMenuDesktop}>{!md && <SideMenu />}</div>
+      <main className={styles.mainColumn}>
+        {/* <div style={{height: '45px'}}/> */}
 
-        { false && md && 
-        <TopAppBar hide={false} />
-      }
+        {true && md && <TopAppBar hide={false} />}
         {showPostBar && (
           <div
             className={styles.topbar}
@@ -99,31 +100,17 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             )}
           </div>
         )}
-        {showPostBar && <Toolbar />}
+        <Toolbar />
         {children}
       </main>
-      { md && 
-      <>
-            <div style={{ height: "50px" }} />
-
-        <BottomMenuBar hide={false} />
+      {md && (
+        <>
+          <div style={{ height: "50px" }} />
+          <BottomMenuBar hide={false} />
         </>
-      }
-      <Snackbar
-        open={false}
-        message="Welcome to Stomo.io"
-        action={
-          <Button
-            variant="contained"
-            onClick={(e) => {
-              e.preventDefault();
-              signIn.signIn();
-            }}
-          >
-            Sign Up
-          </Button>
-        }
-      />
+      )}
+      
+      {showSnackbar && <NotLoggedInMessage/>}
     </div>
   );
 };

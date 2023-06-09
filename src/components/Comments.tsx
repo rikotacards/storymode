@@ -16,24 +16,28 @@ import { addComment } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
 import styles from "./Comments.module.css";
 import { AllComments } from "./AllComments/AllComments";
+import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { useGetAllComments } from "@/hooks/useGetAllComments";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 interface CommentsProps {
   postId: string;
   authorUid: string;
 }
 export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
   const [open, setOpen] = React.useState<boolean>(false);
-  const [comment, setComment] = React.useState<string>('');
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const [comment, setComment] = React.useState<string>("");
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
-  }
+  };
+ 
   const onClick = () => {
     setOpen(true);
   };
   const auth = useAuth();
   const uid = auth?.user?.uid;
-
+  const { data, isLoading } = useGetUserInfo(uid || "");
   const onAddComment = async () => {
-    if(comment.length === 0){
+    if (comment.length === 0) {
       return;
     }
     await addComment({
@@ -42,21 +46,25 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
       postId: postId,
       postAuthorUid: authorUid,
     }).then((data) => {
-      console.log('fuck', data)
-      if(data?.ok){
-        setComment('')
-
+      console.log("fuck", data);
+      if (data?.ok) {
+        setComment("");
       }
-    })
+    });
   };
 
+  const {data: comments} = useGetAllComments({
+    postId, 
+    postAuthorUid: authorUid
+  })
   const onClose = () => {
     setOpen(false);
   };
+  const commentCount = comments?.length
   return (
     <>
       <div onClick={onClick}>
-        <Typography typography="body2">View all 5 comments</Typography>
+        <Typography typography="body2">{commentCount ? `View all ${commentCount} comments`: 'Leave a comment'}</Typography>
       </div>
 
       <Drawer anchor={"bottom"} open={open}>
@@ -71,9 +79,9 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
                 </div>
                 <Typography fontWeight={600}>Comments</Typography>
                 <div>
-                  <Button onClick={onClose}>
-                    <Typography>Close</Typography>
-                  </Button>
+                  <IconButton onClick={onClose}>
+                    <KeyboardArrowDownIcon/>
+                  </IconButton>
                 </div>
               </div>
             </Toolbar>
@@ -82,30 +90,34 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
                 maxHeight: "50vh",
                 overflowY: "scroll",
                 padding: "4px",
-                paddingBottom: "55px",
+                
               }}
             >
-              <AllComments postId={postId} postAuthorUid={authorUid}/>
+              <AllComments postId={postId} postAuthorUid={authorUid} />
             </div>
-            <Paper
+            <div
               style={{
-                width: "100%",
-                position: "fixed",
+                width: "100vw",
                 bottom: "0px",
-                padding: "4px",
+                padding: "8px 8px",
                 display: "flex",
                 flexDirection: "row",
+                overflow: 'hidden',
                 alignItems: "center",
+                zIndex: '10000'
               }}
             >
-              <Avatar style={{ marginRight: "4px" }}>MH</Avatar>
+              <Avatar src={data?.photoUrl} style={{ marginRight: "4px" }}>
+                MH
+              </Avatar>
               <TextField
-              onChange={onChange}
-              value={comment}
+                onChange={onChange}
+                value={comment}
+                size='small'
                 placeholder="Leave a comment"
                 InputProps={{
-                  endAdornment: (
-                    !!comment.length && <InputAdornment position="end">
+                  endAdornment: !!comment.length && (
+                    <InputAdornment position="end">
                       <IconButton
                         onClick={onAddComment}
                         edge="end"
@@ -120,7 +132,7 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
                 sx={{ borderRadius: "20px" }}
                 fullWidth
               />
-            </Paper>
+            </div>
           </div>
         </Paper>
       </Drawer>

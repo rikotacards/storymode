@@ -6,7 +6,7 @@ import { BookmarkButton } from "../BookmarkButton/BookmarkButton";
 import { ShareButton } from "../ShareButton/ShareButton";
 import { useAuth } from "@/context/AuthContext";
 import { Dialog, IconButton } from "@mui/material";
-import { SignInNewUser } from "../SignInNewUser/SignInNewUser";
+import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 
@@ -64,7 +64,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
         </div> */}
       </div>
       <Dialog className={styles.dialog} open={open} onClose={onClose}>
-        <SignInNewUser />
+        <SignInWithGoogle />
       </Dialog>
     </>
   );

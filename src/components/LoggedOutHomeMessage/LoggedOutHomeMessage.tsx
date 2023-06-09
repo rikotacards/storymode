@@ -9,6 +9,7 @@ export const LoggedOutHomeMessage: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         textAlign: 'center',
+        width: '100%'
       }}
     >
       <div>
@@ -16,7 +17,7 @@ export const LoggedOutHomeMessage: React.FC = () => {
       </div>
       <div>
         <Typography>
-          See photos and stories of things and people that matter to you
+          See photos and stories that matter to you.
         </Typography>
       </div>
     </div>

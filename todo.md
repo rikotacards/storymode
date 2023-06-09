@@ -1,3 +1,14 @@
+# June 8 2023
+Login issue. Thought it was a bug on my end. but actually, it's an issue with firebase. The fix is that you HAVE to login to the app via the same authDomain, and not from localhost or anything like that. 
+
+# June 6 2023
+- [x] Try and fix the log in issue. Focused 1 hour. 
+
+Other outstanding issues carrying from before: 
+- [ ] Fix login issue
+- [ ] Fix reacting issue
+- [ ] Fix "notification" text in notification page
+
 # June 5 2023
 Polished up the notifications part, added the images correctly.
 Next, need to fix the column issue with the main.

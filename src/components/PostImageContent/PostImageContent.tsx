@@ -15,20 +15,36 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
   demoImagePath,
 }) => {
   const [path, setPath] = React.useState(isDemo ? imagePath : undefined);
-  const [isLoading, setLoading] = React.useState(true)
+  const [isLoading, setLoading] = React.useState(true);
   const loadComplete = () => {
     setLoading(false);
-  }
-  if (!imagePath) {
-    return <></>;
-  }
-    !isDemo && getImagePath(imagePath)
+  };
+
+  !isDemo &&
+    getImagePath(imagePath)
       .then((data) => {
         setPath(data);
       })
       .catch((e) => {
         console.log(e);
       });
+
+  const preloadImage = (
+    <img
+      draggable={false}
+      className={styles.image}
+      alt={imagePath}
+      decoding="async"
+      role='presentation'
+      // style={{'visibility': isLoading ? 'hidden' : 'visible'}}
+      src={isDemo ? imagePath : path}
+      onLoad={loadComplete}
+      // originally 468
+      width={path ? 468 : 0}
+      //oriignally 540
+      height={path ? 484 : 0}
+    />
+  );
 
   return (
     <div className={styles.imageContainer}>
@@ -38,23 +54,11 @@ export const PostImageContent: React.FC<PostImageContentProps> = ({
           width={468}
           animation="wave"
           variant="rectangular"
+          className={styles.image}
         />
       )}
-     
-      {path && (
 
-        <img
-          draggable={false}
-          className={styles.image}
-          alt={imagePath}
-          src={isDemo ? imagePath : path}
-          onLoad={loadComplete}
-          // originally 468
-          width={path ? 468 : 0}
-          //oriignally 540
-          height={path ? 484 : 0}
-          />
-      )}
+      {path && preloadImage}
     </div>
   );
 };

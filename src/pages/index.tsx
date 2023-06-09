@@ -36,9 +36,7 @@ export default function Home() {
       </Head>
 
       
-        <div style={{ padding: "8px" }}>
           {showCreateUserName ? <CreateUsername /> : null}
-        </div>
         <Feed />
     </div>
   );
