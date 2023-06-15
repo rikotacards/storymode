@@ -43,7 +43,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
     router.push("/" + data?.username);
   };
   return (
-    <div className={styles["post-header"]}>
+    <div className={styles.postHeader}>
       <div className={styles.avatar} onClick={onProfileHeaderClick}>
         {!demoPhotoUrl &&( (!data?.photoUrl || isLoading) ? (
           <Skeleton variant="circular" />

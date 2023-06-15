@@ -37,7 +37,7 @@ export const demoFeed: PostFromDbProps[] = [
       { imagePath: '/demo/demoPost2Part3.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Me, and my two swimming friends that I made over the course of coaching in Hong Kong", blobData: "string" },
     ],
     postTime: 1,
-    postId: "0",
+    postId: "1",
     demoUsername: 'camille',
     demoPhotoUrl: '/demo/demoPost2Part1.png',
     demoReactions: {
@@ -61,7 +61,7 @@ export const demoFeed: PostFromDbProps[] = [
       { imagePath: '/demo/demoPost3Part3.png', imageUrl: "/../demo/demoPost1Part1.png", caption: "Happy to be flying", blobData: "string" },
     ],
     postTime: 1,
-    postId: "0",
+    postId: "2",
     demoUsername: 'michaelhsu',
     demoPhotoUrl: '/demo/demoPost3Part1.png',
   demoReactions: {

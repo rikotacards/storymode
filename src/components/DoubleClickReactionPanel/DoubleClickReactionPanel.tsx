@@ -46,12 +46,20 @@ export const DoubleClickReactionPanel: React.FC<
           }}
         >
           {
-            ((showEmoji || visible) && <IconButton
-              key={rerender + (displayedEmoji ||"") }
-              className={ styles.popupAnimation}
+            <IconButton
+              key={
+                rerender
+                  ? "r"
+                  : "t" + (displayedEmoji || "") + (showEmoji || visible)
+                  ? "1"
+                  : "0" + postId
+              }
+              className={
+                visible || showEmoji ? styles.popupAnimation : undefined
+              }
             >
-            {displayedEmoji || "❤️"}
-            </IconButton>)
+              {displayedEmoji || "❤️"}
+            </IconButton>
           }
           <Collapse
             style={{
@@ -92,11 +100,14 @@ export const DoubleClickReactionPanel: React.FC<
                 setDisplayedEmoji(emoji);
                 closeQuickSelect();
                 close();
-                setRerender(!rerender)
+                setRerender(!rerender);
                 setShowEmoji(true);
                 setTimeout(() => setShowEmoji(false), 2000);
               }}
-              onClose={()=> {setOpen(false); close()}}
+              onClose={() => {
+                setOpen(false);
+                close();
+              }}
             />
           </Collapse>
         </div>
@@ -106,7 +117,6 @@ export const DoubleClickReactionPanel: React.FC<
             <Picker
               autoFocusSearch={false}
               onEmojiClick={(d) => {
-              
                 onAddEmojiClick(d.unified, d.emoji);
                 setDisplayedEmoji(d.emoji);
                 setShowEmoji(true);
@@ -117,18 +127,6 @@ export const DoubleClickReactionPanel: React.FC<
           </div>
         </Dialog>
       </div>
-      {/* <div
-        style={{
-          display: "flex",
-          height: "100%",
-          width: "100%",
-          background: "black",
-          opacity: "0.3",
-          position: "absolute",
-          zIndex:500,
-          visibility: visible ? "visible" : "hidden",
-        }}
-      /> */}
     </>
   );
 };

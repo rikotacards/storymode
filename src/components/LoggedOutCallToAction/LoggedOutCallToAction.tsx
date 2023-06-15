@@ -40,8 +40,7 @@ export const NotLoggedInMessage: React.FC = () => {
         flexDirection: "row",
         borderRadius: "20px",
         transition: "bottom 0.3s",
-        // margin: "4px",
-        width: '100%'
+        margin: "8px",
       }}
       className={styles.container}
     >

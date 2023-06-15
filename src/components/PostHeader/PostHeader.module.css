@@ -1,4 +1,4 @@
-.post-header {
+.postHeader {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
@@ -7,6 +7,7 @@
   position: absolute;
   z-index: 99;
   width: 100%;
+  cursor: auto;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
 
   /* text-shadow: 1px 1px 4px black; */

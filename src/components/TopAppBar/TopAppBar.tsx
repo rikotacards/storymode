@@ -18,7 +18,6 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
   const enableBack = pathLength.length > 1;
   const isUserProfile = route.pathname === "/[username]";
   const isHome = route.pathname ==='/'
-  console.log(route);
   const auth = getAuth();
   const onLogin = () => {
     route.push("/signin");
