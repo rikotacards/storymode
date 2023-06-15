@@ -18,6 +18,7 @@ import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleC
 import { ReactionsProvider } from "@/context/ReactionsContext";
 import { AddComment } from "../AddComment/AddComment";
 import { Comments } from "../Comments";
+import { ShareDrawer } from "../ShareDrawer/ShareDrawer";
 
 interface PostProps extends PostFromDbProps {
   isDemo?: boolean;
@@ -38,6 +39,15 @@ export const Post: React.FC<PostProps> = (props) => {
   } = props;
   const images: string[] = [];
   const captions: string[] = [];
+  const [shareDrawerOpen, setShareDrawerOpen] = React.useState(false);
+  const onShareClick = () => {
+    setShareDrawerOpen(true);
+  }
+  
+  const onShareDrawerClose = () => {
+    setShareDrawerOpen(false);
+
+  }
   const router = useRouter();
   const usernameFromAuthor = useGetUsernameFromUid(author);
   const usernameInPath = router.query.username;

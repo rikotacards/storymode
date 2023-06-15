@@ -44,50 +44,41 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   return (
     <AppBar
       position="fixed"
-      color="primary"
+      // color="primary"
       sx={{
-        display: "flex",
-        width: "100%",
+        // display: "flex",
+        // width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        bottom: '0',
-        height: visible ? "55px" : '55px',
+        bottom: '0px',
+        boxShadow: '0px, 10px',
+        // border: visible? undefined : '0.5px solid white',
+        height: visible ? "45px" : '45px',
         //scroll up color
-        // background: 'rgba(0,0,0,0.1)',
+        background: visible ?'rgba(0,0,0,0)': 'rgba(0,0,0,0.6)',
         // scrooll up blur
-        // backdropFilter: "blur(100px)",
-
+        backdropFilter: visible ? "blur(80px)": "blur(88px)",
+        webkitBackdropFilter: visible ? "blur(80px)": "blur(5px)",
 
         //scroll down
-        background: 'rgba(0,0,0,0.3)',
+        // background: 'rgba(0,0,0,0.3)',
         // scroll down
-        backdropFilter: "blur(45px)",
+        // backdropFilter: "blur(45px)",
         flexDirection: "row",
         // borderRadius: visible ? 0 :'50px 50px 0px 0px',
-        transition: "border-radius 0.5s ease-in-out, height 0.3s ease",
-        overflow: 'hidden',
+        transition: "border-radius 0.5s ease-in-out, height 0.3s ease, backdrop-filter 0.3s ease, background 0.4s ease, -webkit-backdrop-filter 0.2s ease-in-out, backdrop-filter 0.3s ease",
       }}
     >
-      <Paper
-        style={{
-          background: 'rgba(0,0,0,0.5)',
-          display: "flex",
-          width: "100%",
-          borderRadius: 0,
-        }}
-        elevation={0}
-      >
+      
         <Toolbar
           sx={{
             display: "flex",
-            height: "100%",
             width: "100%",
           }}
         >
           {items}
         </Toolbar>
-      </Paper>
     </AppBar>
   );
 };

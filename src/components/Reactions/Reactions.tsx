@@ -10,6 +10,7 @@ import { ReactionQuickSelect } from "../ReactionQuickSelect/ReactionQuickSelect"
 import { useAuth } from "@/context/AuthContext";
 import { Picker } from "../Picker/Picker";
 import { useReactionsContext } from "@/context/ReactionsContext";
+import { useDrawerContext } from "@/context/DrawerContext";
 
 interface ReactionsProps {
   postId: string;
@@ -34,6 +35,7 @@ export const Reactions: React.FC<ReactionsProps> = ({
   const [openEmojiPicker, setOpenPicker] = React.useState(false);
   const [openQuick, setOpenQuick] = React.useState(false);
   const auth = useAuth();
+  const drawerContext = useDrawerContext();
   const uid = auth?.user?.uid;
   const onClick = () => {
     setOpenPicker(!openEmojiPicker);
@@ -61,7 +63,11 @@ export const Reactions: React.FC<ReactionsProps> = ({
       })
       .then(() => {});
   }, [postId]);
-
+  const onAddReactionClick = () => {
+    drawerContext.setComponent('reactionsDrawer');
+    drawerContext.setData({postId})
+    drawerContext.onOpen();
+  }
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
       if (reactionsContext.displayedReactions[unified] == undefined) {
@@ -151,7 +157,7 @@ export const Reactions: React.FC<ReactionsProps> = ({
           />
         </Collapse>
         <div className={styles.addReactionButtonContainer}>
-          <AddReactionButton onClick={toggleOpenQuickSelect} />
+          <AddReactionButton onClick={onAddReactionClick} />
         </div>
       </div>
       <Dialog onClose={handleClose} open={openEmojiPicker}>

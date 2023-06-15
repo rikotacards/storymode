@@ -22,8 +22,8 @@ export const useGetMenuItems = (args: useGetMenuItemProps) => {
       ) : (
         <Avatar
           sx={{
-            height: "30px",
-            width: "30px",
+            height: "27px",
+            width: "27px",
           }}
           src={userInfo?.data?.photoUrl}
           color="active"

@@ -26,6 +26,7 @@ interface CommentsProps {
 export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [comment, setComment] = React.useState<string>("");
+  const drawerContext = useDrawerContext()
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
@@ -33,6 +34,7 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
   const onClick = () => {
     setOpen(true);
   };
+  
   const auth = useAuth();
   const uid = auth?.user?.uid;
   const { data, isLoading } = useGetUserInfo(uid || "");

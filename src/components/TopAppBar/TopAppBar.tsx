@@ -26,27 +26,31 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
   return (
     <AppBar
       position="fixed"
-      color="primary"
+      // color="primary"
       sx={{
         display: "flex",
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
-        top: isUserProfile || !visible ? "-55px" : "0",
+        top: isUserProfile || !visible ? "0px" : "0",
         // top:0,
-
         //scroll down
-        background: "rgba(0,0,0,0.3)",
+        background: "rgba(0,0,0,0)",
         // scroll down
         backdropFilter: "blur(45px)",
         flexDirection: "row",
-        transition: "top 0.4s ease-in-out, height 0.3s ease",
+        height: visible ? "45px" : '45px',
+
+        transition: "top 0.5s ease-in-out, height 0.3s ease",
         overflow: "hidden",
+        // borderRadius: '50%',
+        // borderBottomLeftRadius: '40px',
+        // borderBottomRightRadius: '40px'
       }}
     >
       <Paper
         style={{
-          background: "rgba(0,0,0,0.7)",
+          background: "rgba(0,0,0,0)",
           display: "flex",
           width: "100%",
           borderRadius: 0,

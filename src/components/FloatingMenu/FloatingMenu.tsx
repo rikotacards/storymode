@@ -6,10 +6,13 @@ import { useRouter } from "next/router";
 import styles from "./FloatingMenu.module.css";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BadgeCustom } from "../BadgeCustom/BadgeCustom";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 const isPermanent = false;
 export const FloatingMenu: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
+  const { visible } = useScrollDirection();
+
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
     setOpen(!open);
@@ -35,7 +38,8 @@ export const FloatingMenu: React.FC = () => {
     </Badge>
   ));
   return (
-    <div className={styles.container}>
+    <div className={styles.container} 
+    >
       <Collapse orientation="horizontal" in={isPermanent || open}>
         <div
           style={{
@@ -62,11 +66,14 @@ export const FloatingMenu: React.FC = () => {
               right: "0px",
               margin: "0px",
               display: "flex",
-              opacity: "0.7",
+              // opacity: "0.7",
+              background: 'rgba(0,0,0,0)',
+              boxShadow: '50',
+              backdropFilter: 'blur(100px)',
               marginLeft: open ? "8px" : undefined,
             }}
           >
-            {!open ? <MenuIcon /> : <ChevronRightIcon />}
+            {!open ? <MenuIcon sx={{ color: 'white'}} /> : <ChevronRightIcon />}
           </Fab>
         </BadgeCustom>
       )}
