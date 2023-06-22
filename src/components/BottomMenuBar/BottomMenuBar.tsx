@@ -54,8 +54,9 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         bottom: '0px',
         boxShadow: '0px, 10px',
         // border: visible? undefined : '0.5px solid white',
-        height: visible ? "45px" : '45px',
+        height: visible ? "0px" : '45px',
         //scroll up color
+        overflow: 'hidden',
         background: visible ?'rgba(0,0,0,0)': 'rgba(0,0,0,0.6)',
         // scrooll up blur
         backdropFilter: visible ? "blur(80px)": "blur(88px)",
