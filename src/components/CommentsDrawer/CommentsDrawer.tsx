@@ -55,6 +55,7 @@ export const CommentsDrawer: React.FC = () => {
           width: "100%",
           position: "fixed",
           bottom: "0px",
+          overflow: 'hidden',
           padding: "4px",
           display: "flex",
           flexDirection: "row",

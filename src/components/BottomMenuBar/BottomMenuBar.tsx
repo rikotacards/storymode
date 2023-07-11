@@ -51,10 +51,10 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        bottom: '0px',
-        boxShadow: '0px, 10px',
+        // bottom: '0px',
+        bottom: visible ? "0px" : '-55px',
         // border: visible? undefined : '0.5px solid white',
-        height: visible ? "45px" : '0px',
+        height: "45px",
         //scroll up color
         overflow: 'hidden',
         background: visible ?'rgba(0,0,0,0)': 'rgba(0,0,0,0.6)',
@@ -68,10 +68,10 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         // backdropFilter: "blur(45px)",
         flexDirection: "row",
         // borderRadius: visible ? 0 :'50px 50px 0px 0px',
-        transition: "border-radius 0.5s ease-in-out, height 0.3s ease, backdrop-filter 0.3s ease, background 0.4s ease, -webkit-backdrop-filter 0.2s ease-in-out, backdrop-filter 0.3s ease",
+        transition: "border-radius 0.5s ease-in-out, bottom 0.2s ease-in-out, backdrop-filter 0.3s ease, background 0.4s ease, -webkit-backdrop-filter 0.2s ease-in-out, backdrop-filter 0.3s ease",
       }}
     >
-      
+      <Paper sx={{borderRadius: '0px', width: '100%'}} elevation={0}>
         <Toolbar
           sx={{
             display: "flex",
@@ -80,6 +80,7 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
         >
           {items}
         </Toolbar>
+        </Paper>
     </AppBar>
   );
 };

@@ -32,10 +32,9 @@ export const Feed: React.FC<FeedProps> = () => {
   const router = useRouter();
   const userInfoRes = useGetUserInfo(auth?.user?.uid || sampleId);
   const feedRes =  useGetMyFeed(auth?.user?.uid || sampleId);
-  //airplane
-  // if (!userInfoRes.data && feedRes?.isLoading) {
-  //   return <LinearProgressCustom />;
-  // }
+  if (!userInfoRes.data && feedRes?.isLoading) {
+    return <LinearProgressCustom />;
+  }
   const hasNoContent = 
     !feedRes?.isLoading && userInfoRes?.data?.followersCount === 0;
   if (hasNoContent) {

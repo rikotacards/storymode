@@ -111,9 +111,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </IconButton>}
         <Toolbar />
         {children}
-        {/* airplane */}
         {/* {showSnackbar && <NotLoggedInMessage />} */}
-        {/* <FloatingMenu/> */}
       {md && (
           <BottomMenuBar hide={false} />
       )}

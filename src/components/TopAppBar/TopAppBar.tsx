@@ -32,42 +32,39 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
-        top: isUserProfile || !visible ? "0px" : "0",
+        top: isUserProfile || visible ? "0px" : "-56px",
         // top:0,
         //scroll down
-        background: "rgba(0,0,0,0)",
         // scroll down
-        backdropFilter: "blur(45px)",
+        // backdropFilter: "blur(45px)",
         flexDirection: "row",
-        height: visible ? "45px" : '45px',
+        height: "56px",
+
 
         transition: "top 0.5s ease-in-out, height 0.3s ease",
         overflow: "hidden",
-        // borderRadius: '50%',
-        // borderBottomLeftRadius: '40px',
-        // borderBottomRightRadius: '40px'
       }}
     >
       <Paper
         style={{
-          background: "rgba(0,0,0,0)",
+          // background: "rgba(0,0,0,0)",
           display: "flex",
           width: "100%",
-          borderRadius: 0,
+          borderRadius: '0px'
+
         }}
-        elevation={1}
+        elevation={0}
       >
         <Toolbar
           sx={{
-            display: "flex",
-            height: "100%",
             width: "100%",
+
           }}
         >
           {!isHome && <IconButton size="small" onClick={route.back}>
             <ArrowBackIosNewIcon />
           </IconButton>}
-          <Typography sx={{ fontWeight: "600" }}>Journey</Typography>
+          <Typography variant='h5' sx={{ fontWeight: "600" }}>Journey</Typography>
           {!auth.currentUser && (
             <Button
               sx={{ ml: "auto", textTransform: "none" }}
