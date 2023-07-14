@@ -64,7 +64,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
           {!isHome && <IconButton size="small" onClick={route.back}>
             <ArrowBackIosNewIcon />
           </IconButton>}
-          <Typography variant='h5' sx={{ fontWeight: "600" }}>Journey</Typography>
+          <Typography variant='h5' sx={{ fontWeight: "600" }}>Stills</Typography>
           {!auth.currentUser && (
             <Button
               sx={{ ml: "auto", textTransform: "none" }}
