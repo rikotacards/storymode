@@ -9,8 +9,8 @@
   justify-content: flex-end;
   align-items: center;
   z-index: 1000;
-  -webkit-backdrop-filter: blur(3px);
-  border: 1px solid white;
+  -webkit-backdrop-filter: blur(40px);
+  border: 2px solid white;
   animation: container 30s ease-in-out infinite;
 }
 

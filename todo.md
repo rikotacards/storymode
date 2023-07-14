@@ -1,3 +1,14 @@
+# June 23 2023
+Logging down all outstanding issues here: 
+- [ ] Non logged in user shouldnt be able to leave comment
+- [ ] Fix adding emoji
+- [ ] Make quick react drawer work
+- [ ] Post: ensure too much text on post scrolls properly
+- [ ] horizontal scroll when too many reactions
+
+## Features
+- [ ] Add draft
+
 # June 8 2023
 Login issue. Thought it was a bug on my end. but actually, it's an issue with firebase. The fix is that you HAVE to login to the app via the same authDomain, and not from localhost or anything like that. 
 

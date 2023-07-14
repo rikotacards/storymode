@@ -33,15 +33,14 @@ export const NotLoggedInMessage: React.FC = () => {
         justifyContent: "space-between",
         bottom: true ? "55px" : 0,
         backgroundColor: "transparent",
-        backdropFilter: "blur(5px)",
+        backdropFilter: "blur(80px)",
         position: "fixed",
-        background: 'rgba(0, 0, 0, 0.9)',
+        background: 'rgba(0, 0, 0, 0)',
         zIndex: "1000",
         flexDirection: "row",
         borderRadius: "20px",
         transition: "bottom 0.3s",
-        // margin: "4px",
-        width: '100%'
+        margin: "8px",
       }}
       className={styles.container}
     >

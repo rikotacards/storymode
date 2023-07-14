@@ -13,7 +13,7 @@ export const LoggedOutHomeMessage: React.FC = () => {
       }}
     >
       <div>
-        <Typography variant='h6' fontWeight={"bold"}>Follow your friends</Typography>
+        <Typography sx={{textShadow: '0px 0px 0px orange' }} variant='h6' fontWeight={"bold"}>Follow your friends</Typography>
       </div>
       <div>
         <Typography>

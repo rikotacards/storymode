@@ -2,18 +2,14 @@ import { drawerChildren } from "@/constants/drawerComponents";
 import { AppBar, Drawer, Paper, Toolbar } from "@mui/material";
 import React from "react";
 
-interface DrawerData {
-  author?: string;
-  postId?: string;
-}
-interface DrawerContextProps {
+interface PostContextProps {
   onOpen: () => void;
   onClose: () => void;
   setComponent: (cName: string) => void;
-  setData: (data: DrawerData) => void;
-  drawerData: DrawerData
+  setData: (data: any) => void;
+  data: {[key: string]: any}
 }
-export const DrawerContext = React.createContext({} as DrawerContextProps);
+export const PostContext = React.createContext({} as DrawerContextProps);
 export const useDrawerContext = () => React.useContext(DrawerContext);
 
 interface DrawerProviderProps {
@@ -26,10 +22,10 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
   const [componentName, setComponentName] =
     React.useState<string>("linkEditForm");
 
-  const [drawerData, setDrawerData] = React.useState({} as DrawerData)
+  const [postInfo, setPostInfo] = React.useState({})
 
-  const setData = React.useCallback((data: DrawerData) => {
-    setDrawerData((prev) => ({...prev, ...data}));
+  const setData= React.useCallback((data: any) => {
+    setPostInfo(data);
   }, []);
 
 
@@ -51,14 +47,16 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
     onClose,
     setComponent,
     setData,
-    drawerData
+    data: {
+      postInfo
+    }
   };
 
   return (
     <DrawerContext.Provider value={context}>
       {children}
       <Drawer  anchor={"bottom"} open={open} onClose={onClose}>
-        <Paper sx={{overflow: 'hidden'}} elevation={0}>
+        <Paper  elevation={0}>
 
         {drawerChildren?.[componentName] || null}
         </Paper>

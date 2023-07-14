@@ -15,6 +15,7 @@ import { deletePost } from "@/firebase/db";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
+import { useDrawerContext } from "@/context/DrawerContext";
 
 interface PostHeaderProps {
   author: string;
@@ -26,16 +27,23 @@ interface PostHeaderProps {
 export const PostHeader: React.FC<PostHeaderProps> = ({
   demoPhotoUrl,
   demoUsername,
-  postId,
-  author,
+  author, 
+  postId
 }) => {
   const [open, setOpen] = React.useState(false);
+  const drawerContext = useDrawerContext();
   const router = useRouter();
   const auth = useAuth();
   const { data, isLoading } = useGetUserInfo(author || "");
   const onClick = () => {
+    
     if (auth?.user?.uid === author) setOpen(true);
   };
+  const onMoreClick = () => {
+    drawerContext.setData({postId, author})
+    drawerContext.setComponent('postMoreDrawer')
+    drawerContext.onOpen()
+  }
   const onClose = () => {
     setOpen(false);
   };
@@ -43,7 +51,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
     router.push("/" + data?.username);
   };
   return (
-    <div className={styles["post-header"]}>
+    <div className={styles.postHeader}>
       <div className={styles.avatar} onClick={onProfileHeaderClick}>
         {!demoPhotoUrl &&( (!data?.photoUrl || isLoading) ? (
           <Skeleton variant="circular" />
@@ -76,7 +84,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         {/* <Typography variant="caption">San Diego</Typography> */}
       </div>
       <div className={styles["more-btn"]}>
-        <IconButton onClick={onClick}>
+        <IconButton onClick={onMoreClick}>
           <MoreHorizIcon />
         </IconButton>
       </div>

@@ -24,10 +24,10 @@ export const DoubleClickReactionWrapper: React.FC<
     setOpen(false);
   };
   return (
-    <div style={{position: 'relative'}} onDoubleClick={handleDoubleClick}>
+    <div style={{ position: "relative" }} onDoubleClick={handleDoubleClick}>
       <DoubleClickReactionPanel
-      author={author}
-      postId={postId}
+        author={author}
+        postId={postId}
         close={close}
         visible={open}
         cancelTimeout={cancelTimer}

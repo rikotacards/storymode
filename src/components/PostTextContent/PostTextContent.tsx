@@ -14,13 +14,14 @@ export const PostTextContent: React.FC<PostTextContent> = ({ caption, bold,fontW
     <div className={styles.container} onClick={toggle}>
       <Typography sx={{
         // maxHeight: expanded ? '100%' :'4.5em',
-        WebkitLineClamp: expanded ? 10 : 2,
+        WebkitLineClamp: expanded ? 50 : 3,
+        transition: 'line-clamp 0.2s ease-in-out',
         textOverflow: 'ellipsis',
         overflow: 'hidden',
         WebkitBoxOrient: 'vertical',
         display: '-webkit-box',
-        textShadow: '1px 1px 4px black',
-        fontFamily: 'system-ui'
+        textShadow: '0px 0px 4px black',
+        fontFamily: 'system-ui',
       }} 
       
       variant={bold ?'h5' : 'body2'}  >

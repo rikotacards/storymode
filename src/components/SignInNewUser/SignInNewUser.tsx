@@ -74,7 +74,7 @@ export const SignInWithGoogle: React.FC = () => {
         }}
       >
         <GoogleL />
-        <Typography sx={{marginLeft: '8px', fontWeight: 'bold', fontFamily: 'sans-serif'}}>Continue with Google</Typography>
+        <Typography sx={{marginLeft: '8px', fontWeight: 'bold', fontFamily: 'sans-serif'}}>Log in with Google</Typography>
       </Button>
     </div>
   );

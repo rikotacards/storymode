@@ -33,9 +33,7 @@ export default function Search() {
   if(allPosts.error){
     return <Typography>error</Typography>
   }
-  if(!allPosts?.data){
-    return <></>
-  }
+ 
   return (
     <div
       style={{
@@ -72,7 +70,7 @@ export default function Search() {
         <div style={{marginTop:'8px'}}>
 
         {/* {users} */}
-        <Gallery mode='grid' posts={allPosts.data}/>
+        <Gallery mode='grid' posts={allPosts?.data || []}/>
         </div>
       </div>
     </div>

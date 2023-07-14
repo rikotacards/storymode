@@ -9,6 +9,7 @@ import { Dialog, IconButton } from "@mui/material";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { copyToClipboard } from "@/utils/copyToClipboard";
+import { useDrawerContext } from "@/context/DrawerContext";
 
 interface PostActionsProps {
   postId: string;
@@ -27,6 +28,11 @@ export const PostActions: React.FC<PostActionsProps> = ({
   demoReactions
 }) => {
   const auth = useAuth();
+  const drawerContext = useDrawerContext()
+  const onShareClick = () => {
+    drawerContext.setComponent('shareDrawer')
+    drawerContext.onOpen()
+  }
   const baseUrl = window.location.origin;
   const [open, setOpen] = React.useState(false);
   const onClose = () => {
@@ -52,8 +58,10 @@ export const PostActions: React.FC<PostActionsProps> = ({
           }}
         >
           <Reactions demoReactions={demoReactions} isDemo author={author} postId={postId} />
+          {/* onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)} */}
+
           <IconButton
-            onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)}
+            onClick={onShareClick}
           >
             <SendRoundedIcon />
           </IconButton>

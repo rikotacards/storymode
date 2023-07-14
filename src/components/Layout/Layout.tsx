@@ -2,6 +2,7 @@ import { useGetBreakpoints } from "@/hooks/useGetBreakpoint";
 import {
   Badge,
   Button,
+  IconButton,
   Paper,
   Snackbar,
   Toolbar,
@@ -15,6 +16,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { useSignInWithGooglePopUp } from "@/firebase/useSignInWithGooglePop";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { useGetUidFromUsername } from "@/hooks/useGetUidFromUsername";
 import { useGetUserInfo } from "@/hooks/useGetUserInfo";
@@ -26,6 +28,7 @@ import { TopAppBar } from "../TopAppBar/TopAppBar";
 import { getAuth } from "firebase/auth";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import { LoggedOutHomeMessage } from "../LoggedOutHomeMessage/LoggedOutHomeMessage";
+import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -42,6 +45,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
   const username = router.query?.username;
   const uid = useGetUidFromUsername(username as string);
+  const isMe = uid?.data?.uid === auth?.uid
   const userInfo = useGetUserInfo(uid?.data?.uid as string);
   const notificationStatus = useGetNotificationIsReadStatus(
     (auth?.user?.uid as string) || ""
@@ -102,17 +106,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             )}
           </div>
         )}
+        {isMe && auth.isLoggedIn && <IconButton onClick={auth.onLogout}>
+          <LogoutIcon />
+        </IconButton>}
         <Toolbar />
         {children}
-      </main>
+        {/* {showSnackbar && <NotLoggedInMessage />} */}
       {md && (
-        <>
-          <div style={{ height: "50px" }} />
           <BottomMenuBar hide={false} />
-        </>
       )}
-
-      {showSnackbar && <NotLoggedInMessage />}
+      </main>
     </div>
   );
 };

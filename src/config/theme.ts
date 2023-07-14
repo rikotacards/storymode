@@ -16,5 +16,8 @@ palette: {
    main: red.A400,
    },
   },
+  typography: {
+    fontFamily: 'system-ui'
+  }
 });
 export default theme;
