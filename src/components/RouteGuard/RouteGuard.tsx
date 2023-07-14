@@ -22,7 +22,7 @@ export const RouteGuard: React.FC<RouteGuardProps> = (props) => {
   }, [isLoading, isLoggedIn, isProtectedPath])
 
   
-  if((false)){
+  if((isLoading)){
     return (
       <LinearProgressCustom/>
     )
