@@ -1,3 +1,6 @@
+# July 14 2023
+Added Picker (ui for all emojis) to the react drawer. 
+
 # June 23 2023
 Logging down all outstanding issues here: 
 - [ ] Non logged in user shouldnt be able to leave comment

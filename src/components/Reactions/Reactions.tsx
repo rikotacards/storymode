@@ -64,10 +64,10 @@ export const Reactions: React.FC<ReactionsProps> = ({
       .then(() => {});
   }, [postId]);
   const onAddReactionClick = () => {
-    drawerContext.setComponent('reactionsDrawer');
-    drawerContext.setData({postId})
+    drawerContext.setComponent("reactionsDrawer");
+    drawerContext.setData({ postId });
     drawerContext.onOpen();
-  }
+  };
   const onAddEmojiClick = React.useCallback(
     (unified: EmojiClickData["unified"], emoji: string) => {
       if (reactionsContext.displayedReactions[unified] == undefined) {
@@ -91,10 +91,11 @@ export const Reactions: React.FC<ReactionsProps> = ({
     ]
   );
 
-  for (let key in demoReactions || reactionsContext.displayedReactions) {
+  for (let key in reactionsContext.displayedReactions) {
     if (
+      // We want to always display the heart emoji
       key !== "2764-fe0f" &&
-      (!!reactionsContext.displayedReactions[key]?.count ||
+      (!reactionsContext.displayedReactions[key]?.count ||
         !reactionsContext.displayedReactions[key]?.emoji)
     ) {
       continue;
@@ -104,22 +105,16 @@ export const Reactions: React.FC<ReactionsProps> = ({
       <EmojiCount
         key={key}
         postId={postId}
-        symbol={
-          demoReactions?.[key]?.emoji ||
-          reactionsContext.displayedReactions[key]?.emoji
-        }
+        symbol={reactionsContext.displayedReactions[key]?.emoji}
         label={key}
         unified={key}
         author={author}
-        count={
-          demoReactions?.[key]?.count ||
-          reactionsContext.displayedReactions[key]?.count
-        }
+        count={reactionsContext.displayedReactions[key]?.count}
         hasLiked={reactionsContext.displayedReactions[key]?.hasLiked}
       />
     );
   }
-  if (demoReactions) {
+  if (demoReactions && Object.keys(demoReactions).length) {
     for (let key in demoReactions) {
       displayed.push(
         <EmojiCount
