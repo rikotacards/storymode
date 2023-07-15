@@ -1,12 +1,12 @@
 import React from "react";
 import { EmojiClickData } from "emoji-picker-react";
+import { addNewReaction, addNotification } from "@/firebase/db";
+import { useAuth } from "./AuthContext";
 
 export const ReactionsContext = React.createContext(
   {} as {
     displayedReactions: ReactionsStateType;
-    setDisplayedReactions: React.Dispatch<
-      React.SetStateAction<ReactionsStateType>
-    >;
+    setDisplayedReactions: (value: React.SetStateAction<ReactionsStateType>) => void
     updateDisplayedReactions: (
       unified: EmojiClickData["unified"],
       incrementValue: number,
@@ -27,6 +27,9 @@ interface ReactionsStateType {
 export const ReactionsProvider: React.FC<ReactionsProviderProps> = ({
   children,
 }) => {
+  const auth = useAuth();
+  const uid = auth?.user?.uid
+
   const [displayedReactions, setDisplayedReactions] =
     React.useState<ReactionsStateType>({});
   const updateDisplayedReactions = React.useCallback(
@@ -45,8 +48,8 @@ export const ReactionsProvider: React.FC<ReactionsProviderProps> = ({
     },
     [displayedReactions]
   );
-  React.useEffect(() => {
-  },[displayedReactions])
+
+  React.useEffect(() => {}, [displayedReactions]);
   const context = {
     setDisplayedReactions,
     displayedReactions,

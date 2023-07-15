@@ -65,7 +65,7 @@ export const Reactions: React.FC<ReactionsProps> = ({
   }, [postId]);
   const onAddReactionClick = () => {
     drawerContext.setComponent("reactionsDrawer");
-    drawerContext.setData({ postId });
+    drawerContext.setData({ postId, author });
     drawerContext.onOpen();
   };
   const onAddEmojiClick = React.useCallback(

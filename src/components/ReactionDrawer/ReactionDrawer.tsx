@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useEmojiInfo } from "@/hooks/useEmojiInfo";
+
 import styles from "./ReactionDrawer.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useDrawerContext } from "@/context/DrawerContext";
@@ -21,6 +23,12 @@ export const ReactionsDrawer: React.FC = () => {
     setOpen(!open);
   };
   const drawerContext = useDrawerContext();
+  const { drawerData } = drawerContext;
+  const { author, postId } = drawerData;
+  const { onAddEmojiClick } = useEmojiInfo({
+    author: author || "",
+    postId: postId || "",
+  });
   const emojis = quickSelectEmojis.map((emoji) => (
     <IconButton key={emoji.unified} onClick={() => {}}>
       <Emoji label={emoji.label} symbol={emoji.symbol} />
@@ -64,7 +72,11 @@ export const ReactionsDrawer: React.FC = () => {
           style={{ display: "flex", width: "100%", justifyContent: "center" }}
         >
           <Collapse in={open}>
-            <Picker />
+            <Picker
+              onEmojiClick={({ unified, emoji }) => {
+                onAddEmojiClick(unified, emoji);
+              }}
+            />
           </Collapse>
         </div>
       </div>

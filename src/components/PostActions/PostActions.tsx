@@ -8,7 +8,6 @@ import { useAuth } from "@/context/AuthContext";
 import { Dialog, IconButton } from "@mui/material";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import { copyToClipboard } from "@/utils/copyToClipboard";
 import { useDrawerContext } from "@/context/DrawerContext";
 
 interface PostActionsProps {
@@ -64,9 +63,6 @@ export const PostActions: React.FC<PostActionsProps> = ({
           </IconButton>
         </div>
         {/* <PartCount/> */}
-        {/* <div className={styles.bookmarkButton}>
-          <BookmarkButton active={false} />
-        </div> */}
       </div>
       <Dialog className={styles.dialog} open={open} onClose={onClose}>
         <SignInWithGoogle />
