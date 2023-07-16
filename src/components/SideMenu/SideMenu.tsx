@@ -89,7 +89,7 @@ export const SideMenu: React.FC = () => {
             name={"sign out"}
             icon={<MenuIcon />}
             path="/signout"
-            onClick={() => {router.push('/signin'); authHook.onLogout()}}
+            onClick={() => {router.push('/'); authHook.onLogout()}}
           />
         </div>
       </Drawer>

@@ -1,7 +1,15 @@
+# Trello 
+https://trello.com/b/XBumwCHg/trello-agile-sprint-board-template
+
 # July 14 2023
+Things to do: Add loading state to post.
+
+## What I did today:
 Added Picker (ui for all emojis) to the react drawer. 
 
 Fixed Emoji count not displaying correctly
+
+Re structured the post component. flattened it. Previously the emoji reactions were nested with the posta ctions. 
 
 # June 23 2023
 Logging down all outstanding issues here: 

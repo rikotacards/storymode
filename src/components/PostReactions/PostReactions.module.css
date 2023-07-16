@@ -1,0 +1,25 @@
+.allEmojis::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+.allEmojis {
+  display: flex;
+  /* max-width: 60%; */
+  flex-direction: row;
+  overflow-x: scroll;
+  width: 80%;
+  flex-shrink: 1;
+  padding-left: 16px;
+  position: relative;
+
+  overflow-x: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.addReactionButtonContainer {
+  margin-left: auto;
+  display: flex;
+  z-index: 1000;
+  /* flex-grow: 2; */
+}

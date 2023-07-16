@@ -17,7 +17,11 @@ import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
 import { ReactionsProvider } from "@/context/ReactionsContext";
 import { Comments } from "../Comments";
-import { PostDrawerContext, PostDrawerProvider } from "@/context/PostDrawerContext";
+import {
+  PostDrawerContext,
+  PostDrawerProvider,
+} from "@/context/PostDrawerContext";
+import { PostReactions } from "../PostReactions/PostReactions";
 
 interface PostProps extends PostFromDbProps {
   isDemo?: boolean;
@@ -37,7 +41,7 @@ export const Post: React.FC<PostProps> = (props) => {
   } = props;
   const images: string[] = [];
   const captions: string[] = [];
- 
+
   const router = useRouter();
   const usernameFromAuthor = useGetUsernameFromUid(author);
   const usernameInPath = router.query.username;
@@ -69,14 +73,13 @@ export const Post: React.FC<PostProps> = (props) => {
     );
   }
   return (
-   
-      <PostWrapper
-        demoPhotoUrl={demoPhotoUrl}
-        demoUsername={demoUsername}
-        author={author}
-        postId={postId}
-      >
-        <ReactionsProvider postId={postId} author={author}>
+    <PostWrapper
+      demoPhotoUrl={demoPhotoUrl}
+      demoUsername={demoUsername}
+      author={author}
+      postId={postId}
+    >
+      <ReactionsProvider postId={postId} author={author}>
         <PostDrawerProvider>
           <div>
             {hasImages && (
@@ -130,24 +133,30 @@ export const Post: React.FC<PostProps> = (props) => {
                 </Swiper>
               </DoubleClickReactionWrapper>
             )}
-            <PostActions
-              author={author}
-              username={usernameFromAuthor?.data?.username}
-              postId={postId}
-              isDemo={!!demoUsername}
-              demoReactions={demoReactions}
-            />
+            <div style={{ display: 'flex', top: '555px', position: 'absolute', zIndex:100, width: '100%'}}>
+              <PostReactions
+                postId={postId}
+                author={author}
+                demoReactions={demoReactions}
+              />
+              <PostActions
+                author={author}
+                username={usernameFromAuthor?.data?.username}
+                postId={postId}
+                isDemo={!!demoUsername}
+                demoReactions={demoReactions}
+              />
+              </div>
           </div>
-          </PostDrawerProvider>
-
-        </ReactionsProvider>
-        <div style={{ paddingTop: "4px", paddingLeft: "16px" }}>
-          <Comments postId={postId} authorUid={author} />
-        </div>
-        <Typography variant="caption" className={styles.date}>
-          {dateString}
-        </Typography>
-        <Divider sx={{width: '100%', padding: '8px 0px'}}/>
-      </PostWrapper>
+        </PostDrawerProvider>
+      </ReactionsProvider>
+      <div style={{ paddingTop: "4px", paddingLeft: "16px" }}>
+        <Comments postId={postId} authorUid={author} />
+      </div>
+      <Typography variant="caption" className={styles.date}>
+        {dateString}
+      </Typography>
+      <Divider sx={{ width: "100%", padding: "8px 0px" }} />
+    </PostWrapper>
   );
 };
