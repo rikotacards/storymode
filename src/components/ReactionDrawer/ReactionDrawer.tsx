@@ -14,19 +14,29 @@ import { Emoji } from "../Emoji/Emoji";
 import { Picker } from "../Picker/Picker";
 import { useReactionsContext } from "@/context/ReactionsContext";
 import { usePostDrawerContext } from "@/context/PostDrawerContext";
+import { useAuth } from "@/context/AuthContext";
 
 export const ReactionsDrawer: React.FC = () => {
   const [open, setOpen] = React.useState(false);
+ 
   const toggle = () => {
     setOpen(!open);
   };
+  const {isLoggedIn} = useAuth();
+  
   const drawerContext = usePostDrawerContext();
   const reactionContext = useReactionsContext();
  
   const emojis = quickSelectEmojis.map((emoji) => (
     <IconButton key={emoji.unified} onClick={() => {
-      reactionContext.onAddEmojiClick(emoji.unified,emoji.symbol)
-      drawerContext.onClose();
+      if(!isLoggedIn){
+        drawerContext.setComponent("signInDrawer")
+        return;
+      } else {
+
+        reactionContext.onAddEmojiClick(emoji.unified,emoji.symbol)
+        drawerContext.onClose();
+      }
       }}>
       <Emoji label={emoji.label} symbol={emoji.symbol} />
     </IconButton>

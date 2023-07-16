@@ -1,7 +1,6 @@
 import { Input, Button } from "@mui/material";
 import React from "react";
 import styles from "./AddPostWidget.module.css";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { UploadImageThumbnail } from "../UploadImageThumbnail/UploadImageThumbnail";
 import { AddPostContext } from "@/context/AddPostContext";
 
@@ -46,14 +45,13 @@ export const AddPostWidget: React.FC<AddPostWidgetProps> = ({
               style={{ marginTop: "8px" }}
               variant="outlined"
               fullWidth
+              size="small"
+              color='error'
             >
               Remove
             </Button>
           </div>
         )}
-      </div>
-      <div className={styles.reorderContainer}>
-        <DragHandleIcon color="action" />
       </div>
     </div>
   );

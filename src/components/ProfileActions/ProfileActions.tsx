@@ -18,6 +18,7 @@ import { useGetIsFollowing } from "@/hooks/useGetIsFollowing";
 import { EditProfile } from "../EditProfile/EditProfile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
+import { useDrawerContext } from "@/context/DrawerContext";
 
 interface ProfileActionsProps {
   hideName?: boolean;
@@ -46,6 +47,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
   const closeDrawer = React.useCallback(() => {
     setOpen(false);
   }, []);
+  const drawerContext = useDrawerContext();
   const usernameInPath = route.query.username as string;
   const uidFromUsernameRes = useGetUidFromUsername(usernameInPath);
   const { data: isFollowing } = useGetIsFollowing(
@@ -60,7 +62,8 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
 
   const onFollowClick = () => {
     if (!isLoggedIn) {
-      setOpenLogin(true);
+      drawerContext.setComponent('signInDrawer');
+      drawerContext.onOpen();
       return;
     }
     if (!uid || !uidFromUsernameRes?.data?.uid) {
@@ -90,6 +93,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
               display: "flex",
               width: "100%",
               justifyContent: "space-around",
+              marginBottom: '4px'
             }}
           >
             {!isMyProfile && (
@@ -98,7 +102,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
                 className={styles.button}
                 variant="contained"
                 fullWidth
-                size="small"
+                size="medium"
               >
                 <Typography variant="caption" sx={actionButtonTypographyStyle}>
                   {displayedFollow ? "Unfollow" : "Follow"}
@@ -107,8 +111,8 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
             )}
             {isMyProfile && (
               <Button
-                size="small"
-                onClick={openDrawer}
+              size="medium"
+              onClick={openDrawer}
                 className={styles.button}
                 variant="contained"
                 fullWidth
@@ -119,7 +123,7 @@ export const ProfileActions: React.FC<ProfileActionsProps> = ({ hideName }) => {
               </Button>
             )}
             <Button
-              size="small"
+              size="medium"
               onClick={copyClick}
               className={styles.button}
               sx={{marginLeft: 1}}

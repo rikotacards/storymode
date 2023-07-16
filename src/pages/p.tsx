@@ -3,6 +3,7 @@ import { Links } from "@/components/Links/Links";
 import { ProfileButtons } from "@/components/ProfileButtons/ProfileButtons";
 import { ProfileStats } from "@/components/ProfileStats/ProfileStats";
 import { TabPanel } from "@/components/TabPanel/TabPanel";
+import { demoFeed } from "@/constants/sampleFeed.data";
 import { sampleId } from "@/constants/sampledId";
 import {  PostFromDbProps } from "@/firebase/db";
 import { useGetPostsByUid } from "@/hooks/useGetPostsByUid";
@@ -65,7 +66,7 @@ export const SampleProfile: React.FC<ProfileProps> = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <div>
             <Avatar
-              src={""}
+              src={demoFeed[0].content[0].imagePath}
               style={{ marginRight: "8px", height: 90, width: 90 }}
             ></Avatar>
           </div>

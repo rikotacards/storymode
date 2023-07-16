@@ -4,6 +4,7 @@ import { CommentsDrawer } from "@/components/CommentsDrawer/CommentsDrawer";
 import { PostMoreDrawer } from "@/components/PostMoreDrawer/PostMoreDrawer";
 import { ReactionsDrawer } from "@/components/ReactionDrawer/ReactionDrawer";
 import { ShareDrawer } from "@/components/ShareDrawer/ShareDrawer";
+import { SignInDrawer } from "@/components/SignInDrawer/SignInDrawer";
 
 export const drawerChildren: { [key: string]: any } = {
   linkEditForm: <AddLinksNew />,
@@ -11,4 +12,5 @@ export const drawerChildren: { [key: string]: any } = {
   shareDrawer: <ShareDrawer />,
   postMoreDrawer: <PostMoreDrawer />,
   reactionsDrawer: <ReactionsDrawer />,
+  signInDrawer:<SignInDrawer/>
 };
