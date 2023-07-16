@@ -27,12 +27,19 @@ export const Comments: React.FC<CommentsProps> = ({ postId, authorUid }) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [comment, setComment] = React.useState<string>("");
   const drawerContext = useDrawerContext()
+  const {isLoggedIn} = useAuth();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
  
   const onClick = () => {
-    setOpen(true);
+    if(!isLoggedIn){
+      drawerContext.setComponent('signInDrawer');
+      drawerContext.onOpen();
+    } else {
+
+      setOpen(true);
+    }
   };
   
   const auth = useAuth();

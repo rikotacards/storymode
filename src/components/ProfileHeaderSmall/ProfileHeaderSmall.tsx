@@ -4,6 +4,8 @@ import { MoreHoriz } from "@mui/icons-material";
 import { Avatar, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
+import LinkIcon from '@mui/icons-material/Link';
+
 import { ProfileActions } from "../ProfileActions/ProfileActions";
 import { ProfileStats } from "../ProfileStats/ProfileStats";
 import VerifiedIcon from "@mui/icons-material/Verified";

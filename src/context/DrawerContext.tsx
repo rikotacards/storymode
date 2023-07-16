@@ -56,7 +56,7 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
   return (
     <DrawerContext.Provider value={context}>
       {children}
-      <Drawer anchor={"bottom"} open={open} onClose={onClose}>
+      <Drawer sx={{overflow: 'hidden'}} anchor={"bottom"} open={open} onClose={onClose}>
         <Paper sx={{ overflow: "hidden" }} elevation={0}>
           {drawerChildren?.[componentName] || null}
         </Paper>

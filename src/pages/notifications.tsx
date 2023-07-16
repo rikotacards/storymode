@@ -4,6 +4,8 @@ import React from "react";
 import styles from './notifications.module.css'
 import { useGetNotifications } from "@/hooks/useGetNotifications";
 import { useAuth } from "@/context/AuthContext";
+import { sampleNotificationsData } from "@/constants/sampleNotifications.data";
+import { NotLoggedInMessage } from "@/components/LoggedOutCallToAction/LoggedOutCallToAction";
 
 const NotificationsLoggedOut: React.FC = () => {
   return (
@@ -16,7 +18,9 @@ const NotificationsLoggedOut: React.FC = () => {
 const Notifications: React.FC = () => {
     const auth = useAuth();
     const data = useGetNotifications(auth?.user?.uid || "")
-    const notifications = data?.data?.map((data,i) => <NotificationItem postId={data?.postId} key={i} senderUid={data?.senderUid} payloadId={data?.payloadId} receiverUid={data?.receiverUid} unified={data?.unified}/>)
+    console.log('not', data)
+    const isLoggedIn = auth.isLoggedIn
+    const notifications = (isLoggedIn ? data?.data : sampleNotificationsData)?.map((data,i) => <NotificationItem postId={data?.postId} key={i} senderUid={data?.senderUid} payloadId={data?.payloadId} receiverUid={data?.receiverUid} unified={data?.unified}/>)
   return (
     <div style={{
       display: "flex",
@@ -24,17 +28,10 @@ const Notifications: React.FC = () => {
       justifyContent: "center",
       width: "100%",
     }}>
-      <AppBar className={styles.appbar}>
-        <Paper>
-        <Toolbar>
-          <Typography fontWeight={600}>{"Notifications"}</Typography>
-        </Toolbar>
-        </Paper>
-      </AppBar>
-      <Toolbar />
       <div>
-        {auth.isLoggedIn ? notifications : <NotificationsLoggedOut/>}
+        {notifications }
       </div>
+      <NotLoggedInMessage/>
     </div>
   );
 };

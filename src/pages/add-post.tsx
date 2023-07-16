@@ -30,11 +30,9 @@ const AddPost = () => {
           <AddPostContainer />
         </AddPostContextWrapper>
       ) : (
-        <div style={{pointerEvents: 'none'}}>
           <AddPostContextWrapper>
             <AddPostContainer />
           </AddPostContextWrapper>
-        </div>
       )}
 
       <Dialog onClose={onClose} open={open}>

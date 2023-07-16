@@ -19,6 +19,6 @@ export const useScrollDirection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   });
   return {
-    visible
+    isScrollDown: !visible
   };
 };

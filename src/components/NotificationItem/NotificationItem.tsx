@@ -8,7 +8,7 @@ import { getImagePath } from "@/firebase/db";
 import { useRouter } from "next/router";
 
 export const notificationMessage: { [key: string]: string } = {
-  0: "reacted with",
+  0: "reacted with ",
   followed: "started following you",
 };
 
@@ -22,7 +22,6 @@ interface NotificationItemProps {
 export const NotificationItem: React.FC<NotificationItemProps> = (props) => {
   const { senderUid, receiverUid, payloadId, unified, postId } = props;
   const router = useRouter();
-  console.log("whatever", receiverUid, postId);
   const { post, isLoading } = useGetPostByPostId(receiverUid, postId);
   const userInfoData = useGetUserInfo(senderUid);
   const receiverUsername = useGetUserInfo(receiverUid);
@@ -60,13 +59,13 @@ export const NotificationItem: React.FC<NotificationItemProps> = (props) => {
           >
             {senderUsername}
           </Typography>
-          <div style={{ display: "flex" }}>
-            <Typography variant="body2" sx={{ marginRight: 0.5 }}>
+          <div style={{ display: "flex", alignItems: 'center'}}>
+            <Typography variant="body2" sx={{ marginRight: 1 }}>
               {notificationMessage[payloadId]}
             </Typography>
             {unified && <Emoji size={18} unified={unified} />}
             <Typography sx={{ marginLeft: 0.5 }} variant="body2">
-              {"on your post"}
+              {"on your post."}
             </Typography>
           </div>
         </div>

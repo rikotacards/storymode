@@ -12,13 +12,16 @@ interface TopAppBarProps {
   hide?: boolean;
 }
 export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
-  const { visible } = useScrollDirection();
+  const { isScrollDown } = useScrollDirection();
   const route = useRouter();
+  
   const pathLength = route.asPath.split("/");
   const enableBack = pathLength.length > 1;
   const isUserProfile = route.pathname === "/[username]";
   const isHome = route.pathname ==='/'
   const auth = getAuth();
+  const username = route.asPath.replace('/','')
+  const isLoggedIn = !!auth.currentUser
   const onLogin = () => {
     route.push("/signin");
   };
@@ -32,17 +35,11 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
         width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
-        top: isUserProfile || visible ? "0px" : "-56px",
-        // top:0,
-        //scroll down
-        // scroll down
-        // backdropFilter: "blur(45px)",
+        top: isLoggedIn ? (isUserProfile? "0px" : isScrollDown ? "-56px" : '0px') : "0px",
         flexDirection: "row",
         height: "56px",
-
-
         transition: "top 0.5s ease-in-out, height 0.3s ease",
-        overflow: "hidden",
+        // overflow: "hidden",
       }}
     >
       <Paper
@@ -64,7 +61,7 @@ export const TopAppBar: React.FC<TopAppBarProps> = ({ hide }) => {
           {!isHome && <IconButton size="small" onClick={route.back}>
             <ArrowBackIosNewIcon />
           </IconButton>}
-          <Typography variant='h5' sx={{ fontWeight: "600" }}>Stills</Typography>
+          <Typography variant='h5' sx={{ fontWeight: "600" }}>{route.pathname ==='/[username]' ? username : "Stills"}</Typography>
           {!auth.currentUser && (
             <Button
               sx={{ ml: "auto", textTransform: "none" }}

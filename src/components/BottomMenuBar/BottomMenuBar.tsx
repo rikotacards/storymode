@@ -6,13 +6,27 @@ import { useRouter } from "next/router";
 import { useGetMenuItems } from "@/hooks/useGetMenuItems";
 import { Badge, Paper } from "@mui/material";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useAuth } from "@/context/AuthContext";
 interface BottomMenuBarProps {
   hide?: boolean;
 }
 export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   const route = useRouter();
+  const isHome = route.pathname === '/'
+  const auth = useAuth();
+  const enableDelayedMenu = isHome && !auth.isLoggedIn
+  console.log('d', enableDelayedMenu)
+  const [show, setShow] = React.useState(false);
+  const delay = 5000
+  React.useEffect(() => {
+    if(enableDelayedMenu){
+      setTimeout(() => setShow(true), delay)
+    } else {
+      setShow(true)
+    }
+  }, [])
   const menuItems = useGetMenuItems({ isWide: false });
-  const {visible} = useScrollDirection()
+  const {isScrollDown} = useScrollDirection()
   let items = menuItems.map((item, i) => (
     <div
       key={item.path + i}
@@ -44,30 +58,17 @@ export const BottomMenuBar: React.FC<BottomMenuBarProps> = ({ hide }) => {
   return (
     <AppBar
       position="fixed"
-      // color="primary"
       sx={{
-        // display: "flex",
-        // width: "100%",
         alignItems: "center",
         justifyContent: "space-between",
         top: "auto",
-        // bottom: '0px',
-        bottom: visible ? "0px" : '-55px',
-        // border: visible? undefined : '0.5px solid white',
+        bottom: show ? "0px" :"-55px",
         height: "45px",
-        //scroll up color
         overflow: 'hidden',
-        background: visible ?'rgba(0,0,0,0)': 'rgba(0,0,0,0.6)',
-        // scrooll up blur
-        backdropFilter: visible ? "blur(80px)": "blur(88px)",
-        webkitBackdropFilter: visible ? "blur(80px)": "blur(5px)",
-
-        //scroll down
-        // background: 'rgba(0,0,0,0.3)',
-        // scroll down
-        // backdropFilter: "blur(45px)",
+        background: isScrollDown ?'rgba(0,0,0,0)': 'rgba(0,0,0,0.6)',
+        backdropFilter: isScrollDown ? "blur(80px)": "blur(88px)",
+        webkitBackdropFilter: isScrollDown ? "blur(80px)": "blur(5px)",
         flexDirection: "row",
-        // borderRadius: visible ? 0 :'50px 50px 0px 0px',
         transition: "border-radius 0.5s ease-in-out, bottom 0.2s ease-in-out, backdrop-filter 0.3s ease, background 0.4s ease, -webkit-backdrop-filter 0.2s ease-in-out, backdrop-filter 0.3s ease",
       }}
     >

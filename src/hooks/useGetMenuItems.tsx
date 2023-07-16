@@ -16,7 +16,7 @@ export const useGetMenuItems = (args: useGetMenuItemProps) => {
     ...menuItems,
     {
       name: "Profile",
-      path: "/" + (auth.isLoggedIn ? data?.username as string : '/p'),
+      path: "/" + (auth.isLoggedIn ? data?.username as string : '/max'),
       icon: isLoading ? (
         <CircularProgress size={24} />
       ) : (
