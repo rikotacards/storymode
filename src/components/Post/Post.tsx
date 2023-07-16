@@ -16,9 +16,8 @@ import { useRouter } from "next/router";
 import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
 import { ReactionsProvider } from "@/context/ReactionsContext";
-import { AddComment } from "../AddComment/AddComment";
 import { Comments } from "../Comments";
-import { ShareDrawer } from "../ShareDrawer/ShareDrawer";
+import { PostDrawerContext, PostDrawerProvider } from "@/context/PostDrawerContext";
 
 interface PostProps extends PostFromDbProps {
   isDemo?: boolean;
@@ -32,22 +31,13 @@ export const Post: React.FC<PostProps> = (props) => {
     content,
     postTime,
     postId,
-    isDemo,
     demoPhotoUrl,
     demoUsername,
     demoReactions,
   } = props;
   const images: string[] = [];
   const captions: string[] = [];
-  const [shareDrawerOpen, setShareDrawerOpen] = React.useState(false);
-  const onShareClick = () => {
-    setShareDrawerOpen(true);
-  }
-  
-  const onShareDrawerClose = () => {
-    setShareDrawerOpen(false);
-
-  }
+ 
   const router = useRouter();
   const usernameFromAuthor = useGetUsernameFromUid(author);
   const usernameInPath = router.query.username;
@@ -86,7 +76,8 @@ export const Post: React.FC<PostProps> = (props) => {
         author={author}
         postId={postId}
       >
-        <ReactionsProvider>
+        <ReactionsProvider postId={postId} author={author}>
+        <PostDrawerProvider>
           <div>
             {hasImages && (
               <DoubleClickReactionWrapper author={author} postId={postId}>
@@ -143,10 +134,12 @@ export const Post: React.FC<PostProps> = (props) => {
               author={author}
               username={usernameFromAuthor?.data?.username}
               postId={postId}
-              isDemo
+              isDemo={!!demoUsername}
               demoReactions={demoReactions}
             />
           </div>
+          </PostDrawerProvider>
+
         </ReactionsProvider>
         <div style={{ paddingTop: "4px", paddingLeft: "16px" }}>
           <Comments postId={postId} authorUid={author} />

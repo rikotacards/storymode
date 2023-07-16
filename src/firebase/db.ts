@@ -563,9 +563,7 @@ export const getAllComments = async ({postId, postAuthorUid}: GetAllCommentsProp
       ...data.data(),
       commentId: data.id
     }
-
     res.push(newData)
-    console.log(res)
   })
   return res
 }

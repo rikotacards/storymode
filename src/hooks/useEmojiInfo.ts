@@ -27,10 +27,10 @@ export const useEmojiInfo = ({ postId, author}:UseEmojiInfoProps ) => {
   }, [postId]);
 
   const onAddEmojiClick = React.useCallback(
-    (unified: EmojiClickData["unified"], emoji: string) => {
+    (unified: string, emoji: string) => {
       console.log('clicker', displayedReactions, unified)
 
-      if (displayedReactions[unified] == undefined) {
+      if (displayedReactions?.[unified] == undefined) {
         addNewReaction({ docId: postId, unified, emoji });
         // we have this so we don't need to 'get' the data after increment.
         updateDisplayedReactions(unified, 1, emoji);

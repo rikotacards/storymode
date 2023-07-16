@@ -1,28 +1,33 @@
 import {
   Button,
-  Card,
   Collapse,
-  Drawer,
   IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
 import React from "react";
+
 import styles from "./ReactionDrawer.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useDrawerContext } from "@/context/DrawerContext";
 import { quickSelectEmojis } from "@/constants/quickSelectEmojis";
 import { Emoji } from "../Emoji/Emoji";
 import { Picker } from "../Picker/Picker";
+import { useReactionsContext } from "@/context/ReactionsContext";
+import { usePostDrawerContext } from "@/context/PostDrawerContext";
 
 export const ReactionsDrawer: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const toggle = () => {
     setOpen(!open);
   };
-  const drawerContext = useDrawerContext();
+  const drawerContext = usePostDrawerContext();
+  const reactionContext = useReactionsContext();
+ 
   const emojis = quickSelectEmojis.map((emoji) => (
-    <IconButton key={emoji.unified} onClick={() => {}}>
+    <IconButton key={emoji.unified} onClick={() => {
+      reactionContext.onAddEmojiClick(emoji.unified,emoji.symbol)
+      drawerContext.onClose();
+      }}>
       <Emoji label={emoji.label} symbol={emoji.symbol} />
     </IconButton>
   ));
@@ -64,7 +69,11 @@ export const ReactionsDrawer: React.FC = () => {
           style={{ display: "flex", width: "100%", justifyContent: "center" }}
         >
           <Collapse in={open}>
-            <Picker />
+            {/* <Picker
+              onEmojiClick={({ unified, emoji }) => {
+                onAddEmojiClick(unified, emoji);
+              }}
+            /> */}
           </Collapse>
         </div>
       </div>

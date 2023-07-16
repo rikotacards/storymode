@@ -8,7 +8,6 @@ import { useAuth } from "@/context/AuthContext";
 import { Dialog, IconButton } from "@mui/material";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import { copyToClipboard } from "@/utils/copyToClipboard";
 import { useDrawerContext } from "@/context/DrawerContext";
 
 interface PostActionsProps {
@@ -33,7 +32,6 @@ export const PostActions: React.FC<PostActionsProps> = ({
     drawerContext.setComponent('shareDrawer')
     drawerContext.onOpen()
   }
-  const baseUrl = window.location.origin;
   const [open, setOpen] = React.useState(false);
   const onClose = () => {
     setOpen(false);
@@ -52,13 +50,11 @@ export const PostActions: React.FC<PostActionsProps> = ({
       >
         <div
           style={{
-            // pointerEvents: auth?.isLoggedIn ? undefined : "none",
             display: "flex",
             width: '100%'
           }}
         >
-          <Reactions demoReactions={demoReactions} isDemo author={author} postId={postId} />
-          {/* onClick={() => copyToClipboard(`${baseUrl}/${username}/${postId}`)} */}
+          <Reactions demoReactions={isDemo ? demoReactions : {}} isDemo author={author} postId={postId} />
 
           <IconButton
             onClick={onShareClick}
@@ -67,9 +63,6 @@ export const PostActions: React.FC<PostActionsProps> = ({
           </IconButton>
         </div>
         {/* <PartCount/> */}
-        {/* <div className={styles.bookmarkButton}>
-          <BookmarkButton active={false} />
-        </div> */}
       </div>
       <Dialog className={styles.dialog} open={open} onClose={onClose}>
         <SignInWithGoogle />
