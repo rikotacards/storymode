@@ -11,7 +11,7 @@ const isPermanent = false;
 export const FloatingMenu: React.FC = () => {
   const menuItems = useGetMenuItems({ isWide: false });
   const router = useRouter();
-  const { visible } = useScrollDirection();
+  const { isScrollDown } = useScrollDirection();
 
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
