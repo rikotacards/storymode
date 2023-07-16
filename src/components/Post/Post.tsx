@@ -18,7 +18,6 @@ import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleC
 import { ReactionsProvider } from "@/context/ReactionsContext";
 import { Comments } from "../Comments";
 import {
-  PostDrawerContext,
   PostDrawerProvider,
 } from "@/context/PostDrawerContext";
 import { PostReactions } from "../PostReactions/PostReactions";
