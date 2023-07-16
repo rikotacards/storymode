@@ -1,34 +1,34 @@
 import { drawerChildren } from "@/constants/drawerComponents";
-import { AppBar, Drawer, Paper, Toolbar } from "@mui/material";
+import {  Drawer, Paper } from "@mui/material";
 import React from "react";
 
-interface DrawerData {
+interface PostDrawerData {
   author?: string;
   postId?: string;
 }
-interface DrawerContextProps {
+interface PostDrawerContextProps {
   onOpen: () => void;
   onClose: () => void;
   setComponent: (cName: string) => void;
-  setData: (data: DrawerData) => void;
-  drawerData: DrawerData;
+  setData: (data: PostDrawerData) => void;
+  drawerData: PostDrawerData;
 }
-export const DrawerContext = React.createContext({} as DrawerContextProps);
-export const useDrawerContext = () => React.useContext(DrawerContext);
+export const PostDrawerContext = React.createContext({} as PostDrawerContextProps);
+export const usePostDrawerContext = () => React.useContext(PostDrawerContext);
 
-interface DrawerProviderProps {
+interface PostDrawerProviderProps {
   children: React.ReactNode;
 }
 
-export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
+export const PostDrawerProvider: React.FC<PostDrawerProviderProps> = (props) => {
   const { children } = props;
   const [open, setOpen] = React.useState(false);
   const [componentName, setComponentName] =
     React.useState<string>("linkEditForm");
 
-  const [drawerData, setDrawerData] = React.useState({} as DrawerData);
+  const [drawerData, setDrawerData] = React.useState({} as PostDrawerData);
 
-  const setData = React.useCallback((data: DrawerData) => {
+  const setData = React.useCallback((data: PostDrawerData) => {
     setDrawerData((prev) => ({ ...prev, ...data }));
   }, []);
 
@@ -40,6 +40,7 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
     setOpen(true);
   };
   const onClose = () => {
+    console.log('closing')
     setOpen(false);
   };
 
@@ -54,13 +55,13 @@ export const DrawerProvider: React.FC<DrawerProviderProps> = (props) => {
   };
 
   return (
-    <DrawerContext.Provider value={context}>
+    <PostDrawerContext.Provider value={context}>
       {children}
       <Drawer anchor={"bottom"} open={open} onClose={onClose}>
         <Paper sx={{ overflow: "hidden" }} elevation={0}>
           {drawerChildren?.[componentName] || null}
         </Paper>
       </Drawer>
-    </DrawerContext.Provider>
+    </PostDrawerContext.Provider>
   );
 };

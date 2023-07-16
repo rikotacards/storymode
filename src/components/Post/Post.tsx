@@ -17,6 +17,7 @@ import { useGetUsernameFromUid } from "@/hooks/useGetUsernameFromUid";
 import { DoubleClickReactionWrapper } from "@/DoubleClickReactionWrapper/DoubleClickReactionWrapper";
 import { ReactionsProvider } from "@/context/ReactionsContext";
 import { Comments } from "../Comments";
+import { PostDrawerContext, PostDrawerProvider } from "@/context/PostDrawerContext";
 
 interface PostProps extends PostFromDbProps {
   isDemo?: boolean;
@@ -36,7 +37,6 @@ export const Post: React.FC<PostProps> = (props) => {
   } = props;
   const images: string[] = [];
   const captions: string[] = [];
-  const [shareDrawerOpen, setShareDrawerOpen] = React.useState(false);
  
   const router = useRouter();
   const usernameFromAuthor = useGetUsernameFromUid(author);
@@ -76,7 +76,8 @@ export const Post: React.FC<PostProps> = (props) => {
         author={author}
         postId={postId}
       >
-        <ReactionsProvider>
+        <ReactionsProvider postId={postId} author={author}>
+        <PostDrawerProvider>
           <div>
             {hasImages && (
               <DoubleClickReactionWrapper author={author} postId={postId}>
@@ -137,6 +138,8 @@ export const Post: React.FC<PostProps> = (props) => {
               demoReactions={demoReactions}
             />
           </div>
+          </PostDrawerProvider>
+
         </ReactionsProvider>
         <div style={{ paddingTop: "4px", paddingLeft: "16px" }}>
           <Comments postId={postId} authorUid={author} />
