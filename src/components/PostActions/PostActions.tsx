@@ -9,6 +9,8 @@ import { Dialog, IconButton } from "@mui/material";
 import { SignInWithGoogle } from "../SignInNewUser/SignInNewUser";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { useDrawerContext } from "@/context/DrawerContext";
+import { AddReactionButton } from "../AddReactionButton/AddReactionButton";
+import { usePostDrawerContext } from "@/context/PostDrawerContext";
 
 interface PostActionsProps {
   postId: string;
@@ -16,7 +18,7 @@ interface PostActionsProps {
   // used for recevingUid
   author: string;
   isDemo?: boolean;
-  demoReactions?: ReactionsStateType
+  demoReactions?: ReactionsStateType;
 }
 
 export const PostActions: React.FC<PostActionsProps> = ({
@@ -24,17 +26,22 @@ export const PostActions: React.FC<PostActionsProps> = ({
   username,
   postId,
   isDemo,
-  demoReactions
+  demoReactions,
 }) => {
   const auth = useAuth();
-  const drawerContext = useDrawerContext()
+  const drawerContext = usePostDrawerContext();
   const onShareClick = () => {
-    drawerContext.setComponent('shareDrawer')
-    drawerContext.onOpen()
-  }
+    drawerContext.setComponent("shareDrawer");
+    drawerContext.onOpen();
+  };
   const [open, setOpen] = React.useState(false);
   const onClose = () => {
     setOpen(false);
+  };
+  const onAddReactionButtonClick = () => {
+    drawerContext.setComponent("reactionsDrawer");
+    drawerContext.setData({ postId, author });
+    drawerContext.onOpen();
   };
   const onOpen = () => {
     // !auth.isLoggedIn && setOpen(true);
@@ -42,7 +49,6 @@ export const PostActions: React.FC<PostActionsProps> = ({
   return (
     <>
       <div
-        className={styles.postactions}
         onClick={(e) => {
           e.preventDefault();
           return onOpen();
@@ -51,18 +57,14 @@ export const PostActions: React.FC<PostActionsProps> = ({
         <div
           style={{
             display: "flex",
-            width: '100%'
+            alignItems: "center",
           }}
         >
-          <Reactions demoReactions={isDemo ? demoReactions : {}} isDemo author={author} postId={postId} />
-
-          <IconButton
-            onClick={onShareClick}
-          >
+          <AddReactionButton onClick={onAddReactionButtonClick} />
+          <IconButton onClick={onShareClick}>
             <SendRoundedIcon />
           </IconButton>
         </div>
-        {/* <PartCount/> */}
       </div>
       <Dialog className={styles.dialog} open={open} onClose={onClose}>
         <SignInWithGoogle />

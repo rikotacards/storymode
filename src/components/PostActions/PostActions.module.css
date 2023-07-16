@@ -1,15 +1,3 @@
-.postactions {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  position: absolute;
-  top: 555px;
-  z-index: 999;
-
-}
-.bookmarkButton {
-  margin-left: auto
-}
 .dialog {
   backdrop-filter: blur(10px);
         justify-content: flex-end;
